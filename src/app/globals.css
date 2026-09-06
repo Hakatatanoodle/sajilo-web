@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/*
+ * Sajilo Web design tokens — design.md §71.
+ * Cinematic surface, functional core: dark immersive canvas, controlled
+ * violet gradient accents, generous type, disciplined motion.
+ */
+@theme {
+  /* Surfaces */
+  --color-ink: #0a0a10;
+  --color-ink-2: #101018;
+
+  /* Text */
+  --color-fg: #edeff7;
+  --color-fg-muted: #a7acbf;
+  --color-fg-faint: #70768c;
+
+  /* Accents */
+  --color-accent: #8b7cff;
+  --color-accent-strong: #6d5cff;
+  --color-accent-2: #c86bff;
+  --color-mint: #5eead4;
+
+  /* Typography (wired to next/font variables in layout.tsx) */
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-float-a: float-a 7s ease-in-out infinite;
+  --animate-float-b: float-b 9s ease-in-out infinite;
+
+  @keyframes float-a {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes float-b {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(10px);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink font-body text-fg antialiased;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* Decorative utilities */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(115deg, #a79bff, #e08dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+ * Scroll-reveal (paired with src/components/Reveal.tsx).
+ * Scoped under html.js so content is fully visible without JavaScript;
+ * disabled entirely for prefers-reduced-motion.
+ */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.8s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal][data-visible] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  html.js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
