@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
@@ -18,7 +19,9 @@ export const metadata: Metadata = {
  */
 export default function WorkPage() {
   return (
-    <Container className="py-16 sm:py-20">
+    <div className="relative isolate overflow-hidden">
+      <AuroraBackdrop variant="page" />
+      <Container className="py-16 sm:py-20">
       <header className="max-w-2xl">
         <Reveal>
           <Tag>What this is</Tag>
@@ -39,13 +42,14 @@ export default function WorkPage() {
         </Reveal>
       </header>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        {work.map((project, index) => (
-          <Reveal key={project.slug} delay={index * 90} className="h-full">
-            <ProjectCard project={project} className="h-full" />
-          </Reveal>
-        ))}
-      </div>
-    </Container>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {work.map((project, index) => (
+            <Reveal key={project.slug} delay={index * 90} className="h-full">
+              <ProjectCard project={project} className="h-full" />
+            </Reveal>
+          ))}
+        </div>
+        </Container>
+    </div>
   );
 }

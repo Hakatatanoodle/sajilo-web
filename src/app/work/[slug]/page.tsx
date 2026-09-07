@@ -83,7 +83,7 @@ export default async function ProjectPage({
               aria-hidden
               className="absolute -inset-6 rounded-3xl blur-3xl"
               style={{
-                background: `linear-gradient(120deg, ${project.palette.heroFrom}55, ${project.palette.heroTo}33)`,
+                background: `linear-gradient(120deg, ${project.palette.heroTo}66, ${project.palette.accent}30)`,
               }}
             />
             <BrowserFrame
@@ -172,7 +172,7 @@ export default async function ProjectPage({
         </div>
 
         <Reveal delay={120}>
-          <p className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-sm leading-relaxed text-fg-faint">
+          <p className="mt-10 rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-fg-faint">
             <strong className="font-semibold text-fg-muted">{project.title}</strong>{" "}
             is a concept demo — a self-initiated build by Sajilo Web, not a
             client engagement. Every project on this site is labeled this way
@@ -185,7 +185,7 @@ export default async function ProjectPage({
         <Reveal>
           <Link
             href={`/work/${next.slug}`}
-            className="group block rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-accent/40"
+            className="group block rounded-2xl border border-line bg-surface p-8 transition-colors hover:border-accent/40"
           >
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-fg-faint">
               Next project
@@ -199,7 +199,7 @@ export default async function ProjectPage({
                   {next.industry} · {next.tag}
                 </p>
               </div>
-              <span className="flex size-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-fg transition-all group-hover:border-accent/50 group-hover:text-accent">
+              <span className="flex size-11 items-center justify-center rounded-full border border-line-strong bg-surface text-fg transition-all group-hover:border-accent/50 group-hover:text-accent">
                 <ArrowRight className="size-5" />
               </span>
             </div>

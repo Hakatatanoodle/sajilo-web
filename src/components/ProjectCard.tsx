@@ -20,12 +20,12 @@ export function ProjectCard({
     <Link
       href={`/work/${project.slug}`}
       className={cn(
-        "group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.05] hover:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.85)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+        "group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-all duration-300 hover:-translate-y-1 hover:border-line-strong hover:bg-surface-2 hover:shadow-[0_24px_60px_-24px_rgba(31,39,64,0.18)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
         className
       )}
     >
       <div
-        className="relative aspect-[16/10] overflow-hidden border-b border-white/10"
+        className="relative aspect-[16/10] overflow-hidden border-b border-line"
         role="img"
         aria-label={`Preview of the ${project.title} concept demo`}
       >

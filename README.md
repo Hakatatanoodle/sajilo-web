@@ -2,7 +2,15 @@
 
 The Sajilo Web agency website: who we are, what we build, the work we can
 honestly show, and how to reach us. Built as a **small, serious, capable**
-studio site — cinematic surface, functional core.
+studio site.
+
+> **v0.2 — Brand retheme.** The visual identity now comes directly from the
+> Sajilo Web logo: white canvas, brand yellow (`#FFC629`), navy ink
+> (`#1F2740`), the S-ribbon + cursor logo mark (`src/components/Logo.tsx`),
+> the yellow "Web" pill as the primary button style, a yellow CTA band, a
+> navy footer, and the BUILD · LAUNCH · GROW tagline. The previous dark
+> violet theme was replaced in a single pass; it remains recoverable from
+> git history.
 
 Governing docs live one level up: `../portfolio_v0.1.md` (brand),
 `../architecture.md` (engineering), `../design.md` (design direction),
@@ -88,4 +96,6 @@ palettes) come from the real demo builds in `../web_agency_portfolio/` and
 ## Verification performed
 
 `npm run lint` · `npm run typecheck` · `npm run build` · manual pass:
-keyboard navigation, reduced motion, mobile widths, contrast on dark surfaces.
+keyboard navigation, reduced motion, mobile widths, contrast on the light
+theme (yellow is used as a surface with navy text, never as text on white;
+accent *text* uses a darker amber for readability).

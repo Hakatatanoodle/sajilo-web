@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "Websites and digital tools for growing local businesses in Nepal.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a10",
-    theme_color: "#0a0a10",
+    background_color: "#ffffff",
+    theme_color: "#1f2740",
     icons: [
       {
         src: "/icon.svg",

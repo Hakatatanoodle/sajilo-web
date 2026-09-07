@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { InquiryComposer } from "@/components/InquiryComposer";
 import { Clock, Mail, MapPin, WhatsApp } from "@/components/icons";
@@ -24,7 +25,9 @@ const NEXT_STEPS = [
  */
 export default function ContactPage() {
   return (
-    <Container className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1fr_1.15fr]">
+    <div className="relative isolate overflow-hidden">
+      <AuroraBackdrop variant="edge-right" />
+      <Container className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1fr_1.15fr]">
       <div>
         <Reveal>
           <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-accent">
@@ -48,7 +51,7 @@ export default function ContactPage() {
             <li>
               <a
                 href={`mailto:${site.contact.email}`}
-                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-accent/40"
+                className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent/40"
               >
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
                   <Mail className="size-5" />
@@ -70,7 +73,7 @@ export default function ContactPage() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 transition-colors hover:border-accent/40"
+                className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent/40"
               >
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
                   <WhatsApp className="size-5" />
@@ -85,7 +88,7 @@ export default function ContactPage() {
                 </span>
               </a>
             </li>
-            <li className="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <li className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
               <span className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
                 <MapPin className="size-5" />
               </span>
@@ -102,7 +105,7 @@ export default function ContactPage() {
         </Reveal>
 
         <Reveal delay={280}>
-          <div className="mt-8 rounded-2xl border border-dashed border-white/15 p-6">
+          <div className="mt-8 rounded-2xl border border-dashed border-line-strong p-6">
             <h2 className="flex items-center gap-2 font-display text-base font-bold text-fg">
               <Clock className="size-4 text-accent" />
               What happens next
@@ -127,6 +130,7 @@ export default function ContactPage() {
       <Reveal delay={140}>
         <InquiryComposer />
       </Reveal>
-    </Container>
+      </Container>
+    </div>
   );
 }

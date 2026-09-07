@@ -1,4 +1,5 @@
 import { industries } from "@/content/site";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { SectionHeading } from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
@@ -9,7 +10,8 @@ import Reveal from "@/components/Reveal";
  */
 export function Positioning() {
   return (
-    <section className="relative py-20">
+    <section className="relative isolate overflow-hidden py-20">
+      <AuroraBackdrop variant="edge-left" />
       <Container>
         <SectionHeading
           eyebrow="Who we work with"
@@ -26,7 +28,7 @@ export function Positioning() {
             {industries.map((industry) => (
               <li
                 key={industry}
-                className="rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-sm text-fg-muted transition-colors hover:border-accent/40 hover:text-fg"
+                className="rounded-full border border-line bg-surface px-4 py-2 text-sm text-fg-muted transition-colors hover:border-accent/40 hover:text-fg"
               >
                 {industry}
               </li>

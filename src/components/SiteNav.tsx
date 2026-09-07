@@ -5,13 +5,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/content/site";
 import { ButtonLink } from "@/components/Button";
+import { LogoLockup } from "@/components/Logo";
 import { Close, Menu } from "@/components/icons";
 import { cn } from "@/lib/cn";
 
 /**
- * Fixed site header. Transparent at rest, gains a blurred surface on scroll.
- * The mobile menu is a full overlay: Escape closes, body scroll is locked,
- * and it closes automatically on route change.
+ * Fixed site header. Transparent at rest, gains a soft white blurred
+ * surface on scroll. The mobile menu is a full overlay: Escape closes,
+ * body scroll is locked, and it closes automatically on route change.
  */
 export function SiteNav() {
   const pathname = usePathname();
@@ -52,7 +53,7 @@ export function SiteNav() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled || open
-          ? "border-b border-white/[0.06] bg-ink/85 backdrop-blur-md"
+          ? "border-b border-line bg-white/85 shadow-[0_10px_40px_-24px_rgba(31,39,64,0.35)] backdrop-blur-md"
           : "border-b border-transparent"
       )}
     >
@@ -62,13 +63,10 @@ export function SiteNav() {
       >
         <Link
           href="/"
-          className="font-display text-lg font-extrabold tracking-tight text-fg"
+          className="rounded-md"
           aria-label={`${site.name} — home`}
         >
-          Sajilo
-          <span className="bg-gradient-to-r from-accent to-accent-2 bg-clip-text text-transparent">
-            Web
-          </span>
+          <LogoLockup />
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
@@ -79,7 +77,9 @@ export function SiteNav() {
               aria-current={isActive(item.href) ? "page" : undefined}
               className={cn(
                 "rounded-full px-4 py-2 text-sm font-medium transition-colors",
-                isActive(item.href) ? "text-fg" : "text-fg-muted hover:text-fg"
+                isActive(item.href)
+                  ? "bg-brand/20 font-semibold text-navy"
+                  : "text-fg-muted hover:bg-surface-2 hover:text-fg"
               )}
             >
               {item.label}
@@ -92,7 +92,7 @@ export function SiteNav() {
 
         <button
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-fg md:hidden"
+          className="inline-flex size-10 items-center justify-center rounded-full border border-line bg-white text-fg transition-colors hover:bg-surface-2 md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -105,7 +105,7 @@ export function SiteNav() {
       {open ? (
         <div
           id="mobile-menu"
-          className="border-t border-white/[0.06] bg-ink/95 backdrop-blur-md md:hidden"
+          className="border-t border-line bg-white/95 backdrop-blur-md md:hidden"
         >
           <div className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-5">
             {nav.map((item) => (
@@ -116,8 +116,8 @@ export function SiteNav() {
                 className={cn(
                   "rounded-xl px-4 py-3 font-display text-lg font-bold transition-colors",
                   isActive(item.href)
-                    ? "bg-white/[0.05] text-fg"
-                    : "text-fg-muted hover:bg-white/[0.04] hover:text-fg"
+                    ? "bg-brand/15 text-navy"
+                    : "text-fg-muted hover:bg-surface-2 hover:text-fg"
                 )}
               >
                 {item.label}
