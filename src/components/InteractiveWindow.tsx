@@ -1,58 +1,60 @@
 "use client";
 
-import {
-  useEffect,
-  useRef,
-  type PointerEvent as ReactPointerEvent,
-  type ReactNode,
-} from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 /**
- * InteractiveWindow — makes a composition feel like a physical object:
- * it tilts toward the cursor (CSS 3D perspective) and can be grabbed and
- * dragged around within gentle bounds, with a slight "lift" while held.
+ * InteractiveWindow — a two-sided 3D showcase object.
  *
- * Pure pointer events + one transformed layer + a rAF lerp loop — no
- * animation library (architecture.md: zero extra runtime dependencies).
- * Without JavaScript it renders static; all motion is disabled under
- * prefers-reduced-motion. Touch keeps vertical scrolling (touch-pan-y) so
- * horizontal drags move the window without trapping the page.
+ * Horizontal drag spins it a full 360° (and beyond, with fling inertia and
+ * friction); vertical drag tilts it; left alone it slowly turntables. The
+ * front face is the composition passed as `front`; the back face is `back` —
+ * a designed navy card — so flipping it over reveals something, not a mirror.
  *
- * Depth is real 3D: give children `translateZ(n)` inside this wrapper and
- * they sit above the window plane, parallaxing naturally when the layer
- * rotates. Double-click glides the window back to its resting spot.
+ * Depth cues (the "magic"): a ground shadow that skews with the spin and
+ * thins edge-on, softens as the object lifts toward the viewer while held,
+ * a sheen that travels across the glass with rotation, and a gentle bob.
+ * Real translateZ children on the front face parallax naturally.
+ *
+ * Pure pointer events + CSS 3D + one rAF loop — no animation library
+ * (architecture.md: zero extra runtime deps). No-JS visitors see the static
+ * front face. prefers-reduced-motion: no idle spin/inertia/bob, but direct
+ * drag rotation still works (user-initiated motion is OK).
  */
 
-const MAX_TILT = 7; // deg — max rotation toward the cursor
-const MAX_SHIFT_X = 72; // px — drag bounds
-const MAX_SHIFT_Y = 48;
-const DRAG_SCALE = 1.02; // slight lift while dragging
-const LERP = 0.14; // easing toward targets per frame
+const IDLE_SPEED = 0.08; // deg/frame — slow turntable drift
+const FRICTION = 0.94; // fling decay
+const REST_RX = -5; // resting tilt (deg) — looks 3D even at rest
+const MAX_RX = 30; // tilt clamp
+const LIFT_Z = 60; // px toward viewer while grabbed
+const ROT_SPEED = 0.4; // deg per px, horizontal
+const TILT_SPEED = 0.3; // deg per px, vertical
 
 type Motion = {
-  cRX: number; cRY: number; cDX: number; cDY: number; cSC: number; // current
-  tRX: number; tRY: number; tDX: number; tDY: number; tSC: number; // targets
-  hovering: boolean; dragging: boolean;
-  startX: number; startY: number; baseDX: number; baseDY: number;
+  cRY: number; cRX: number; cLZ: number; cSC: number; vRY: number;
+  dragging: boolean; idleOn: boolean; idleTimer: number; restRy: number | null;
   raf: number; running: boolean; reduced: boolean;
+  lastX: number; lastY: number;
 };
 
 export function InteractiveWindow({
-  children,
+  front,
+  back,
   className,
 }: {
-  children: ReactNode;
+  front: ReactNode;
+  back: ReactNode;
   className?: string;
 }) {
   const areaRef = useRef<HTMLDivElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
+  const shadowRef = useRef<HTMLDivElement>(null);
+  const sheenRef = useRef<HTMLDivElement>(null);
   const s = useRef<Motion>({
-    cRX: 0, cRY: 0, cDX: 0, cDY: 0, cSC: 1,
-    tRX: 0, tRY: 0, tDX: 0, tDY: 0, tSC: 1,
-    hovering: false, dragging: false,
-    startX: 0, startY: 0, baseDX: 0, baseDY: 0,
+    cRY: -18, cRX: REST_RX, cLZ: 0, cSC: 1, vRY: 0,
+    dragging: false, idleOn: false, idleTimer: 0, restRy: null,
     raf: 0, running: false, reduced: false,
+    lastX: 0, lastY: 0,
   }).current;
 
   useEffect(() => {
@@ -62,147 +64,193 @@ export function InteractiveWindow({
       s.reduced = e.matches;
     };
     mq.addEventListener("change", onChange);
-
-    const layer = layerRef.current;
+    const t = window.setTimeout(() => {
+      s.idleOn = true;
+      wake();
+    }, 2800);
     return () => {
       mq.removeEventListener("change", onChange);
+      window.clearTimeout(t);
+      window.clearTimeout(s.idleTimer);
       cancelAnimationFrame(s.raf);
       s.running = false;
-      if (layer) layer.style.transform = "";
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function tick() {
-    s.cRX += (s.tRX - s.cRX) * LERP;
-    s.cRY += (s.tRY - s.cRY) * LERP;
-    s.cDX += (s.tDX - s.cDX) * LERP;
-    s.cDY += (s.tDY - s.cDY) * LERP;
-    s.cSC += (s.tSC - s.cSC) * LERP;
+    if (!s.dragging) {
+      if (s.restRy !== null) {
+        s.cRY += (s.restRy - s.cRY) * (s.reduced ? 1 : 0.1);
+        if (Math.abs(s.restRy - s.cRY) < 0.15) {
+          s.cRY = s.restRy;
+          s.restRy = null;
+        }
+      } else if (Math.abs(s.vRY) > 0.02) {
+        s.cRY += s.vRY;
+        s.vRY *= FRICTION;
+        if (s.reduced) s.vRY = 0;
+      } else {
+        s.vRY = 0;
+        s.cRX += (REST_RX - s.cRX) * (s.reduced ? 1 : 0.08);
+        if (s.idleOn && !s.reduced) s.cRY += IDLE_SPEED;
+      }
+    }
+    s.cLZ += ((s.dragging ? LIFT_Z : 0) - s.cLZ) * (s.reduced ? 1 : 0.12);
+    s.cSC += ((s.dragging ? 1.03 : 1) - s.cSC) * (s.reduced ? 1 : 0.15);
 
-    const settled =
-      !s.dragging &&
-      !s.hovering &&
-      Math.abs(s.cRX - s.tRX) < 0.01 &&
-      Math.abs(s.cRY - s.tRY) < 0.01 &&
-      Math.abs(s.cDX - s.tDX) < 0.05 &&
-      Math.abs(s.cDY - s.tDY) < 0.05 &&
-      Math.abs(s.cSC - s.tSC) < 0.001;
+    const bob = s.reduced ? 0 : Math.sin(performance.now() / 900) * 3;
 
     const layer = layerRef.current;
     if (layer) {
-      layer.style.transform = `translate3d(${s.cDX.toFixed(2)}px, ${s.cDY.toFixed(2)}px, 0) rotateX(${s.cRX.toFixed(2)}deg) rotateY(${s.cRY.toFixed(2)}deg) scale(${s.cSC.toFixed(3)})`;
+      layer.style.transform = `translate3d(0px, ${bob.toFixed(2)}px, ${s.cLZ.toFixed(1)}px) rotateX(${s.cRX.toFixed(2)}deg) rotateY(${s.cRY.toFixed(2)}deg) scale(${s.cSC.toFixed(3)})`;
     }
 
-    if (settled) {
-      s.running = false;
-      return;
+    const shadow = shadowRef.current;
+    if (shadow) {
+      const rad = (s.cRY * Math.PI) / 180;
+      const offX = Math.sin(rad) * 26;
+      const sx = 0.6 + 0.4 * Math.abs(Math.cos(rad));
+      const liftK = s.cLZ / LIFT_Z;
+      shadow.style.transform = `translateX(calc(-50% + ${offX.toFixed(1)}px)) scaleX(${(sx + liftK * 0.08).toFixed(3)})`;
+      shadow.style.opacity = String(Math.max(0.08, 0.28 - liftK * 0.12));
     }
-    s.raf = requestAnimationFrame(tick);
+    const sheen = sheenRef.current;
+    if (sheen) {
+      sheen.style.backgroundPositionX = `${((((s.cRY % 360) + 360) % 360) / 3.6).toFixed(1)}%`;
+    }
+
+    const busy =
+      s.dragging ||
+      s.idleOn ||
+      s.restRy !== null ||
+      Math.abs(s.vRY) > 0.02 ||
+      Math.abs(s.cRX - REST_RX) > 0.05 ||
+      Math.abs(s.cLZ) > 0.5 ||
+      Math.abs(s.cSC - 1) > 0.002;
+    if (busy) {
+      s.raf = requestAnimationFrame(tick);
+    } else {
+      s.running = false;
+    }
   }
 
   function wake() {
-    if (!s.running && !s.reduced) {
+    if (!s.running) {
       s.running = true;
       s.raf = requestAnimationFrame(tick);
     }
   }
 
-  function pointTilt(e: ReactPointerEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width;
-    const py = (e.clientY - rect.top) / rect.height;
-    s.tRY = (px - 0.5) * 2 * MAX_TILT;
-    s.tRX = -(py - 0.5) * 2 * MAX_TILT;
+  function idleOff() {
+    s.idleOn = false;
+    window.clearTimeout(s.idleTimer);
+  }
+
+  function idleSoon() {
+    window.clearTimeout(s.idleTimer);
+    s.idleTimer = window.setTimeout(() => {
+      s.idleOn = true;
+      wake();
+    }, 3500);
   }
 
   return (
     <div
       ref={areaRef}
       className={cn(
-        "relative touch-pan-y select-none cursor-grab [perspective:1200px]",
+        "relative touch-pan-y select-none cursor-grab [perspective:1400px] [perspective-origin:50%_40%]",
         className
       )}
       onPointerEnter={() => {
-        s.hovering = true;
-        wake();
-      }}
-      onPointerMove={(e) => {
-        if (s.reduced) return;
-        if (s.dragging) {
-          s.tDX = Math.max(
-            -MAX_SHIFT_X,
-            Math.min(MAX_SHIFT_X, s.baseDX + (e.clientX - s.startX))
-          );
-          s.tDY = Math.max(
-            -MAX_SHIFT_Y,
-            Math.min(MAX_SHIFT_Y, s.baseDY + (e.clientY - s.startY))
-          );
-        }
-        pointTilt(e);
+        idleOff();
         wake();
       }}
       onPointerLeave={() => {
-        s.hovering = false;
-        if (!s.dragging) {
-          s.tRX = 0;
-          s.tRY = 0;
-          s.tSC = 1;
-          wake();
-        }
+        idleSoon();
+        wake();
+      }}
+      onPointerMove={(e) => {
+        if (!s.dragging) return;
+        const dx = e.clientX - s.lastX;
+        const dy = e.clientY - s.lastY;
+        s.cRY += dx * ROT_SPEED;
+        if (!s.reduced) s.vRY = s.vRY * 0.5 + dx * ROT_SPEED * 0.5;
+        s.cRX = Math.max(-MAX_RX, Math.min(MAX_RX, s.cRX + dy * TILT_SPEED));
+        s.lastX = e.clientX;
+        s.lastY = e.clientY;
+        wake();
       }}
       onPointerDown={(e) => {
-        if (s.reduced || e.button !== 0) return;
+        if (e.button !== 0) return;
         e.currentTarget.setPointerCapture(e.pointerId);
+        idleOff();
         s.dragging = true;
-        s.startX = e.clientX;
-        s.startY = e.clientY;
-        s.baseDX = s.tDX;
-        s.baseDY = s.tDY;
-        s.tSC = DRAG_SCALE;
+        s.restRy = null;
+        s.vRY = 0;
+        s.lastX = e.clientX;
+        s.lastY = e.clientY;
         if (areaRef.current) areaRef.current.style.cursor = "grabbing";
         wake();
       }}
       onPointerUp={(e) => {
         if (!s.dragging) return;
         s.dragging = false;
-        s.tSC = 1;
         try {
           e.currentTarget.releasePointerCapture(e.pointerId);
         } catch {
           /* pointer already released */
         }
         if (areaRef.current) areaRef.current.style.cursor = "";
-        // If the pointer ended outside the area, ease the tilt home too.
-        const rect = e.currentTarget.getBoundingClientRect();
-        const inside =
-          e.clientX >= rect.left &&
-          e.clientX <= rect.right &&
-          e.clientY >= rect.top &&
-          e.clientY <= rect.bottom;
-        if (!inside) {
-          s.tRX = 0;
-          s.tRY = 0;
-        }
+        idleSoon();
         wake();
       }}
       onPointerCancel={() => {
         s.dragging = false;
-        s.tSC = 1;
         if (areaRef.current) areaRef.current.style.cursor = "";
+        idleSoon();
         wake();
       }}
       onDoubleClick={() => {
-        s.tDX = 0;
-        s.tDY = 0;
+        // Glide back to the front face, nearest full turn.
+        s.vRY = 0;
+        s.restRy = Math.round(s.cRY / 360) * 360;
         wake();
       }}
     >
+      {/* Ground shadow — skews with the spin, thins edge-on, softens on lift. */}
+      <div
+        ref={shadowRef}
+        aria-hidden
+        className="pointer-events-none absolute -bottom-9 left-1/2 h-7 w-[72%] -translate-x-1/2 rounded-[100%] bg-navy/30 blur-md"
+      />
+
       <div
         ref={layerRef}
         className="relative [transform-style:preserve-3d] [will-change:transform]"
       >
-        {children}
+        <div className="relative [transform-style:preserve-3d] backface-hidden">
+          {front}
+          {/* Sheen — travels across the glass as the window rotates. */}
+          <div
+            ref={sheenRef}
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-xl opacity-60"
+            style={{
+              backgroundImage:
+                "linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%)",
+              backgroundSize: "220% 100%",
+              backgroundPositionX: "0%",
+            }}
+          />
+        </div>
+
+        <div
+          aria-hidden
+          className="absolute inset-0 overflow-hidden rounded-2xl border border-navy-deep bg-navy [transform:rotateY(180deg)_translateZ(2px)] backface-hidden"
+        >
+          {back}
+        </div>
       </div>
     </div>
   );

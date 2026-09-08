@@ -38,6 +38,7 @@
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-cubic: cubic-bezier(0.55, 0.06, 0.68, 0.19);
   --animate-float-a: float-a 7s ease-in-out infinite;
   --animate-float-b: float-b 9s ease-in-out infinite;
 
@@ -158,23 +159,39 @@
 }
 
 /*
- * Scroll-reveal (paired with src/components/Reveal.tsx).
+ * Scroll-reveal (paired with src/components/Reveal.tsx) — fully reversible.
  * Scoped under html.js so content is fully visible without JavaScript;
  * disabled entirely for prefers-reduced-motion.
+ *
+ * Premium asymmetric motion: the entrance is slow and luxurious (expo-out,
+ * 1.1s, with the element's stagger delay); the exit is quick and quiet
+ * (0.55s, ease-in, no delay) so scrolling back never feels laggy. Transitions
+ * are read from the destination state, which is how in/out get different
+ * timings from one pair of rules.
  */
 html.js [data-reveal] {
   opacity: 0;
-  transform: translateY(22px);
+  transform: translateY(30px) scale(0.985);
   transition:
-    opacity 0.8s var(--ease-out-expo),
-    transform 0.8s var(--ease-out-expo);
-  transition-delay: var(--reveal-delay, 0ms);
+    opacity 0.55s var(--ease-in-cubic),
+    transform 0.55s var(--ease-in-cubic);
+  transition-delay: 0ms;
   will-change: opacity, transform;
+}
+
+/* Direction-aware hidden offset for elements that left through the top:
+   they hide upward, away from the viewport (set by Reveal.tsx). */
+html.js [data-reveal].reveal-out-top {
+  transform: translateY(-30px) scale(0.985);
 }
 
 html.js [data-reveal][data-visible] {
   opacity: 1;
   transform: none;
+  transition:
+    opacity 1.1s var(--ease-out-expo),
+    transform 1.1s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 @media (prefers-reduced-motion: reduce) {

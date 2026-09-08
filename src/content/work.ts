@@ -6,8 +6,11 @@
  * require that concept work is ALWAYS visibly distinguished from client work,
  * so the tag is part of the type and rendered on every card and page.
  *
- * Project facts (features, pricing, palette) come from the actual demo builds —
- * see web_agency_portfolio/ and sajilo_hub_clothing_store_updated/.
+ * Project facts (features, pricing, palette) come from the actual demo builds.
+ * Two demos are real, runnable sites served from public/demos/ (synced from
+ * the source folders/zips in the parent directory via `npm run sync-demos`)
+ * and embedded live on their case-study pages via `demoUrl`; the rest are
+ * illustrated with CSS miniatures until their real builds are delivered.
  */
 
 export type ProjectKind = "clinic" | "gym" | "hotel" | "restaurant" | "store";
@@ -19,6 +22,13 @@ export type Project = {
   /** Always "Concept · Demo" — never presented as client work. */
   tag: "Concept · Demo";
   year: string;
+  /**
+   * Optional path to the real, runnable demo under public/demos/. When set,
+   * the case-study page embeds the actual site in a live frame instead of
+   * the illustrative miniature. Update the files under public/demos/<slug>/
+   * in place (same filenames) or run `npm run sync-demos` — no code changes.
+   */
+  demoUrl?: string;
   /** One-liner for cards and meta descriptions. */
   summary: string;
   /** The demo's actual headline — shown as the case-study title. */
@@ -39,6 +49,48 @@ export type Project = {
 };
 
 export const work: Project[] = [
+  {
+    slug: "sajilo-hub-store",
+    title: "Sajilo HUB — Clothing Store",
+    industry: "E-commerce",
+    tag: "Concept · Demo",
+    year: "2026",
+    demoUrl: "/demos/sajilo-hub-store/index.html",
+    summary:
+      "A working storefront demo: searchable catalog with filters and swatches, cart, and a three-step checkout that treats cash on delivery as the primary payment method.",
+    heroLine: "Wear what feels like you.",
+    overview: [
+      "Sajilo HUB is our most complete demo: a full front-end clothing store built around how people in Nepal actually buy online — browse casually, ask questions, pay on delivery.",
+      "It shows what “digital business tools” means in practice: not decoration, but structure that replaces manual DM-to-DM order handling.",
+    ],
+    challenge:
+      "Local clothing businesses sell through social inboxes — every order is a manual conversation, and nothing is structured. The question: how far can a real store go while fitting local buying habits, where cash on delivery is the default and trust is built conversationally?",
+    solution:
+      "Sajilo HUB answers with a complete shopping flow: a 12-product catalog with search, price and rating sorting, category and sale filters; product cards with sale badges and color swatches; and a three-step checkout that puts cash on delivery first — with online payment as a clearly-marked integration point, not a fake success screen.",
+    features: [
+      "12-product catalog with photos, ratings, and sale badges",
+      "Search, sort by price or rating, category and sale filters",
+      "Color swatches and per-product ordering",
+      "Three-step checkout: details → payment → confirm",
+      "Cash on Delivery first; online payment marked as an integration point",
+      "Order summary with delivery charge ($2.99)",
+      "Store locator view with hours, contact, and demo map",
+    ],
+    demonstrates: [
+      "E-commerce structure adapted to local buying habits",
+      "Search and filtering UX at small-catalog scale",
+      "Checkout flows that put COD first",
+      "Honest demo boundaries — payment gateways marked as integration points",
+    ],
+    mockKind: "store",
+    palette: {
+      heroFrom: "#B6ADA0",
+      heroTo: "#D7D1C8",
+      base: "#FAFAF9",
+      ink: "#141414",
+      accent: "#111111",
+    },
+  },
   {
     slug: "carepoint-clinic",
     title: "CarePoint Clinic",
@@ -80,6 +132,7 @@ export const work: Project[] = [
     slug: "ironforge-fitness",
     title: "IronForge Fitness",
     industry: "Fitness",
+    demoUrl: "/demos/ironforge-fitness/index.html",
     tag: "Concept · Demo",
     year: "2026",
     summary:
@@ -187,53 +240,12 @@ export const work: Project[] = [
       accent: "#3E6B4F",
     },
   },
-  {
-    slug: "sajilo-hub-store",
-    title: "Sajilo HUB — Clothing Store",
-    industry: "E-commerce",
-    tag: "Concept · Demo",
-    year: "2026",
-    summary:
-      "A working storefront demo: searchable catalog with filters and swatches, cart, and a three-step checkout that treats cash on delivery as the primary payment method.",
-    heroLine: "Wear what feels like you.",
-    overview: [
-      "Sajilo HUB is our most complete demo: a full front-end clothing store built around how people in Nepal actually buy online — browse casually, ask questions, pay on delivery.",
-      "It shows what “digital business tools” means in practice: not decoration, but structure that replaces manual DM-to-DM order handling.",
-    ],
-    challenge:
-      "Local clothing businesses sell through social inboxes — every order is a manual conversation, and nothing is structured. The question: how far can a real store go while fitting local buying habits, where cash on delivery is the default and trust is built conversationally?",
-    solution:
-      "Sajilo HUB answers with a complete shopping flow: a 12-product catalog with search, price and rating sorting, category and sale filters; product cards with sale badges and color swatches; and a three-step checkout that puts cash on delivery first — with online payment as a clearly-marked integration point, not a fake success screen.",
-    features: [
-      "12-product catalog with photos, ratings, and sale badges",
-      "Search, sort by price or rating, category and sale filters",
-      "Color swatches and per-product ordering",
-      "Three-step checkout: details → payment → confirm",
-      "Cash on Delivery first; online payment marked as an integration point",
-      "Order summary with delivery charge (Rs. 299)",
-      "Store locator view with hours, contact, and demo map",
-    ],
-    demonstrates: [
-      "E-commerce structure adapted to local buying habits",
-      "Search and filtering UX at small-catalog scale",
-      "Checkout flows that put COD first",
-      "Honest demo boundaries — payment gateways marked as integration points",
-    ],
-    mockKind: "store",
-    palette: {
-      heroFrom: "#B6ADA0",
-      heroTo: "#D7D1C8",
-      base: "#FAFAF9",
-      ink: "#141414",
-      accent: "#111111",
-    },
-  },
 ];
 
 export const featuredSlugs = [
-  "carepoint-clinic",
   "sajilo-hub-store",
-  "himalayan-haven",
+  "ironforge-fitness",
+  "carepoint-clinic",
 ] as const;
 
 export function getProject(slug: string): Project | undefined {

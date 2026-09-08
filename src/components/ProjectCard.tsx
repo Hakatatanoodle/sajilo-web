@@ -37,7 +37,15 @@ export function ProjectCard({
       </div>
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex items-center justify-between gap-3">
-          <Tag>{project.tag}</Tag>
+          <div className="flex items-center gap-2.5">
+            <Tag>{project.tag}</Tag>
+            {project.demoUrl && (
+              <span className="flex items-center gap-1.5 text-[11px] font-semibold text-mint">
+                <span className="size-1.5 rounded-full bg-mint" aria-hidden />
+                Live demo
+              </span>
+            )}
+          </div>
           <span className="text-xs text-fg-faint">
             {project.industry} · {project.year}
           </span>

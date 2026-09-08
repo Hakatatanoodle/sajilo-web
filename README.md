@@ -84,8 +84,34 @@ founder names. Still outstanding:
       if WhatsApp runs on a different number.
 
 Nothing else on the site is placeholder: all project facts (features, prices,
-palettes) come from the real demo builds in `../web_agency_portfolio/` and
-`../sajilo_hub_clothing_store_updated/`.
+palettes) come from the real demo builds. Two of them — the Sajilo HUB
+clothing store and IronForge Fitness — are real, runnable sites served from
+`public/demos/` (see below).
+
+## Real demo websites (`public/demos/`)
+
+Two featured builds are **real, runnable demo websites** embedded live on
+their case-study pages — the Sajilo HUB clothing store and IronForge Fitness.
+They are plain static sites copied verbatim into `public/demos/` and rendered
+inside a browser frame (`src/components/LiveDemoFrame.tsx`) — visitors click
+around inside the actual build, not a screenshot.
+
+**Updating a demo takes no code changes:** overwrite the files in the
+matching folder (keep the same filenames), or run:
+
+```bash
+npm run sync-demos   # copies the source demo folders/zips from ../
+```
+
+| Folder in `public/demos/` | Source (outside the repo) | Shown at |
+|---|---|---|
+| `sajilo-hub-store/` | `../sajilo_hub_clothing_store_updated/` | `/work/sajilo-hub-store` |
+| `ironforge-fitness/` | `../sajiloweb_gym_website_responsive.zip` | `/work/ironforge-fitness` |
+
+The other three projects are illustrated with CSS miniatures. To add a real
+demo later: drop its files into `public/demos/<slug>/`, register the source
+in `scripts/sync-demos.mjs`, and set `demoUrl` on the project in
+`src/content/work.ts`.
 
 ## Deployment (Vercel)
 

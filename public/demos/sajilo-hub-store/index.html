@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sajilo HUB — Clothing Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="announcement">FREE SHIPPING ON ORDERS ABOVE $50 <span>•</span> FLASH SALE UP TO 50% OFF</div>
+
+  <header class="header">
+    <a class="brand" href="#" data-nav="home">
+      <strong>SAJILO HUB</strong>
+      <small>CLOTHING CO.</small>
+    </a>
+
+    <nav>
+      <button class="nav-link active" data-nav="home">Home</button>
+      <button class="nav-link" data-nav="men">Men</button>
+      <button class="nav-link" data-nav="women">Women</button>
+      <button class="nav-link" data-nav="accessories">Accessories</button>
+      <button class="nav-link" data-nav="sale">Sale</button>
+      <button class="nav-link" data-nav="location">Location</button>
+    </nav>
+
+    <div class="header-actions">
+      <button aria-label="Account">♙</button>
+      <button aria-label="Wishlist">♡</button>
+      <button class="cart-btn" aria-label="Cart">▢<span id="cartCount">0</span></button>
+      <button class="menu-btn" id="menuBtn">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="shopView" class="shop-view">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">NEW SEASON / 2026</p>
+          <h1>Wear what feels<br><em>like you.</em></h1>
+          <p class="hero-copy">Curated everyday clothing with clean silhouettes, easy colors and prices that make shopping simple.</p>
+          <button class="primary-btn" id="shopNow">Shop collection <span>→</span></button>
+        </div>
+        <div class="hero-art">
+          <div class="hero-card card-one">NEW<br><b>ESSENTIALS</b></div>
+          <div class="hero-card card-two">SAJILO<br><b>SELECT</b></div>
+        </div>
+      </div>
+
+      <section class="catalog">
+        <div class="catalog-head">
+          <div>
+            <p class="eyebrow">THE COLLECTION</p>
+            <h2>Find your next favorite.</h2>
+          </div>
+          <span id="productCount">0 products</span>
+        </div>
+
+        <div class="search-row">
+          <label class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search" placeholder="Search products, e.g. hoodie, jacket..." />
+          </label>
+          <button class="filter-toggle" id="filterToggle">☷ Filters</button>
+        </div>
+
+        <div class="filters" id="filters">
+          <label>Sort by
+            <select id="sortFilter">
+              <option value="low">Price: Low to High</option>
+              <option value="high">Price: High to Low</option>
+              <option value="rating">Rating</option>
+            </select>
+          </label>
+          <label>Rating
+            <select id="ratingFilter">
+              <option value="all">All ratings</option>
+              <option value="5">5 star</option>
+              <option value="4">4 star & above</option>
+              <option value="3">3 star & above</option>
+              <option value="2">2 star & above</option>
+              <option value="1">1 star & above</option>
+            </select>
+          </label>
+          <label>Category
+            <select id="categoryFilter">
+              <option value="all">All</option>
+              <option value="men">Men</option>
+              <option value="women">Women</option>
+              <option value="accessories">Accessories</option>
+            </select>
+          </label>
+          <div class="type-filter">
+            <span>Type</span>
+            <div>
+              <button data-type="all" class="type-btn active">All</button>
+              <button data-type="sale" class="type-btn">Sale</button>
+              <button data-type="regular" class="type-btn">Regular</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-grid" id="productGrid"></div>
+        <div class="empty-state" id="emptyState" hidden>No products match your search or filters.</div>
+        <button class="load-more" id="loadMore">Load more products <span>↓</span></button>
+      </section>
+    </section>
+
+    <section id="locationView" class="location-view" hidden>
+      <div class="location-hero">
+        <div>
+          <p class="eyebrow">COME SAY HELLO</p>
+          <h1>Our <em>Location.</em></h1>
+          <p>Visit the Sajilo HUB store, browse the latest collection in person, and get help choosing the right fit.</p>
+        </div>
+        <button class="secondary-btn" id="directionsBtn">Get directions ↗</button>
+      </div>
+
+      <div class="location-layout">
+        <div class="map-card">
+          <div class="map-grid"></div>
+          <div class="map-road road-a"></div>
+          <div class="map-road road-b"></div>
+          <div class="map-road road-c"></div>
+          <div class="map-label label-a">NEW ROAD</div>
+          <div class="map-label label-b">CITY CENTER</div>
+          <div class="map-label label-c">CENTRAL PARK</div>
+          <div class="you-pin">●<span>You</span></div>
+          <div class="store-pin">◆<span>Sajilo HUB</span></div>
+          <div class="route-line"></div>
+        </div>
+
+        <aside class="store-info">
+          <p class="eyebrow">STORE DETAILS</p>
+          <h2>Sajilo HUB</h2>
+          <div class="info-block"><b>⌖</b><div><strong>Address</strong><p>New Road, City Center<br>Kathmandu, Nepal</p></div></div>
+          <div class="info-block"><b>◷</b><div><strong>Opening hours</strong><p>Sun–Fri: 10:00 AM – 8:00 PM<br>Saturday: 10:00 AM – 6:00 PM</p></div></div>
+          <div class="info-block"><b>☎</b><div><strong>Contact</strong><p>+977 980-1234567<br>hello@sajilohub.com</p></div></div>
+          <div class="info-block"><b>◎</b><div><strong>Directions</strong><p>Approx. 0.8 km from your current location.</p></div></div>
+          <button class="primary-btn full" id="directionsBtn2">Open in Maps ↗</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="checkoutModal" hidden>
+    <div class="checkout-modal">
+      <button class="close-modal" id="closeCheckout">×</button>
+      <div class="steps"><b>1</b><span></span><i>2</i><span></span><i>3</i></div>
+      <div class="step-labels"><b>Order details</b><span>Payment</span><span>Confirm</span></div>
+      <p class="eyebrow">CHECKOUT</p>
+      <h2>Complete your order.</h2>
+
+      <div class="checkout-product" id="checkoutProduct"></div>
+
+      <form id="orderForm">
+        <div class="form-grid">
+          <label>Full name<input required name="name" placeholder="Enter your full name"></label>
+          <label>Contact number<input required name="contact" placeholder="98XXXXXXXX"></label>
+          <label>Size
+            <select required name="size"><option value="">Select size</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+          </label>
+          <label>Color
+            <select required name="color" id="colorSelect"></select>
+          </label>
+        </div>
+        <label>Delivery location<textarea required name="location" rows="3" placeholder="Enter your full address or delivery area"></textarea></label>
+
+        <div class="payment-title">Payment method</div>
+        <div class="payment-options">
+          <label><input type="radio" name="payment" value="cod" checked><span><b>Cash on Delivery</b><small>Pay when you receive the order</small></span></label>
+          <label><input type="radio" name="payment" value="online"><span><b>Online Payment</b><small>Demo option — connect your gateway later</small></span></label>
+        </div>
+
+        <div class="summary">
+          <div><span>Subtotal</span><b id="summarySubtotal">$0.00</b></div>
+          <div><span>Delivery</span><b>$2.99</b></div>
+          <div class="total"><span>Total</span><b id="summaryTotal">$0.00</b></div>
+        </div>
+        <button class="primary-btn full" type="submit">Place order</button>
+        <p class="secure">Demo checkout • Connect eSewa/Khalti/Stripe or another gateway for real payments.</p>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <footer>© 2026 Sajilo HUB · Sample website by Sajilo Web</footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -3,8 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BrowserFrame } from "@/components/BrowserFrame";
 import { Container } from "@/components/Container";
+import { LiveDemoFrame } from "@/components/LiveDemoFrame";
 import { ProjectMockup } from "@/components/mockups";
-import { ArrowLeft, ArrowRight, Check } from "@/components/icons";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "@/components/icons";
 import Reveal from "@/components/Reveal";
 import { Tag } from "@/components/Tag";
 import { getProject, nextProject, work } from "@/content/work";
@@ -86,18 +87,49 @@ export default async function ProjectPage({
                 background: `linear-gradient(120deg, ${project.palette.heroTo}66, ${project.palette.accent}30)`,
               }}
             />
-            <BrowserFrame
-              title={`${project.title} — ${project.industry} concept demo`}
-              url={`${project.slug}.sajiloweb-demo.build`}
-              className="relative"
-            >
-              <ProjectMockup kind={project.mockKind} palette={project.palette} />
-            </BrowserFrame>
+            {project.demoUrl ? (
+              <>
+                <LiveDemoFrame
+                  src={project.demoUrl}
+                  title={`${project.title} — interactive demo build`}
+                  urlLabel={`${project.slug}.sajiloweb-demo.build`}
+                  className="relative"
+                />
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                  <p className="max-w-sm text-xs text-fg-faint">
+                    This is the actual demo running in the frame — click
+                    around, it works.
+                  </p>
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong bg-surface px-3.5 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  >
+                    Open full demo
+                    <ArrowUpRight className="size-3.5" />
+                  </a>
+                </div>
+              </>
+            ) : (
+              <>
+                <BrowserFrame
+                  title={`${project.title} — ${project.industry} concept demo`}
+                  url={`${project.slug}.sajiloweb-demo.build`}
+                  className="relative"
+                >
+                  <ProjectMockup
+                    kind={project.mockKind}
+                    palette={project.palette}
+                  />
+                </BrowserFrame>
+                <p className="mt-4 text-xs text-fg-faint">
+                  Illustrative miniature rendered in the demo&apos;s own visual
+                  language. The full build is available to view on request.
+                </p>
+              </>
+            )}
           </div>
-          <p className="mt-4 text-xs text-fg-faint">
-            Illustrative miniature rendered in the demo&apos;s own visual
-            language. The full build is available to view on request.
-          </p>
         </Reveal>
       </Container>
       <Container className="grid gap-10 pb-4 md:grid-cols-2">
