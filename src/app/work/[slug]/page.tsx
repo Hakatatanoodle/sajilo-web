@@ -82,7 +82,7 @@ export default async function ProjectPage({
           <div className="relative">
             <div
               aria-hidden
-              className="absolute -inset-6 rounded-3xl blur-3xl"
+              className="pointer-events-none absolute -inset-6 rounded-3xl blur-3xl"
               style={{
                 background: `linear-gradient(120deg, ${project.palette.heroTo}66, ${project.palette.accent}30)`,
               }}
@@ -95,7 +95,7 @@ export default async function ProjectPage({
                   urlLabel={`${project.slug}.sajiloweb-demo.build`}
                   className="relative"
                 />
-                <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+                <div className="relative mt-4 flex flex-wrap items-center justify-between gap-3">
                   <p className="max-w-sm text-xs text-fg-faint">
                     This is the actual demo running in the frame — click
                     around, it works.

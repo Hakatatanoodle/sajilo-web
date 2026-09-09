@@ -13,7 +13,13 @@
  * illustrated with CSS miniatures until their real builds are delivered.
  */
 
-export type ProjectKind = "clinic" | "gym" | "hotel" | "restaurant" | "store";
+export type ProjectKind =
+  | "clinic"
+  | "gym"
+  | "hotel"
+  | "restaurant"
+  | "store"
+  | "sweet";
 
 export type Project = {
   slug: string;
@@ -73,7 +79,7 @@ export const work: Project[] = [
       "Color swatches and per-product ordering",
       "Three-step checkout: details → payment → confirm",
       "Cash on Delivery first; online payment marked as an integration point",
-      "Order summary with delivery charge ($2.99)",
+      "Order summary with delivery charge (Rs. 299)",
       "Store locator view with hours, contact, and demo map",
     ],
     demonstrates: [
@@ -89,43 +95,6 @@ export const work: Project[] = [
       base: "#FAFAF9",
       ink: "#141414",
       accent: "#111111",
-    },
-  },
-  {
-    slug: "carepoint-clinic",
-    title: "CarePoint Clinic",
-    industry: "Healthcare",
-    tag: "Concept · Demo",
-    year: "2026",
-    summary:
-      "A clean clinic concept: services explained in plain language, clinicians introduced properly, and appointment requests without the phone ping-pong.",
-    heroLine: "Care that starts with you.",
-    overview: [
-      "CarePoint Clinic is a concept website for a modern primary-care practice — the kind of clinic that already has loyal patients but is effectively invisible online.",
-      "The build covers the full patient journey: understanding services, meeting the clinicians, and requesting an appointment with clear expectations of what happens next.",
-    ],
-    challenge:
-      "Clinic websites usually fail patients in the same ways: services described in jargon, no way to know who the clinicians are, and appointments that mean calling during working hours and hoping someone picks up.",
-    solution:
-      "CarePoint is structured around what a patient actually needs. Services are written in plain language, the clinicians section introduces people rather than wall-of-text credentials, and the appointment form asks only for what the front desk genuinely acts on — then states clearly what happens after the request.",
-    features: [
-      "Services: general consultation, eye care, diagnostics",
-      "Clinician profiles with roles and specialities",
-      "Appointment request form — name, phone, date, reason",
-      "Honest confirmation of what happens after a request",
-    ],
-    demonstrates: [
-      "Turning medical services into plain language",
-      "Trust-oriented structure for healthcare businesses",
-      "Form UX that sets expectations instead of faking success",
-    ],
-    mockKind: "clinic",
-    palette: {
-      heroFrom: "#1D4558",
-      heroTo: "#86B8C5",
-      base: "#F6F8F9",
-      ink: "#16262E",
-      accent: "#2C7A8C",
     },
   },
   {
@@ -164,6 +133,85 @@ export const work: Project[] = [
       base: "#F7F7F5",
       ink: "#1A1A1A",
       accent: "#8A8A8A",
+    },
+  },
+  {
+    slug: "sajilo-sweets-house",
+    title: "Sajilo Sweets House",
+    industry: "Food & Sweets",
+    tag: "Concept · Demo",
+    year: "2026",
+    demoUrl: "/demos/sweet-house/index.html",
+    summary:
+      "A neighbourhood mithai shop, online: filterable menu, per-piece and weight-based ordering with bulk discounts, a cart that survives refreshes, and festive Dashain–Tihar gift boxes — every price in Rs.",
+    heroLine: "Sweet moments, made the Sajilo way.",
+    overview: [
+      "Sajilo Sweets House is a concept build for a local New Road mithai shop — the kind of business whose busiest seasons (Dashain, Tihar) are exactly when a phone-and-counter-only setup falls apart.",
+      "The demo covers the full sweets-shop journey online: browsing a fresh menu, ordering by piece or by weight, gifting curated festive boxes, and hearing it from other customers first.",
+    ],
+    challenge:
+      "Sweets shops run on tradition, but their ordering runs on handwriting: festival pre-books jotted in notebooks, weight pricing explained over the counter, and no way to plan a Dashain gift order unless you walk in. The question: how much of that can a simple front-end demo make self-serve?",
+    solution:
+      "Sajilo Sweets House answers with a 10-item menu across sweets, snacks, namkeen and drinks — filterable in one click. Sweets order by the piece or by approximate weight (250g / 500g / 1kg) with bulk discounts applied automatically. A cart drawer persists between visits, checkout offers cash on delivery or pay-at-store, and a dedicated festive section sells curated Dashain and Tihar gift boxes.",
+    features: [
+      "10-item menu across sweets, snacks, namkeen and drinks",
+      "Category filtering with instant updates",
+      "Weight-based ordering — 250g / 500g / 1kg with automatic bulk discounts",
+      "Cart drawer that persists between visits",
+      "Cash on delivery or pay-at-store checkout",
+      "Dashain gift box at Rs. 1,499, Tihar boxes pre-bookable",
+      "Customer reviews with a submission flow",
+    ],
+    demonstrates: [
+      "Local-food e-commerce without a backend",
+      "Weight-based pricing UI kept simple",
+      "Festive-commerce patterns for Nepali businesses",
+      "Honest demo boundaries — checkout is a form, not a fake gateway",
+    ],
+    mockKind: "sweet",
+    palette: {
+      heroFrom: "#EF6C18",
+      heroTo: "#FF9B32",
+      base: "#FFFDFB",
+      ink: "#28221E",
+      accent: "#EF6C18",
+    },
+  },
+  {
+    slug: "carepoint-clinic",
+    title: "CarePoint Clinic",
+    industry: "Healthcare",
+    tag: "Concept · Demo",
+    year: "2026",
+    summary:
+      "A clean clinic concept: services explained in plain language, clinicians introduced properly, and appointment requests without the phone ping-pong.",
+    heroLine: "Care that starts with you.",
+    overview: [
+      "CarePoint Clinic is a concept website for a modern primary-care practice — the kind of clinic that already has loyal patients but is effectively invisible online.",
+      "The build covers the full patient journey: understanding services, meeting the clinicians, and requesting an appointment with clear expectations of what happens next.",
+    ],
+    challenge:
+      "Clinic websites usually fail patients in the same ways: services described in jargon, no way to know who the clinicians are, and appointments that mean calling during working hours and hoping someone picks up.",
+    solution:
+      "CarePoint is structured around what a patient actually needs. Services are written in plain language, the clinicians section introduces people rather than wall-of-text credentials, and the appointment form asks only for what the front desk genuinely acts on — then states clearly what happens after the request.",
+    features: [
+      "Services: general consultation, eye care, diagnostics",
+      "Clinician profiles with roles and specialities",
+      "Appointment request form — name, phone, date, reason",
+      "Honest confirmation of what happens after a request",
+    ],
+    demonstrates: [
+      "Turning medical services into plain language",
+      "Trust-oriented structure for healthcare businesses",
+      "Form UX that sets expectations instead of faking success",
+    ],
+    mockKind: "clinic",
+    palette: {
+      heroFrom: "#1D4558",
+      heroTo: "#86B8C5",
+      base: "#F6F8F9",
+      ink: "#16262E",
+      accent: "#2C7A8C",
     },
   },
   {
@@ -245,7 +293,7 @@ export const work: Project[] = [
 export const featuredSlugs = [
   "sajilo-hub-store",
   "ironforge-fitness",
-  "carepoint-clinic",
+  "sajilo-sweets-house",
 ] as const;
 
 export function getProject(slug: string): Project | undefined {

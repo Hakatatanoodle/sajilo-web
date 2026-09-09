@@ -31,8 +31,14 @@ const DEMOS = [
   {
     slug: "ironforge-fitness",
     label: "IronForge Fitness",
-    kind: "zip",
-    from: join(parentDir, "sajiloweb_gym_website_responsive.zip"),
+    kind: "folder",
+    from: join(parentDir, "sajiloweb_gym_website_responsive"),
+  },
+  {
+    slug: "sweet-house",
+    label: "Sajilo Sweets House",
+    kind: "folder",
+    from: join(parentDir, "sajilo_sweets_house_redesigned"),
   },
 ];
 

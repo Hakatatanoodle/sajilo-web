@@ -55,7 +55,7 @@ src/
 ├─ content/              # ALL site content lives here
 │  ├─ site.ts            # Brand, nav, industries, founders, contact
 │  ├─ services.ts        # The five services
-│  └─ work.ts            # The five concept/demo projects
+│  └─ work.ts            # The six demo projects (3 runnable, 3 concept)
 └─ lib/cn.ts             # Tiny class-name helper
 ```
 
@@ -90,9 +90,10 @@ clothing store and IronForge Fitness — are real, runnable sites served from
 
 ## Real demo websites (`public/demos/`)
 
-Two featured builds are **real, runnable demo websites** embedded live on
-their case-study pages — the Sajilo HUB clothing store and IronForge Fitness.
-They are plain static sites copied verbatim into `public/demos/` and rendered
+Two featured builds started it — now **three of the projects are real,
+runnable demo websites** embedded live on their case-study pages: the Sajilo
+HUB clothing store, IronForge Fitness, and Sajilo Sweets House. They are
+plain static sites copied verbatim into `public/demos/` and rendered
 inside a browser frame (`src/components/LiveDemoFrame.tsx`) — visitors click
 around inside the actual build, not a screenshot.
 
@@ -106,7 +107,8 @@ npm run sync-demos   # copies the source demo folders/zips from ../
 | Folder in `public/demos/` | Source (outside the repo) | Shown at |
 |---|---|---|
 | `sajilo-hub-store/` | `../sajilo_hub_clothing_store_updated/` | `/work/sajilo-hub-store` |
-| `ironforge-fitness/` | `../sajiloweb_gym_website_responsive.zip` | `/work/ironforge-fitness` |
+| `ironforge-fitness/` | `../sajiloweb_gym_website_responsive/` | `/work/ironforge-fitness` |
+| `sweet-house/` | `../sajilo_sweets_house_redesigned/` | `/work/sajilo-sweets-house` |
 
 The other three projects are illustrated with CSS miniatures. To add a real
 demo later: drop its files into `public/demos/<slug>/`, register the source

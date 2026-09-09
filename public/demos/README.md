@@ -17,7 +17,8 @@ which copies the current source demos from the parent directory.
 | Folder | Source | Shown at |
 |---|---|---|
 | `sajilo-hub-store/` | `../../sajilo_hub_clothing_store_updated/` | `/work/sajilo-hub-store` |
-| `ironforge-fitness/` | `../../sajiloweb_gym_website_responsive.zip` | `/work/ironforge-fitness` |
+| `ironforge-fitness/` | `../../sajiloweb_gym_website_responsive/` | `/work/ironforge-fitness` |
+| `sweet-house/` | `../../sajilo_sweets_house_redesigned/` | `/work/sajilo-sweets-house` |
 
 Adding a future demo = put its files in `public/demos/<slug>/`, add the
 source to `scripts/sync-demos.mjs`, and set `demoUrl` on the project in

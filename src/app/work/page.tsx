@@ -33,11 +33,11 @@ export default function WorkPage() {
         </Reveal>
         <Reveal delay={160}>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            Everything here is a Sajilo Web concept build — designed and
-            developed by us to demonstrate what we can do for businesses like
-            yours. We don&apos;t present borrowed or invented client work;
-            when real client projects exist, they&apos;ll appear here labeled
-            &ldquo;Client Project&rdquo;.
+            Three of these are real, runnable demo websites you can open and
+            click through; the rest are concept builds designed by us. It&apos;s
+            all self-initiated work made by Sajilo Web — we don&apos;t present
+            borrowed or invented client work; when real client projects exist,
+            they&apos;ll appear here labeled &ldquo;Client Project&rdquo;.
           </p>
         </Reveal>
       </header>

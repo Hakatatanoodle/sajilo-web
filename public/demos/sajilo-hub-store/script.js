@@ -26,7 +26,7 @@ function render(){
  grid.innerHTML=list.slice(0,visible).map(p=>`<article class="product">
  <div class="product-img">${p.sale?`<span class="badge">-${p.discount}%</span>`:""}<button class="heart">♡</button><img loading="lazy" src="${p.img}" alt="${p.name}"></div>
  <div class="product-body"><h3>${p.name}</h3><div class="rating">${stars(p.rating)} <span>${p.rating.toFixed(1)} rating</span></div>
- <div class="price"><strong class="${p.sale?"sale":""}">$${p.price.toFixed(2)}</strong>${p.old?`<span class="old">$${p.old.toFixed(2)}</span>`:""}</div>
+ <div class="price"><strong class="${p.sale?"sale":""}">Rs. ${p.price.toLocaleString("en-IN")}</strong>${p.old?`<span class="old">Rs. ${p.old.toLocaleString("en-IN")}</span>`:""}</div>
  <div class="swatches">${p.colors.map(c=>`<span class="swatch" style="background:${c}" title="Available color"></span>`).join("")}</div>
  <button class="buy" onclick="openCheckout(${p.id})">Order now</button></div></article>`).join("");
  empty.hidden=list.length>0;
@@ -43,7 +43,7 @@ document.querySelector("#shopNow").addEventListener("click",()=>document.querySe
 document.querySelector("#menuBtn").addEventListener("click",()=>{document.querySelector("nav").style.display=document.querySelector("nav").style.display==="flex"?"none":"flex"});
 function openCheckout(id){
  selectedProduct=products.find(p=>p.id===id);
- document.querySelector("#checkoutProduct").innerHTML=`<img src="${selectedProduct.img}" alt=""><div><strong>${selectedProduct.name}</strong><p>$${selectedProduct.price.toFixed(2)} · ${selectedProduct.rating} rating</p></div>`;
+ document.querySelector("#checkoutProduct").innerHTML=`<img src="${selectedProduct.img}" alt=""><div><strong>${selectedProduct.name}</strong><p>Rs. ${selectedProduct.price.toLocaleString("en-IN")} · ${selectedProduct.rating} rating</p></div>`;
  document.querySelector("#colorSelect").innerHTML=selectedProduct.colors.map((c,i)=>`<option>Color ${i+1}</option>`).join("");
  document.querySelector("#summarySubtotal").textContent=`Rs. ${selectedProduct.price.toLocaleString("en-IN")}`;
  document.querySelector("#summaryTotal").textContent=`Rs. ${(selectedProduct.price+299).toLocaleString("en-IN")}`;
