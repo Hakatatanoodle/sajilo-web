@@ -7,8 +7,8 @@
  * so the tag is part of the type and rendered on every card and page.
  *
  * Project facts (features, pricing, palette) come from the actual demo builds.
- * Two demos are real, runnable sites served from public/demos/ (synced from
- * the source folders/zips in the parent directory via `npm run sync-demos`)
+ * Three demos are real, runnable sites served from public/demos/ (synced from
+ * the source folders in the parent directory via `npm run sync-demos`)
  * and embedded live on their case-study pages via `demoUrl`; the rest are
  * illustrated with CSS miniatures until their real builds are delivered.
  */
@@ -127,12 +127,13 @@ export const work: Project[] = [
       "Page structure for membership businesses",
     ],
     mockKind: "gym",
+    // Real demo tokens: near-black canvas with the electric-yellow accent.
     palette: {
-      heroFrom: "#151515",
-      heroTo: "#555555",
-      base: "#F7F7F5",
-      ink: "#1A1A1A",
-      accent: "#8A8A8A",
+      heroFrom: "#050505",
+      heroTo: "#1C1C1C",
+      base: "#0A0A0A",
+      ink: "#F5F5F5",
+      accent: "#E7FF00",
     },
   },
   {
