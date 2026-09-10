@@ -5,6 +5,7 @@ import { GenericLocalMini } from "./GenericLocalMini";
 import { HotelMini } from "./HotelMini";
 import { RestaurantMini } from "./RestaurantMini";
 import { StoreMini } from "./StoreMini";
+import { SweetMini } from "./SweetMini";
 import type { MiniPalette, MiniProps } from "./types";
 
 export type { MiniPalette, MiniProps };
@@ -16,6 +17,7 @@ const registry: Record<ProjectKind, (props: MiniProps) => React.ReactElement> = 
   hotel: HotelMini,
   restaurant: RestaurantMini,
   store: StoreMini,
+  sweet: SweetMini,
 };
 
 /**

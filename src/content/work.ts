@@ -6,11 +6,20 @@
  * require that concept work is ALWAYS visibly distinguished from client work,
  * so the tag is part of the type and rendered on every card and page.
  *
- * Project facts (features, pricing, palette) come from the actual demo builds —
- * see web_agency_portfolio/ and sajilo_hub_clothing_store_updated/.
+ * Project facts (features, pricing, palette) come from the actual demo builds.
+ * Three demos are real, runnable sites served from public/demos/ (synced from
+ * the source folders in the parent directory via `npm run sync-demos`)
+ * and embedded live on their case-study pages via `demoUrl`; the rest are
+ * illustrated with CSS miniatures until their real builds are delivered.
  */
 
-export type ProjectKind = "clinic" | "gym" | "hotel" | "restaurant" | "store";
+export type ProjectKind =
+  | "clinic"
+  | "gym"
+  | "hotel"
+  | "restaurant"
+  | "store"
+  | "sweet";
 
 export type Project = {
   slug: string;
@@ -19,6 +28,13 @@ export type Project = {
   /** Always "Concept · Demo" — never presented as client work. */
   tag: "Concept · Demo";
   year: string;
+  /**
+   * Optional path to the real, runnable demo under public/demos/. When set,
+   * the case-study page embeds the actual site in a live frame instead of
+   * the illustrative miniature. Update the files under public/demos/<slug>/
+   * in place (same filenames) or run `npm run sync-demos` — no code changes.
+   */
+  demoUrl?: string;
   /** One-liner for cards and meta descriptions. */
   summary: string;
   /** The demo's actual headline — shown as the case-study title. */
@@ -39,6 +55,129 @@ export type Project = {
 };
 
 export const work: Project[] = [
+  {
+    slug: "sajilo-hub-store",
+    title: "Sajilo HUB — Clothing Store",
+    industry: "E-commerce",
+    tag: "Concept · Demo",
+    year: "2026",
+    demoUrl: "/demos/sajilo-hub-store/index.html",
+    summary:
+      "A working storefront demo: searchable catalog with filters and swatches, cart, and a three-step checkout that treats cash on delivery as the primary payment method.",
+    heroLine: "Wear what feels like you.",
+    overview: [
+      "Sajilo HUB is our most complete demo: a full front-end clothing store built around how people in Nepal actually buy online — browse casually, ask questions, pay on delivery.",
+      "It shows what “digital business tools” means in practice: not decoration, but structure that replaces manual DM-to-DM order handling.",
+    ],
+    challenge:
+      "Local clothing businesses sell through social inboxes — every order is a manual conversation, and nothing is structured. The question: how far can a real store go while fitting local buying habits, where cash on delivery is the default and trust is built conversationally?",
+    solution:
+      "Sajilo HUB answers with a complete shopping flow: a 12-product catalog with search, price and rating sorting, category and sale filters; product cards with sale badges and color swatches; and a three-step checkout that puts cash on delivery first — with online payment as a clearly-marked integration point, not a fake success screen.",
+    features: [
+      "12-product catalog with photos, ratings, and sale badges",
+      "Search, sort by price or rating, category and sale filters",
+      "Color swatches and per-product ordering",
+      "Three-step checkout: details → payment → confirm",
+      "Cash on Delivery first; online payment marked as an integration point",
+      "Order summary with delivery charge (Rs. 299)",
+      "Store locator view with hours, contact, and demo map",
+    ],
+    demonstrates: [
+      "E-commerce structure adapted to local buying habits",
+      "Search and filtering UX at small-catalog scale",
+      "Checkout flows that put COD first",
+      "Honest demo boundaries — payment gateways marked as integration points",
+    ],
+    mockKind: "store",
+    palette: {
+      heroFrom: "#B6ADA0",
+      heroTo: "#D7D1C8",
+      base: "#FAFAF9",
+      ink: "#141414",
+      accent: "#111111",
+    },
+  },
+  {
+    slug: "ironforge-fitness",
+    title: "IronForge Fitness",
+    industry: "Fitness",
+    demoUrl: "/demos/ironforge-fitness/index.html",
+    tag: "Concept · Demo",
+    year: "2026",
+    summary:
+      "A membership-first gym site: programs explained, three honest pricing tiers in Rs., and a free intro visit instead of a hard sell.",
+    heroLine: "Build your edge.",
+    overview: [
+      "IronForge is a concept site for a serious training gym — built around the reality that people choosing a gym want to know two things early: how training works and what it costs.",
+      "The site answers both on one page, then converts interest into a low-pressure first visit.",
+    ],
+    challenge:
+      "Gyms sell transformation, but most gym sites bury the two things a newcomer needs — what training actually looks like, and what membership costs. Vague “contact us for pricing” erodes trust before the first visit.",
+    solution:
+      "IronForge leads with its three training paths, shows every membership tier openly with real prices, and invites a free introductory visit — a concrete, low-pressure step into the gym rather than a generic “join now”.",
+    features: [
+      "Programs: strength, conditioning, personal training",
+      "Three membership tiers with open pricing — Rs. 2,500 to Rs. 7,500 per month",
+      "Free introductory visit request",
+      "Direct tone — motivation without the hype",
+    ],
+    demonstrates: [
+      "Open pricing used as a trust device",
+      "Conversion paths that respect the visitor",
+      "Page structure for membership businesses",
+    ],
+    mockKind: "gym",
+    // Real demo tokens: near-black canvas with the electric-yellow accent.
+    palette: {
+      heroFrom: "#050505",
+      heroTo: "#1C1C1C",
+      base: "#0A0A0A",
+      ink: "#F5F5F5",
+      accent: "#E7FF00",
+    },
+  },
+  {
+    slug: "sajilo-sweets-house",
+    title: "Sajilo Sweets House",
+    industry: "Food & Sweets",
+    tag: "Concept · Demo",
+    year: "2026",
+    demoUrl: "/demos/sweet-house/index.html",
+    summary:
+      "A neighbourhood mithai shop, online: filterable menu, per-piece and weight-based ordering with bulk discounts, a cart that survives refreshes, and festive Dashain–Tihar gift boxes — every price in Rs.",
+    heroLine: "Sweet moments, made the Sajilo way.",
+    overview: [
+      "Sajilo Sweets House is a concept build for a local New Road mithai shop — the kind of business whose busiest seasons (Dashain, Tihar) are exactly when a phone-and-counter-only setup falls apart.",
+      "The demo covers the full sweets-shop journey online: browsing a fresh menu, ordering by piece or by weight, gifting curated festive boxes, and hearing it from other customers first.",
+    ],
+    challenge:
+      "Sweets shops run on tradition, but their ordering runs on handwriting: festival pre-books jotted in notebooks, weight pricing explained over the counter, and no way to plan a Dashain gift order unless you walk in. The question: how much of that can a simple front-end demo make self-serve?",
+    solution:
+      "Sajilo Sweets House answers with a 10-item menu across sweets, snacks, namkeen and drinks — filterable in one click. Sweets order by the piece or by approximate weight (250g / 500g / 1kg) with bulk discounts applied automatically. A cart drawer persists between visits, checkout offers cash on delivery or pay-at-store, and a dedicated festive section sells curated Dashain and Tihar gift boxes.",
+    features: [
+      "10-item menu across sweets, snacks, namkeen and drinks",
+      "Category filtering with instant updates",
+      "Weight-based ordering — 250g / 500g / 1kg with automatic bulk discounts",
+      "Cart drawer that persists between visits",
+      "Cash on delivery or pay-at-store checkout",
+      "Dashain gift box at Rs. 1,499, Tihar boxes pre-bookable",
+      "Customer reviews with a submission flow",
+    ],
+    demonstrates: [
+      "Local-food e-commerce without a backend",
+      "Weight-based pricing UI kept simple",
+      "Festive-commerce patterns for Nepali businesses",
+      "Honest demo boundaries — checkout is a form, not a fake gateway",
+    ],
+    mockKind: "sweet",
+    palette: {
+      heroFrom: "#EF6C18",
+      heroTo: "#FF9B32",
+      base: "#FFFDFB",
+      ink: "#28221E",
+      accent: "#EF6C18",
+    },
+  },
   {
     slug: "carepoint-clinic",
     title: "CarePoint Clinic",
@@ -74,43 +213,6 @@ export const work: Project[] = [
       base: "#F6F8F9",
       ink: "#16262E",
       accent: "#2C7A8C",
-    },
-  },
-  {
-    slug: "ironforge-fitness",
-    title: "IronForge Fitness",
-    industry: "Fitness",
-    tag: "Concept · Demo",
-    year: "2026",
-    summary:
-      "A membership-first gym site: programs explained, three honest pricing tiers in Rs., and a free intro visit instead of a hard sell.",
-    heroLine: "Build your edge.",
-    overview: [
-      "IronForge is a concept site for a serious training gym — built around the reality that people choosing a gym want to know two things early: how training works and what it costs.",
-      "The site answers both on one page, then converts interest into a low-pressure first visit.",
-    ],
-    challenge:
-      "Gyms sell transformation, but most gym sites bury the two things a newcomer needs — what training actually looks like, and what membership costs. Vague “contact us for pricing” erodes trust before the first visit.",
-    solution:
-      "IronForge leads with its three training paths, shows every membership tier openly with real prices, and invites a free introductory visit — a concrete, low-pressure step into the gym rather than a generic “join now”.",
-    features: [
-      "Programs: strength, conditioning, personal training",
-      "Three membership tiers with open pricing — Rs. 2,500 to Rs. 7,500 per month",
-      "Free introductory visit request",
-      "Direct tone — motivation without the hype",
-    ],
-    demonstrates: [
-      "Open pricing used as a trust device",
-      "Conversion paths that respect the visitor",
-      "Page structure for membership businesses",
-    ],
-    mockKind: "gym",
-    palette: {
-      heroFrom: "#151515",
-      heroTo: "#555555",
-      base: "#F7F7F5",
-      ink: "#1A1A1A",
-      accent: "#8A8A8A",
     },
   },
   {
@@ -187,53 +289,12 @@ export const work: Project[] = [
       accent: "#3E6B4F",
     },
   },
-  {
-    slug: "sajilo-hub-store",
-    title: "Sajilo HUB — Clothing Store",
-    industry: "E-commerce",
-    tag: "Concept · Demo",
-    year: "2026",
-    summary:
-      "A working storefront demo: searchable catalog with filters and swatches, cart, and a three-step checkout that treats cash on delivery as the primary payment method.",
-    heroLine: "Wear what feels like you.",
-    overview: [
-      "Sajilo HUB is our most complete demo: a full front-end clothing store built around how people in Nepal actually buy online — browse casually, ask questions, pay on delivery.",
-      "It shows what “digital business tools” means in practice: not decoration, but structure that replaces manual DM-to-DM order handling.",
-    ],
-    challenge:
-      "Local clothing businesses sell through social inboxes — every order is a manual conversation, and nothing is structured. The question: how far can a real store go while fitting local buying habits, where cash on delivery is the default and trust is built conversationally?",
-    solution:
-      "Sajilo HUB answers with a complete shopping flow: a 12-product catalog with search, price and rating sorting, category and sale filters; product cards with sale badges and color swatches; and a three-step checkout that puts cash on delivery first — with online payment as a clearly-marked integration point, not a fake success screen.",
-    features: [
-      "12-product catalog with photos, ratings, and sale badges",
-      "Search, sort by price or rating, category and sale filters",
-      "Color swatches and per-product ordering",
-      "Three-step checkout: details → payment → confirm",
-      "Cash on Delivery first; online payment marked as an integration point",
-      "Order summary with delivery charge (Rs. 299)",
-      "Store locator view with hours, contact, and demo map",
-    ],
-    demonstrates: [
-      "E-commerce structure adapted to local buying habits",
-      "Search and filtering UX at small-catalog scale",
-      "Checkout flows that put COD first",
-      "Honest demo boundaries — payment gateways marked as integration points",
-    ],
-    mockKind: "store",
-    palette: {
-      heroFrom: "#B6ADA0",
-      heroTo: "#D7D1C8",
-      base: "#FAFAF9",
-      ink: "#141414",
-      accent: "#111111",
-    },
-  },
 ];
 
 export const featuredSlugs = [
-  "carepoint-clinic",
   "sajilo-hub-store",
-  "himalayan-haven",
+  "ironforge-fitness",
+  "sajilo-sweets-house",
 ] as const;
 
 export function getProject(slug: string): Project | undefined {

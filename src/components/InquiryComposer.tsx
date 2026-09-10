@@ -17,7 +17,7 @@ const NEEDS = [
 type FieldErrors = Partial<Record<"name" | "contact" | "message", string>>;
 
 const inputStyles =
-  "w-full rounded-xl border border-white/10 bg-ink/60 px-4 py-3 text-sm text-fg placeholder:text-fg-faint transition-colors focus:border-accent/60 focus:outline-none";
+  "w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-fg placeholder:text-fg-faint transition-colors focus:border-accent/60 focus:outline-none";
 
 function FieldError({ id, error }: { id: string; error?: string }) {
   return (
@@ -105,7 +105,7 @@ export function InquiryComposer() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+      className="rounded-2xl border border-line bg-surface p-6 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
@@ -186,7 +186,7 @@ export function InquiryComposer() {
           <div className="mt-3 flex flex-wrap items-center gap-2">
             <a
               href={`mailto:${site.contact.email}`}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-white/[0.08]"
+              className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2"
             >
               <Mail className="size-3.5 text-mint" />
               {site.contact.email}
@@ -194,7 +194,7 @@ export function InquiryComposer() {
             <button
               type="button"
               onClick={copyEmail}
-              className="rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-white/[0.08]"
+              className="rounded-full border border-line-strong bg-surface px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2"
             >
               {copied ? "Copied ✓" : "Copy address"}
             </button>

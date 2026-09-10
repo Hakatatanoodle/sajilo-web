@@ -18,8 +18,8 @@ export function Tag({
 }) {
   const styles =
     variant === "concept"
-      ? "border-accent/30 bg-accent/10 text-accent"
-      : "border-emerald-400/30 bg-emerald-400/10 text-emerald-300";
+      ? "border-amber-300 bg-amber-50 text-amber-800"
+      : "border-emerald-300 bg-emerald-50 text-emerald-700";
   return (
     <span
       className={cn(

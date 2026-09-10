@@ -1,7 +1,10 @@
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { ButtonLink } from "@/components/Button";
 import { BrowserFrame } from "@/components/BrowserFrame";
 import { Container } from "@/components/Container";
 import { GenericLocalMini } from "@/components/mockups";
+import { InteractiveWindow } from "@/components/InteractiveWindow";
+import { LogoLockup, LogoTagline } from "@/components/Logo";
 import { ArrowRight, Check } from "@/components/icons";
 import Reveal from "@/components/Reveal";
 
@@ -12,18 +15,17 @@ import Reveal from "@/components/Reveal";
  */
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-24 pt-14 sm:pt-20">
-      {/* Backdrop: grid + brand glows */}
+    <section className="relative isolate overflow-hidden pb-24 pt-14 sm:pt-20">
+      {/* Backdrop: dynamic multi-color aurora + dot grid (refs: amphora) */}
+      <AuroraBackdrop variant="hero" />
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-grid opacity-60 [mask-image:radial-gradient(ellipse_75%_65%_at_50%_35%,black,transparent)]" />
-        <div className="absolute -top-40 left-1/2 h-[480px] w-[820px] -translate-x-1/2 rounded-full bg-accent-strong/25 blur-[140px]" />
-        <div className="absolute right-[-160px] top-1/3 h-[360px] w-[360px] rounded-full bg-accent-2/15 blur-[120px]" />
+        <div className="absolute inset-0 bg-dots opacity-70 [mask-image:radial-gradient(ellipse_75%_60%_at_50%_32%,black,transparent)]" />
       </div>
 
       <Container className="relative grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <Reveal>
-            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-semibold tracking-wide text-fg-muted">
+            <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-1.5 text-xs font-semibold tracking-wide text-fg-muted">
               <span className="size-1.5 rounded-full bg-mint" />
               Web &amp; digital solutions · for local businesses in Nepal
             </p>
@@ -70,36 +72,81 @@ export function Hero() {
             outcomes a Sajilo site produces. Decorative — the frame carries
             the accessible label. */}
         <Reveal delay={200} className="relative">
-          <div className="relative mx-auto max-w-[540px]">
-            <BrowserFrame
-              title="A local business website built by Sajilo Web (illustration)"
-              url="yourbusiness.com.np"
-            >
-              <GenericLocalMini />
-            </BrowserFrame>
+          <InteractiveWindow
+            className="mx-auto max-w-[540px]"
+            front={
+              <>
+                <BrowserFrame
+                  title="A local business website built by Sajilo Web (illustration)"
+                  url="yourbusiness.com.np"
+                >
+                  <GenericLocalMini />
+                </BrowserFrame>
 
-            <div className="absolute -right-3 -top-7 animate-float-a rounded-xl border border-white/10 bg-ink-2/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.9)] backdrop-blur sm:-right-6">
-              <p className="text-[11px] font-semibold text-fg">Booking request</p>
-              <p className="mt-0.5 flex items-center gap-1.5 text-[10px] text-fg-faint">
-                <span className="size-1.5 rounded-full bg-mint" />
-                Today · via the website
-              </p>
-            </div>
+                {/* Floating notifications — real translateZ depth on the
+                    front face, so they parallax as the window spins. */}
+                <div className="absolute -right-3 -top-7 backface-hidden [transform:translateZ(56px)] sm:-right-6">
+                  <div className="animate-float-a rounded-xl border border-line bg-ink-2/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgba(31,39,64,0.16)] backdrop-blur">
+                    <p className="text-[11px] font-semibold text-fg">Booking request</p>
+                    <p className="mt-0.5 flex items-center gap-1.5 text-[10px] text-fg-faint">
+                      <span className="size-1.5 rounded-full bg-mint" />
+                      Today · via the website
+                    </p>
+                  </div>
+                </div>
 
-            <div className="absolute -bottom-7 -left-3 animate-float-b rounded-xl border border-white/10 bg-ink-2/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.9)] backdrop-blur sm:-left-8">
-              <p className="text-[11px] font-semibold text-fg">New WhatsApp inquiry</p>
-              <p className="mt-0.5 text-[10px] text-fg-faint">
-                &ldquo;Do you deliver to Bhaktapur?&rdquo;
-              </p>
-            </div>
+                <div className="absolute -bottom-7 -left-3 backface-hidden [transform:translateZ(48px)] sm:-left-8">
+                  <div className="animate-float-b rounded-xl border border-line bg-ink-2/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgba(31,39,64,0.16)] backdrop-blur">
+                    <p className="text-[11px] font-semibold text-fg">New WhatsApp inquiry</p>
+                    <p className="mt-0.5 text-[10px] text-fg-faint">
+                      &ldquo;Do you deliver to Bhaktapur?&rdquo;
+                    </p>
+                  </div>
+                </div>
 
-            <div className="absolute -bottom-4 right-6 animate-float-a rounded-full border border-white/10 bg-ink-2/90 px-4 py-2 shadow-[0_16px_40px_-16px_rgba(0,0,0,0.9)] backdrop-blur [animation-delay:1.4s]">
-              <p className="flex items-center gap-1.5 text-[10px] font-semibold text-fg-muted">
-                <Check className="size-3.5 text-mint" />
-                Hours &amp; location — updated
-              </p>
-            </div>
-          </div>
+                <div className="absolute -bottom-4 right-6 backface-hidden [transform:translateZ(52px)]">
+                  <div className="animate-float-a rounded-full border border-line bg-ink-2/90 px-4 py-2 shadow-[0_16px_40px_-16px_rgba(31,39,64,0.16)] backdrop-blur [animation-delay:1.4s]">
+                    <p className="flex items-center gap-1.5 text-[10px] font-semibold text-fg-muted">
+                      <Check className="size-3.5 text-mint" />
+                      Hours &amp; location — updated
+                    </p>
+                  </div>
+                </div>
+              </>
+            }
+            back={
+              <>
+                <div
+                  aria-hidden
+                  className="absolute inset-0 opacity-[0.07]"
+                  style={{
+                    backgroundImage:
+                      "radial-gradient(rgb(255 255 255 / 0.6) 1px, transparent 1.4px)",
+                    backgroundSize: "22px 22px",
+                  }}
+                />
+                <div
+                  aria-hidden
+                  className="absolute -right-16 -top-16 size-56 rounded-full border-[10px] border-brand/20"
+                />
+                <div
+                  aria-hidden
+                  className="absolute -bottom-20 -left-14 size-64 rounded-full border-[10px] border-white/10"
+                />
+                <div className="relative flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
+                  <LogoLockup inverted className="scale-125" />
+                  <LogoTagline className="text-brand" />
+                  <p className="max-w-[28ch] text-sm leading-relaxed text-white/60">
+                    Websites built properly — from every angle.
+                  </p>
+                </div>
+              </>
+            }
+          />
+
+          <p className="mt-10 text-center text-[11px] font-medium text-fg-faint">
+            Grab the window — give it a spin. There&apos;s a back.
+          </p>
         </Reveal>
       </Container>
     </section>

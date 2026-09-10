@@ -55,7 +55,7 @@ export function AboutStrip() {
             {founders.map((founder) => (
               <div
                 key={founder.role}
-                className="rounded-2xl border border-white/10 bg-white/[0.03] p-6"
+                className="rounded-2xl border border-line bg-surface p-6"
               >
                 <span className="flex size-11 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-accent">
                   <User className="size-5" />

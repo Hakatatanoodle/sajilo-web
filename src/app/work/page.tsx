@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
@@ -18,7 +19,9 @@ export const metadata: Metadata = {
  */
 export default function WorkPage() {
   return (
-    <Container className="py-16 sm:py-20">
+    <div className="relative isolate overflow-hidden">
+      <AuroraBackdrop variant="page" />
+      <Container className="py-16 sm:py-20">
       <header className="max-w-2xl">
         <Reveal>
           <Tag>What this is</Tag>
@@ -30,22 +33,23 @@ export default function WorkPage() {
         </Reveal>
         <Reveal delay={160}>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            Everything here is a Sajilo Web concept build — designed and
-            developed by us to demonstrate what we can do for businesses like
-            yours. We don&apos;t present borrowed or invented client work;
-            when real client projects exist, they&apos;ll appear here labeled
-            &ldquo;Client Project&rdquo;.
+            Three of these are real, runnable demo websites you can open and
+            click through; the rest are concept builds designed by us. It&apos;s
+            all self-initiated work made by Sajilo Web — we don&apos;t present
+            borrowed or invented client work; when real client projects exist,
+            they&apos;ll appear here labeled &ldquo;Client Project&rdquo;.
           </p>
         </Reveal>
       </header>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-2">
-        {work.map((project, index) => (
-          <Reveal key={project.slug} delay={index * 90} className="h-full">
-            <ProjectCard project={project} className="h-full" />
-          </Reveal>
-        ))}
-      </div>
-    </Container>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {work.map((project, index) => (
+            <Reveal key={project.slug} delay={index * 90} className="h-full">
+              <ProjectCard project={project} className="h-full" />
+            </Reveal>
+          ))}
+        </div>
+        </Container>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ServiceIcon } from "@/content/services";
 import { services } from "@/content/services";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { ArrowUpRight, Globe, Layers, Shield, Spark, Target } from "@/components/icons";
 import Reveal from "@/components/Reveal";
@@ -20,7 +21,8 @@ const iconMap: Record<ServiceIcon, typeof Globe> = {
  */
 export function ServicesGrid() {
   return (
-    <section className="relative py-20">
+    <section className="relative isolate overflow-hidden py-20">
+      <AuroraBackdrop variant="edge-left" />
       <Container>
         <SectionHeading
           eyebrow="What we build"
@@ -35,7 +37,7 @@ export function ServicesGrid() {
               <Reveal key={service.slug} delay={index * 80} className="h-full">
                 <Link
                   href={`/services#${service.slug}`}
-                  className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-white/[0.05]"
+                  className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface-2"
                 >
                   <span className="flex size-11 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
                     <Icon className="size-5" />
@@ -56,7 +58,7 @@ export function ServicesGrid() {
           })}
 
           <Reveal delay={400} className="h-full">
-            <div className="flex h-full flex-col justify-center rounded-2xl border border-dashed border-white/15 p-6">
+            <div className="flex h-full flex-col justify-center rounded-2xl border border-dashed border-line-strong p-6">
               <p className="text-sm leading-relaxed text-fg-faint">
                 Not sure what you need? That&apos;s normal.{" "}
                 <Link

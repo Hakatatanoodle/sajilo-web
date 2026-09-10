@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { Check, Globe, Layers, Shield, Spark, Target } from "@/components/icons";
 import Reveal from "@/components/Reveal";
@@ -26,7 +27,9 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <Container className="py-16 sm:py-20">
+      <div className="relative isolate overflow-hidden">
+        <AuroraBackdrop variant="edge-right" />
+        <Container className="py-16 sm:py-20">
         <header className="max-w-2xl">
           <Reveal>
             <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-accent">
@@ -54,7 +57,7 @@ export default function ServicesPage() {
               <Reveal key={service.slug} delay={index * 70}>
                 <section
                   id={service.slug}
-                  className="scroll-mt-24 rounded-2xl border border-white/10 bg-white/[0.03] p-7 sm:p-9"
+                  className="scroll-mt-24 rounded-2xl border border-line bg-surface p-7 sm:p-9"
                 >
                   <div className="flex flex-wrap items-center gap-4">
                     <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
@@ -91,7 +94,7 @@ export default function ServicesPage() {
                         ))}
                       </ul>
                     </div>
-                    <div className="rounded-xl border border-dashed border-white/15 p-5">
+                    <div className="rounded-xl border border-dashed border-line-strong p-5">
                       <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-fg-faint">
                         A good fit if
                       </h3>
@@ -105,7 +108,8 @@ export default function ServicesPage() {
             );
           })}
         </div>
-      </Container>
+        </Container>
+      </div>
       <CtaSection />
     </>
   );

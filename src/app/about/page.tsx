@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { User } from "@/components/icons";
 import Reveal from "@/components/Reveal";
@@ -36,7 +37,9 @@ const PRINCIPLES = [
 export default function AboutPage() {
   return (
     <>
-      <Container className="py-16 sm:py-20">
+      <div className="relative isolate overflow-hidden">
+        <AuroraBackdrop variant="edge-left" />
+        <Container className="py-16 sm:py-20">
         <header className="max-w-2xl">
           <Reveal>
             <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-accent">
@@ -85,7 +88,7 @@ export default function AboutPage() {
               {PRINCIPLES.map((principle) => (
                 <div
                   key={principle.title}
-                  className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+                  className="rounded-2xl border border-line bg-surface p-5"
                 >
                   <h2 className="font-display text-base font-bold text-fg">
                     {principle.title}
@@ -108,7 +111,7 @@ export default function AboutPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {founders.map((founder, index) => (
               <Reveal key={founder.role} delay={index * 90} className="h-full">
-                <div className="h-full rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                <div className="h-full rounded-2xl border border-line bg-surface p-6">
                   <span className="flex size-11 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-accent">
                     <User className="size-5" />
                   </span>
@@ -124,7 +127,8 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </Container>
+        </Container>
+      </div>
       <CtaSection />
     </>
   );

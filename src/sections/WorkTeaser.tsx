@@ -1,3 +1,4 @@
+import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { ButtonLink } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -14,7 +15,8 @@ export function WorkTeaser() {
   const featured = getFeatured();
 
   return (
-    <section className="relative py-20">
+    <section className="relative isolate overflow-hidden py-20">
+      <AuroraBackdrop variant="edge-right" />
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading

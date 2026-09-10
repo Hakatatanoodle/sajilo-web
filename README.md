@@ -2,7 +2,15 @@
 
 The Sajilo Web agency website: who we are, what we build, the work we can
 honestly show, and how to reach us. Built as a **small, serious, capable**
-studio site — cinematic surface, functional core.
+studio site.
+
+> **v0.2 — Brand retheme.** The visual identity now comes directly from the
+> Sajilo Web logo: white canvas, brand yellow (`#FFC629`), navy ink
+> (`#1F2740`), the S-ribbon + cursor logo mark (`src/components/Logo.tsx`),
+> the yellow "Web" pill as the primary button style, a yellow CTA band, a
+> navy footer, and the BUILD · LAUNCH · GROW tagline. The previous dark
+> violet theme was replaced in a single pass; it remains recoverable from
+> git history.
 
 Governing docs live one level up: `../portfolio_v0.1.md` (brand),
 `../architecture.md` (engineering), `../design.md` (design direction),
@@ -47,7 +55,7 @@ src/
 ├─ content/              # ALL site content lives here
 │  ├─ site.ts            # Brand, nav, industries, founders, contact
 │  ├─ services.ts        # The five services
-│  └─ work.ts            # The five concept/demo projects
+│  └─ work.ts            # The six demo projects (3 runnable, 3 concept)
 └─ lib/cn.ts             # Tiny class-name helper
 ```
 
@@ -76,8 +84,36 @@ founder names. Still outstanding:
       if WhatsApp runs on a different number.
 
 Nothing else on the site is placeholder: all project facts (features, prices,
-palettes) come from the real demo builds in `../web_agency_portfolio/` and
-`../sajilo_hub_clothing_store_updated/`.
+palettes) come from the real demo builds. Two of them — the Sajilo HUB
+clothing store and IronForge Fitness — are real, runnable sites served from
+`public/demos/` (see below).
+
+## Real demo websites (`public/demos/`)
+
+Two featured builds started it — now **three of the projects are real,
+runnable demo websites** embedded live on their case-study pages: the Sajilo
+HUB clothing store, IronForge Fitness, and Sajilo Sweets House. They are
+plain static sites copied verbatim into `public/demos/` and rendered
+inside a browser frame (`src/components/LiveDemoFrame.tsx`) — visitors click
+around inside the actual build, not a screenshot.
+
+**Updating a demo takes no code changes:** overwrite the files in the
+matching folder (keep the same filenames), or run:
+
+```bash
+npm run sync-demos   # copies the source demo folders/zips from ../
+```
+
+| Folder in `public/demos/` | Source (outside the repo) | Shown at |
+|---|---|---|
+| `sajilo-hub-store/` | `../sajilo_hub_clothing_store_updated/` | `/work/sajilo-hub-store` |
+| `ironforge-fitness/` | `../sajiloweb_gym_website_responsive/` | `/work/ironforge-fitness` |
+| `sweet-house/` | `../sajilo_sweets_house_redesigned/` | `/work/sajilo-sweets-house` |
+
+The other three projects are illustrated with CSS miniatures. To add a real
+demo later: drop its files into `public/demos/<slug>/`, register the source
+in `scripts/sync-demos.mjs`, and set `demoUrl` on the project in
+`src/content/work.ts`.
 
 ## Deployment (Vercel)
 
@@ -88,4 +124,6 @@ palettes) come from the real demo builds in `../web_agency_portfolio/` and
 ## Verification performed
 
 `npm run lint` · `npm run typecheck` · `npm run build` · manual pass:
-keyboard navigation, reduced motion, mobile widths, contrast on dark surfaces.
+keyboard navigation, reduced motion, mobile widths, contrast on the light
+theme (yellow is used as a surface with navy text, never as text on white;
+accent *text* uses a darker amber for readability).

@@ -51,11 +51,11 @@ export function Process() {
         />
 
         <Reveal className="mt-12">
-          <ol className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.06] sm:grid-cols-2 lg:grid-cols-3">
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-line bg-surface-2 sm:grid-cols-2 lg:grid-cols-3">
             {STEPS.map((step) => (
               <li
                 key={step.num}
-                className="bg-ink p-7 transition-colors duration-300 hover:bg-white/[0.02]"
+                className="bg-ink p-7 transition-colors duration-300 hover:bg-surface"
               >
                 <p className="text-gradient font-display text-3xl font-extrabold tracking-tight">
                   {step.num}
