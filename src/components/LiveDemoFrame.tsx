@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+import { BrowserChrome } from "@/components/BrowserChrome";
 import { cn } from "@/lib/cn";
 
 type LiveDemoFrameProps = {
@@ -19,6 +23,10 @@ type LiveDemoFrameProps = {
  * contents aria-hidden), the iframe here is a live, interactive document and
  * is exposed to assistive tech with its own accessible name.
  *
+ * A spinner covers the frame until the demo document fires onLoad, so lazy
+ * demos never appear as a blank white box (client component — without JS the
+ * iframe simply loads as before).
+ *
  * The demo files are plain static sites copied verbatim from the source demo
  * folders/zips (see public/demos/README.md). Updating a demo means
  * overwriting those files — same filenames — or running `npm run sync-demos`.
@@ -31,6 +39,8 @@ export function LiveDemoFrame({
   className,
   heightClass,
 }: LiveDemoFrameProps) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <div
       role="region"
@@ -40,23 +50,24 @@ export function LiveDemoFrame({
         className
       )}
     >
-      <div className="flex items-center gap-1.5 border-b border-line bg-[#f7f6f2] px-3.5 py-2">
-        <span className="size-2 rounded-full bg-[#FF5F57]" />
-        <span className="size-2 rounded-full bg-[#FEBC2E]" />
-        <span className="size-2 rounded-full bg-[#28C840]" />
-        <span className="ml-2 flex-1 truncate rounded-md bg-navy/[0.06] px-2.5 py-0.5 text-[10px] text-fg-faint">
-          {urlLabel}
-        </span>
+      <BrowserChrome url={urlLabel} />
+      <div className={cn("relative", heightClass ?? "h-[540px] sm:h-[680px]")}>
+        {!loaded ? (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-surface">
+            <p className="flex items-center gap-3 text-sm text-fg-faint">
+              <span className="size-4 animate-spin rounded-full border-2 border-line-strong border-t-accent" />
+              Loading demo…
+            </p>
+          </div>
+        ) : null}
+        <iframe
+          src={src}
+          title={title}
+          loading="lazy"
+          onLoad={() => setLoaded(true)}
+          className="block h-full w-full border-0 bg-white"
+        />
       </div>
-      <iframe
-        src={src}
-        title={title}
-        loading="lazy"
-        className={cn(
-          "block w-full border-0 bg-white",
-          heightClass ?? "h-[540px] sm:h-[680px]"
-        )}
-      />
     </div>
   );
 }

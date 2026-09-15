@@ -14,6 +14,9 @@ export const site = {
   /** Condensed positioning — portfolio_v0.1.md §37 */
   description:
     "Sajilo Web is a small, serious web and digital solutions studio focused on growing local businesses in Nepal. We build professional websites, structured online experiences, and useful custom digital tools — and we handle the technical complexity so getting online feels simple.",
+  /** One-line description for the PWA manifest and the social card footer. */
+  shortDescription:
+    "Websites and digital tools for growing local businesses in Nepal.",
   /**
    * TODO(user): set NEXT_PUBLIC_SITE_URL in Vercel (or .env.local) to the real
    * project URL. The fallback below is a placeholder.

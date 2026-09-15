@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
+import { PageHeader } from "@/components/PageHeader";
 import { ProjectCard } from "@/components/ProjectCard";
-import Reveal from "@/components/Reveal";
+import { Reveal } from "@/components/Reveal";
 import { Tag } from "@/components/Tag";
 import { work } from "@/content/work";
 
@@ -22,25 +23,11 @@ export default function WorkPage() {
     <div className="relative isolate overflow-hidden">
       <AuroraBackdrop variant="page" />
       <Container className="py-16 sm:py-20">
-      <header className="max-w-2xl">
-        <Reveal>
-          <Tag>What this is</Tag>
-        </Reveal>
-        <Reveal delay={80}>
-          <h1 className="mt-5 font-display text-4xl font-extrabold tracking-tight text-fg sm:text-5xl">
-            Work we can show you.
-          </h1>
-        </Reveal>
-        <Reveal delay={160}>
-          <p className="mt-5 text-lg leading-relaxed text-fg-muted">
-            Three of these are real, runnable demo websites you can open and
-            click through; the rest are concept builds designed by us. It&apos;s
-            all self-initiated work made by Sajilo Web — we don&apos;t present
-            borrowed or invented client work; when real client projects exist,
-            they&apos;ll appear here labeled &ldquo;Client Project&rdquo;.
-          </p>
-        </Reveal>
-      </header>
+        <PageHeader
+          eyebrow={<Tag>What this is</Tag>}
+          title="Work we can show you."
+          lead="Three of these are real, runnable demo websites you can open and click through; the rest are concept builds designed by us. It's all self-initiated work made by Sajilo Web — we don't present borrowed or invented client work; when real client projects exist, they'll appear here labeled “Client Project”."
+        />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {work.map((project, index) => (
@@ -49,7 +36,7 @@ export default function WorkPage() {
             </Reveal>
           ))}
         </div>
-        </Container>
+      </Container>
     </div>
   );
 }

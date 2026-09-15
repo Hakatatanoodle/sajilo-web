@@ -1,8 +1,10 @@
 import { founders } from "@/content/site";
 import { ButtonLink } from "@/components/Button";
+import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
-import { ArrowRight, Check, User } from "@/components/icons";
-import Reveal from "@/components/Reveal";
+import { FounderCard } from "@/components/FounderCard";
+import { ArrowRight } from "@/components/icons";
+import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 
 /**
@@ -27,20 +29,15 @@ export function AboutStrip() {
             lead="Sajilo Web is early-stage, founder-led, and intentionally small. The people you talk to are the people who design and build your project — nothing gets handed down a chain."
           />
           <Reveal delay={120}>
-            <ul className="mt-8 space-y-3.5 text-sm text-fg-muted">
-              <li className="flex items-start gap-2.5">
-                <Check className="mt-0.5 size-4 shrink-0 text-mint" />
-                You talk directly to the people building your site.
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="mt-0.5 size-4 shrink-0 text-mint" />
-                Small on purpose — focused attention, no account managers.
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="mt-0.5 size-4 shrink-0 text-mint" />
-                Serious process: scoped, reviewed, documented.
-              </li>
-            </ul>
+            <CheckList
+              spacing="relaxed"
+              className="mt-8"
+              items={[
+                "You talk directly to the people building your site.",
+                "Small on purpose — focused attention, no account managers.",
+                "Serious process: scoped, reviewed, documented.",
+              ]}
+            />
           </Reveal>
           <Reveal delay={200}>
             <ButtonLink href="/about" variant="ghost" className="mt-8">
@@ -53,21 +50,12 @@ export function AboutStrip() {
         <Reveal delay={150}>
           <div className="grid gap-4 sm:grid-cols-2">
             {founders.map((founder) => (
-              <div
+              <FounderCard
                 key={founder.role}
-                className="rounded-2xl border border-line bg-surface p-6"
-              >
-                <span className="flex size-11 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-accent">
-                  <User className="size-5" />
-                </span>
-                <p className="mt-4 font-display text-base font-bold text-fg">
-                  {founder.name}
-                </p>
-                <p className="text-sm text-accent">{founder.role}</p>
-                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
-                  {founder.focus}
-                </p>
-              </div>
+                name={founder.name}
+                role={founder.role}
+                focus={founder.focus}
+              />
             ))}
           </div>
         </Reveal>

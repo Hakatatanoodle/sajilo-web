@@ -3,7 +3,7 @@ import { ButtonLink } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ArrowRight } from "@/components/icons";
-import Reveal from "@/components/Reveal";
+import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { getFeatured } from "@/content/work";
 

@@ -1,7 +1,7 @@
 import { ButtonLink } from "@/components/Button";
 import { Container } from "@/components/Container";
 import { ArrowRight } from "@/components/icons";
-import Reveal from "@/components/Reveal";
+import { Reveal } from "@/components/Reveal";
 
 /**
  * Final call to action — the yellow brand band (the logo's "Web" pill,

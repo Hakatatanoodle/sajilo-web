@@ -3,6 +3,7 @@ import { DM_Sans, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
+import { StickyMobileCta } from "@/components/StickyMobileCta";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -31,6 +32,10 @@ export const metadata: Metadata = {
     template: "%s — Sajilo Web",
   },
   description: site.description,
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
   openGraph: {
     type: "website",
     siteName: site.name,
@@ -38,11 +43,20 @@ export const metadata: Metadata = {
     description: site.description,
     url: "/",
     locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Sajilo Web — Your business. Online, properly.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Sajilo Web — Your business. Online, properly.",
     description: site.description,
+    images: ["/opengraph-image"],
   },
   robots: { index: true, follow: true },
 };
@@ -90,6 +104,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
         <SiteFooter />
+        <StickyMobileCta />
       </body>
     </html>
   );

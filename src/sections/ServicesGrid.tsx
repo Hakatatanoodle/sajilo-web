@@ -1,19 +1,11 @@
 import Link from "next/link";
-import type { ServiceIcon } from "@/content/services";
 import { services } from "@/content/services";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
-import { ArrowUpRight, Globe, Layers, Shield, Spark, Target } from "@/components/icons";
-import Reveal from "@/components/Reveal";
+import { IconChip } from "@/components/IconChip";
+import { ArrowUpRight, serviceIconMap } from "@/components/icons";
+import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
-
-const iconMap: Record<ServiceIcon, typeof Globe> = {
-  globe: Globe,
-  target: Target,
-  layers: Layers,
-  spark: Spark,
-  shield: Shield,
-};
 
 /**
  * Home services grid — five service areas from portfolio_v0.1.md §6,
@@ -32,16 +24,16 @@ export function ServicesGrid() {
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => {
-            const Icon = iconMap[service.icon];
+            const Icon = serviceIconMap[service.icon];
             return (
               <Reveal key={service.slug} delay={index * 80} className="h-full">
                 <Link
                   href={`/services#${service.slug}`}
                   className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface-2"
                 >
-                  <span className="flex size-11 items-center justify-center rounded-xl border border-accent/25 bg-accent/10 text-accent">
+                  <IconChip>
                     <Icon className="size-5" />
-                  </span>
+                  </IconChip>
                   <h3 className="mt-5 font-display text-lg font-bold text-fg">
                     {service.title}
                   </h3>

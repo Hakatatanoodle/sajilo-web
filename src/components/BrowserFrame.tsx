@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { BrowserChrome } from "@/components/BrowserChrome";
 import { cn } from "@/lib/cn";
 
 type BrowserFrameProps = {
@@ -31,14 +32,7 @@ export function BrowserFrame({
         className
       )}
     >
-      <div className="flex items-center gap-1.5 border-b border-line bg-[#f7f6f2] px-3.5 py-2">
-        <span className="size-2 rounded-full bg-[#FF5F57]" />
-        <span className="size-2 rounded-full bg-[#FEBC2E]" />
-        <span className="size-2 rounded-full bg-[#28C840]" />
-        <span className="ml-2 flex-1 truncate rounded-md bg-navy/[0.06] px-2.5 py-0.5 text-[10px] text-fg-faint">
-          {url}
-        </span>
-      </div>
+      <BrowserChrome url={url} />
       <div aria-hidden className={cn("relative aspect-[16/10]", contentClassName)}>
         {children}
       </div>

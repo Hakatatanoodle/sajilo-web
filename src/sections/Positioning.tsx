@@ -2,7 +2,7 @@ import { industries } from "@/content/site";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { SectionHeading } from "@/components/SectionHeading";
-import Reveal from "@/components/Reveal";
+import { Reveal } from "@/components/Reveal";
 
 /**
  * Positioning strip — who we serve. Industry chips from portfolio_v0.1.md §3,

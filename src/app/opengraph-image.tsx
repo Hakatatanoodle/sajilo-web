@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
+import { site } from "@/content/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt =
-  "Sajilo Web — Understand the business. Make the digital side Sajilo.";
+export const alt = `${site.name} — ${site.tagline}`;
 
 /**
  * Default social-share image for the whole site (app-level OG convention).
@@ -108,7 +108,7 @@ export default function OpengraphImage() {
             BUILD • LAUNCH • GROW
           </div>
           <div style={{ fontSize: 22, color: "#8a90a6" }}>
-            Websites &amp; digital tools for local businesses in Nepal
+            {site.shortDescription}
           </div>
         </div>
       </div>
