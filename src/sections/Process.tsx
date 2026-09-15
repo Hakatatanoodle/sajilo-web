@@ -1,5 +1,5 @@
 import { Container } from "@/components/Container";
-import Reveal from "@/components/Reveal";
+import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 
 /**

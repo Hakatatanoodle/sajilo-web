@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BrowserFrame } from "@/components/BrowserFrame";
+import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
 import { LiveDemoFrame } from "@/components/LiveDemoFrame";
 import { ProjectMockup } from "@/components/mockups";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "@/components/icons";
-import Reveal from "@/components/Reveal";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/icons";
+import { Reveal } from "@/components/Reveal";
 import { Tag } from "@/components/Tag";
 import { getProject, nextProject, work } from "@/content/work";
 
@@ -155,7 +156,7 @@ export default async function ProjectPage({
             <h2 className="font-display text-xl font-bold text-fg">Overview</h2>
             {project.overview.map((paragraph) => (
               <p
-                key={paragraph.slice(0, 24)}
+                key={paragraph}
                 className="mt-3 leading-relaxed text-fg-muted"
               >
                 {paragraph}
@@ -170,17 +171,7 @@ export default async function ProjectPage({
               <h2 className="font-display text-xl font-bold text-fg">
                 What&apos;s inside
               </h2>
-              <ul className="mt-4 space-y-2.5">
-                {project.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-start gap-2.5 text-sm text-fg-muted"
-                  >
-                    <Check className="mt-0.5 size-4 shrink-0 text-mint" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+              <CheckList items={project.features} className="mt-4" />
             </section>
           </Reveal>
           <Reveal delay={100}>
@@ -188,17 +179,11 @@ export default async function ProjectPage({
               <h2 className="font-display text-xl font-bold text-fg">
                 What it demonstrates
               </h2>
-              <ul className="mt-4 space-y-2.5">
-                {project.demonstrates.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-2.5 text-sm text-fg-muted"
-                  >
-                    <Check className="mt-0.5 size-4 shrink-0 text-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <CheckList
+                items={project.demonstrates}
+                iconClassName="text-accent"
+                className="mt-4"
+              />
             </section>
           </Reveal>
         </div>

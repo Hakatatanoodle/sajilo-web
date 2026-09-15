@@ -2,8 +2,8 @@
 
 /*
  * Sajilo Web design tokens — design.md §71.
- * Cinematic surface, functional core: dark immersive canvas, controlled
- * violet gradient accents, generous type, disciplined motion.
+ * Light brand canvas (white / yellow / navy): warm paper surfaces, yellow
+ * brand accents with an amber text-accent, generous type, disciplined motion.
  */
 @theme {
   /* Surfaces — light canvas (Sajilo Web brand: white / yellow / navy) */
@@ -110,8 +110,8 @@
 }
 
 /*
- * Aurora background system — dynamic multi-color fields on near-black
- * (user direction: "dynamic, colorful gradient"). Paired with
+ * Aurora background system — dynamic multi-color fields over the light
+ * canvas (user direction: "dynamic, colorful gradient"). Paired with
  * src/components/AuroraBackdrop.tsx, which positions colored blobs;
  * the classes here blur them, drift them very slowly, and lay a subtle
  * film-grain on top. All motion is disabled by prefers-reduced-motion.

@@ -6,7 +6,7 @@ import { GenericLocalMini } from "@/components/mockups";
 import { InteractiveWindow } from "@/components/InteractiveWindow";
 import { LogoLockup, LogoTagline } from "@/components/Logo";
 import { ArrowRight, Check } from "@/components/icons";
-import Reveal from "@/components/Reveal";
+import { Reveal } from "@/components/Reveal";
 
 /**
  * Home hero — the site's highest-intensity moment (design.md: HOME ★5).

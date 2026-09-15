@@ -4,6 +4,7 @@
  * `aria-label` at the call site when the icon is the only content.
  */
 import type { SVGProps } from "react";
+import type { ServiceIcon } from "@/content/services";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -181,3 +182,17 @@ export function WhatsApp(props: IconProps) {
     </svg>
   );
 }
+
+/**
+ * Icon lookup for service cards, keyed by the `ServiceIcon` field in
+ * src/content/services.ts — the single source shared by ServicesGrid (home)
+ * and the services page. The content import is type-only, so the runtime
+ * dependency direction (content → components) is preserved.
+ */
+export const serviceIconMap: Record<ServiceIcon, typeof Globe> = {
+  globe: Globe,
+  target: Target,
+  layers: Layers,
+  spark: Spark,
+  shield: Shield,
+};

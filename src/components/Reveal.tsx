@@ -24,7 +24,7 @@ type RevealProps = {
  *   fully visible when JavaScript is unavailable (no-JS safety).
  * - Respects prefers-reduced-motion by revealing immediately.
  */
-export default function Reveal({ children, delay = 0, className }: RevealProps) {
+export function Reveal({ children, delay = 0, className }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
