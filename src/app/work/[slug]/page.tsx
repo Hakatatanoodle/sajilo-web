@@ -15,6 +15,9 @@ export function generateStaticParams() {
   return work.map((project) => ({ slug: project.slug }));
 }
 
+/** Unknown slugs 404 — don't try to render a case study on the fly. */
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
@@ -104,7 +107,7 @@ export default async function ProjectPage({
                   <a
                     href={project.demoUrl}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener noreferrer nofollow"
                     className="inline-flex items-center gap-1.5 rounded-lg border border-line-strong bg-surface px-3.5 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   >
                     Open full demo

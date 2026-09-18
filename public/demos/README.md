@@ -1,9 +1,14 @@
 # Demo websites — real, runnable builds
 
-These folders contain the actual demo websites, copied verbatim from the
-source folders/zips that live outside this repo. They are embedded live on
-the case-study pages (`src/components/LiveDemoFrame.tsx`) — visitors click
+These folders contain the actual demo websites, copied from the source
+folders that live outside this repo. They are embedded live on the
+case-study pages (`src/components/LiveDemoFrame.tsx`) — visitors click
 around inside the real build, not a screenshot.
+
+They are **concept demos, not live businesses**. Each page is `noindex`,
+shows a demo banner, and is iframed with `sandbox` (no `allow-same-origin`)
+so demo JS cannot reach the parent site. `/demos/` is also disallowed in
+`robots.ts`.
 
 ## The update contract (important)
 

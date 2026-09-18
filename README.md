@@ -44,6 +44,7 @@ src/
 │  ├─ services/          # Services ★3
 │  ├─ about/             # About ★2
 │  ├─ contact/           # Contact ★2
+│  ├─ privacy/           # Privacy (honest, short)
 │  ├─ not-found.tsx      # Designed 404
 │  ├─ sitemap.ts / robots.ts / manifest.ts
 │  ├─ icon.svg           # Favicon
@@ -69,12 +70,11 @@ for future real client projects.
 
 ## Before going live — remaining items
 
-Real values are now in place for the contact email, phone, WhatsApp, and
-founder names. Still outstanding:
+These need a human decision; they are not code bugs:
 
-- [ ] **Domain** — set `NEXT_PUBLIC_SITE_URL` in Vercel (or `.env.local`) to
-      the real project URL; the fallback `https://sajilo-web.vercel.app` is a
-      placeholder used for metadata, sitemap, and robots.
+- [ ] **Domain** — set `NEXT_PUBLIC_SITE_URL` in Vercel (see `.env.example`)
+      to the real project URL. Until then, metadata / sitemap / robots fall
+      back to `https://sajilo-web.vercel.app`.
 - [ ] **Founder roles** — currently provisional (Yochan = Engineering &
       Delivery, Rohan = Design & Client Care); adjust in
       `src/content/site.ts` when the real split is decided.
@@ -83,25 +83,26 @@ founder names. Still outstanding:
       (+977 9746345871); change `contact.whatsapp` in `src/content/site.ts`
       if WhatsApp runs on a different number.
 
-Nothing else on the site is placeholder: all project facts (features, prices,
-palettes) come from the real demo builds. Two of them — the Sajilo HUB
-clothing store and IronForge Fitness — are real, runnable sites served from
-`public/demos/` (see below).
+Security hardening already in the repo: demo iframes are sandboxed, `/demos/`
+is `noindex`, security headers live in `next.config.ts`, and the leftover
+`cloudflared` package is not part of the site.
 
 ## Real demo websites (`public/demos/`)
 
 Two featured builds started it — now **three of the projects are real,
 runnable demo websites** embedded live on their case-study pages: the Sajilo
 HUB clothing store, IronForge Fitness, and Sajilo Sweets House. They are
-plain static sites copied verbatim into `public/demos/` and rendered
-inside a browser frame (`src/components/LiveDemoFrame.tsx`) — visitors click
-around inside the actual build, not a screenshot.
+plain static sites copied into `public/demos/` and rendered inside a
+sandboxed browser frame (`src/components/LiveDemoFrame.tsx`) — visitors click
+around inside the actual build, not a screenshot. Demos are labelled as
+concept pieces, blocked from search indexing, and cannot touch the parent
+page's DOM or storage.
 
 **Updating a demo takes no code changes:** overwrite the files in the
 matching folder (keep the same filenames), or run:
 
 ```bash
-npm run sync-demos   # copies the source demo folders/zips from ../
+npm run sync-demos   # copies the source demo folders from ../
 ```
 
 | Folder in `public/demos/` | Source (outside the repo) | Shown at |
@@ -118,8 +119,10 @@ in `scripts/sync-demos.mjs`, and set `demoUrl` on the project in
 ## Deployment (Vercel)
 
 1. Push to GitHub, import the repo in Vercel (framework auto-detected).
-2. Set `NEXT_PUBLIC_SITE_URL` to the final URL.
-3. Deploy — the site is fully static; no database, no server functions.
+2. Deploy — no env vars required. The site is fully static; no database,
+   no server functions. Security headers are set in `next.config.ts`.
+3. When you add a custom domain, set `NEXT_PUBLIC_SITE_URL` to that origin
+   and redeploy so canonicals / sitemap / social cards match.
 
 ## Verification performed
 

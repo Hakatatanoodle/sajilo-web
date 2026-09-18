@@ -36,5 +36,7 @@ Open `index.html` in a browser.
 
 The product photos use public Unsplash image URLs, so an internet connection is recommended for the images.
 
+This page is a concept demo: it is noindexed, labelled in the announcement bar, and checkout does not send or store orders.
+
 ## Production notes
 This is a portfolio/demo front end. All sample prices are displayed in Nepali Rupees (Rs.). The online payment option is intentionally a placeholder. For a real store, connect a backend/database and a payment provider such as eSewa, Khalti, Stripe, etc., and validate/store orders securely on the server.

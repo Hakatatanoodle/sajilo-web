@@ -27,6 +27,10 @@ type LiveDemoFrameProps = {
  * demos never appear as a blank white box (client component — without JS the
  * iframe simply loads as before).
  *
+ * The iframe is sandboxed without `allow-same-origin` so demo JS cannot
+ * reach this page's DOM or localStorage. Demos that used origin storage
+ * (cart persistence) degrade gracefully.
+ *
  * The demo files are plain static sites copied verbatim from the source demo
  * folders/zips (see public/demos/README.md). Updating a demo means
  * overwriting those files — same filenames — or running `npm run sync-demos`.
@@ -65,6 +69,8 @@ export function LiveDemoFrame({
           title={title}
           loading="lazy"
           onLoad={() => setLoaded(true)}
+          sandbox="allow-scripts allow-forms"
+          referrerPolicy="no-referrer"
           className="block h-full w-full border-0 bg-white"
         />
       </div>

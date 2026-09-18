@@ -51,7 +51,7 @@ function openCheckout(id){
  document.body.style.overflow="hidden";
 }
 document.querySelector("#closeCheckout").addEventListener("click",()=>{document.querySelector("#checkoutModal").hidden=true;document.body.style.overflow=""});
-document.querySelector("#orderForm").addEventListener("submit",e=>{e.preventDefault();document.querySelector("#checkoutModal").hidden=true;document.body.style.overflow="";showToast("Order placed successfully — demo mode.");document.querySelector("#cartCount").textContent=Number(document.querySelector("#cartCount").textContent)+1;e.target.reset()});
+document.querySelector("#orderForm").addEventListener("submit",e=>{e.preventDefault();document.querySelector("#checkoutModal").hidden=true;document.body.style.overflow="";showToast("Demo only — nothing was sent or charged.");document.querySelector("#cartCount").textContent=Number(document.querySelector("#cartCount").textContent)+1;e.target.reset()});
 document.querySelectorAll("#directionsBtn,#directionsBtn2").forEach(b=>b.addEventListener("click",()=>showToast("Demo map: connect Google Maps or Mapbox for live directions.")));
 function showToast(t){const x=document.querySelector("#toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2800)}
 render();

@@ -7,6 +7,25 @@
  * (section "Before going live"). We never invent brand facts (portfolio_v0.1.md §35).
  */
 
+function originFrom(value: string): string {
+  const trimmed = value.trim().replace(/\/$/, "");
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed}`;
+}
+
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return originFrom(explicit);
+
+  const vercelHost =
+    process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim() ||
+    process.env.NEXT_PUBLIC_VERCEL_URL?.trim() ||
+    process.env.VERCEL_URL?.trim();
+  if (vercelHost) return originFrom(vercelHost);
+
+  return "http://localhost:3000";
+}
+
 export const site = {
   name: "Sajilo Web",
   /** Final brand sentence — portfolio_v0.1.md §38 */
@@ -18,10 +37,11 @@ export const site = {
   shortDescription:
     "Websites and digital tools for growing local businesses in Nepal.",
   /**
-   * TODO(user): set NEXT_PUBLIC_SITE_URL in Vercel (or .env.local) to the real
-   * project URL. The fallback below is a placeholder.
+   * Canonical origin for sitemap, robots, and Open Graph.
+   * Deploy without setting anything — Vercel fills this in. Set
+   * NEXT_PUBLIC_SITE_URL later if you attach a custom domain.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sajilo-web.vercel.app",
+  url: resolveSiteUrl(),
 
   contact: {
     email: "sajiloweb2@gmail.com",

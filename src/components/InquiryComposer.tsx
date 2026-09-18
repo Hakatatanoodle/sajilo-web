@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
-import { site } from "@/content/site";
+import { site, whatsappHref } from "@/content/site";
 import { Button } from "@/components/Button";
-import { ArrowRight, Check, Mail } from "@/components/icons";
+import { ArrowRight, Check, Mail, WhatsApp } from "@/components/icons";
 import { cn } from "@/lib/cn";
 
 const NEEDS = [
@@ -24,7 +24,7 @@ function FieldError({ id, error }: { id: string; error?: string }) {
     <p
       id={id}
       role="alert"
-      className={cn("mt-1.5 text-xs text-rose-300", !error && "hidden")}
+      className={cn("mt-1.5 text-xs text-red-700", !error && "hidden")}
     >
       {error}
     </p>
@@ -39,13 +39,25 @@ function Label({ htmlFor, children }: { htmlFor: string; children: ReactNode }) 
   );
 }
 
+function composeDraft(name: string, contact: string, need: string, message: string) {
+  const subject = `Project inquiry — ${need}`;
+  const body = [
+    `Name: ${name}`,
+    `Reply to: ${contact}`,
+    `Need: ${need}`,
+    "",
+    message,
+  ].join("\n");
+  return { subject, body };
+}
+
 /**
  * Contact form — honest by design.
  *
  * There is no backend yet (architecture.md: the smallest architecture that
- * works), so this composes a prefilled draft in the visitor's own email app.
- * Nothing is stored and nothing is silently "sent" — the visitor's mail
- * client does the actual sending.
+ * works), so this composes a prefilled draft in the visitor's own email app
+ * or WhatsApp. Nothing is stored and nothing is silently "sent" — the
+ * visitor's mail/chat client does the actual sending.
  */
 export function InquiryComposer() {
   const [name, setName] = useState("");
@@ -76,18 +88,20 @@ export function InquiryComposer() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    const subject = `Project inquiry — ${need}`;
-    const body = [
-      `Name: ${name}`,
-      `Reply to: ${contact}`,
-      `Need: ${need}`,
-      "",
-      message,
-    ].join("\n");
-
+    const { subject, body } = composeDraft(name, contact, need, message);
     window.location.href = `mailto:${site.contact.email}?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(body)}`;
+    setDraftOpened(true);
+  }
+
+  function openWhatsApp() {
+    const nextErrors = validate();
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    const { subject, body } = composeDraft(name, contact, need, message);
+    window.open(whatsappHref(`${subject}\n\n${body}`), "_blank", "noopener,noreferrer");
     setDraftOpened(true);
   }
 
@@ -115,6 +129,7 @@ export function InquiryComposer() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Sita Gurung"
+            autoComplete="name"
             className={cn(inputStyles, "mt-2")}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={errors.name ? "inq-name-error" : undefined}
@@ -128,6 +143,7 @@ export function InquiryComposer() {
             value={contact}
             onChange={(e) => setContact(e.target.value)}
             placeholder="Where should we reply?"
+            autoComplete="email"
             className={cn(inputStyles, "mt-2")}
             aria-invalid={Boolean(errors.contact)}
             aria-describedby={errors.contact ? "inq-contact-error" : undefined}
@@ -145,7 +161,7 @@ export function InquiryComposer() {
           className={cn(inputStyles, "mt-2 appearance-none")}
         >
           {NEEDS.map((option) => (
-            <option key={option} value={option} className="bg-ink text-fg">
+            <option key={option} value={option}>
               {option}
             </option>
           ))}
@@ -167,38 +183,54 @@ export function InquiryComposer() {
         <FieldError id="inq-message-error" error={errors.message} />
       </div>
 
-      <Button type="submit" size="lg" className="mt-6 w-full">
-        Open email draft
-        <ArrowRight className="size-4" />
-      </Button>
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <Button type="submit" size="lg" className="w-full">
+          Open email draft
+          <ArrowRight className="size-4" />
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="lg"
+          className="w-full"
+          onClick={openWhatsApp}
+        >
+          <WhatsApp className="size-4" />
+          Send via WhatsApp
+        </Button>
+      </div>
 
       <p className="mt-4 text-xs leading-relaxed text-fg-faint">
-        This opens your own email app with the message filled in — nothing is
-        sent until you press send there, and nothing is stored on this site.
+        This opens your own email or WhatsApp with the message filled in —
+        nothing is sent until you press send there, and nothing is stored on
+        this site. If a draft doesn&apos;t open (common on some phones), use
+        the address below.
       </p>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <a
+          href={`mailto:${site.contact.email}`}
+          className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2"
+        >
+          <Mail className="size-3.5 text-mint" />
+          {site.contact.email}
+        </a>
+        <button
+          type="button"
+          onClick={copyEmail}
+          className="rounded-full border border-line-strong bg-surface px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2"
+        >
+          {copied ? "Copied ✓" : "Copy address"}
+        </button>
+      </div>
+
       {draftOpened ? (
         <div className="mt-4 rounded-xl border border-mint/25 bg-mint/[0.07] p-4 text-sm text-fg">
           <p className="flex items-start gap-2 font-semibold">
             <Check className="mt-0.5 size-4 shrink-0 text-mint" />
-            Your email draft should be open. If nothing happened, reach us
-            directly:
+            Draft should be open. If nothing happened, email or WhatsApp us
+            directly with the same details.
           </p>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <a
-              href={`mailto:${site.contact.email}`}
-              className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-surface px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2"
-            >
-              <Mail className="size-3.5 text-mint" />
-              {site.contact.email}
-            </a>
-            <button
-              type="button"
-              onClick={copyEmail}
-              className="rounded-full border border-line-strong bg-surface px-4 py-2 text-xs font-semibold text-fg transition-colors hover:bg-surface-2"
-            >
-              {copied ? "Copied ✓" : "Copy address"}
-            </button>
-          </div>
         </div>
       ) : null}
     </form>
