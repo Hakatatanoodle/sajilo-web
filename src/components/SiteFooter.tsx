@@ -26,11 +26,6 @@ export function SiteFooter() {
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
             {site.tagline}
           </p>
-          <p className="mt-4 max-w-sm text-xs leading-relaxed text-white/50">
-            All work shown on this site is our own concept/demo builds. Real
-            client projects will always be labeled &ldquo;Client
-            Project&rdquo; — never mixed in.
-          </p>
           <LogoTagline className="mt-5 text-brand" />
         </div>
 

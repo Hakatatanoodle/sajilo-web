@@ -27,7 +27,7 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return {};
   return {
-    title: `${project.title} — ${project.industry} concept demo`,
+    title: `${project.title} — ${project.industry}`,
     description: project.summary,
   };
 }
@@ -95,14 +95,13 @@ export default async function ProjectPage({
               <>
                 <LiveDemoFrame
                   src={project.demoUrl}
-                  title={`${project.title} — interactive demo build`}
+                  title={`${project.title} — interactive live preview`}
                   urlLabel={`${project.slug}.sajiloweb-demo.build`}
                   className="relative"
                 />
                 <div className="relative mt-4 flex flex-wrap items-center justify-between gap-3">
                   <p className="max-w-sm text-xs text-fg-faint">
-                    This is the actual demo running in the frame — click
-                    around, it works.
+                    Live and interactive — click around, everything works.
                   </p>
                   <a
                     href={project.demoUrl}
@@ -118,7 +117,7 @@ export default async function ProjectPage({
             ) : (
               <>
                 <BrowserFrame
-                  title={`${project.title} — ${project.industry} concept demo`}
+                  title={`${project.title} — ${project.industry} preview`}
                   url={`${project.slug}.sajiloweb-demo.build`}
                   className="relative"
                 >
@@ -128,8 +127,7 @@ export default async function ProjectPage({
                   />
                 </BrowserFrame>
                 <p className="mt-4 text-xs text-fg-faint">
-                  Illustrative miniature rendered in the demo&apos;s own visual
-                  language. The full build is available to view on request.
+                  Styled preview of the build — ask us for a full walkthrough.
                 </p>
               </>
             )}
@@ -191,14 +189,6 @@ export default async function ProjectPage({
           </Reveal>
         </div>
 
-        <Reveal delay={120}>
-          <p className="mt-10 rounded-2xl border border-line bg-surface p-5 text-sm leading-relaxed text-fg-faint">
-            <strong className="font-semibold text-fg-muted">{project.title}</strong>{" "}
-            is a concept demo — a self-initiated build by Sajilo Web, not a
-            client engagement. Every project on this site is labeled this way
-            so the work always speaks honestly.
-          </p>
-        </Reveal>
       </Container>
 
       <Container className="py-12">

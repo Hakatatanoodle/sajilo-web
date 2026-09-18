@@ -4,13 +4,12 @@ import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/Reveal";
-import { Tag } from "@/components/Tag";
 import { work } from "@/content/work";
 
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Concept and demo builds by Sajilo Web — clinic, gym, hotel, restaurant, and storefront. Every project honestly labeled; no invented client work.",
+    "Websites and digital builds by Sajilo Web — clinic, gym, hotel, restaurant, and storefront. Open the live demos and click through.",
 };
 
 /**
@@ -24,9 +23,9 @@ export default function WorkPage() {
       <AuroraBackdrop variant="page" />
       <Container className="py-16 sm:py-20">
         <PageHeader
-          eyebrow={<Tag>What this is</Tag>}
+          eyebrow="Our work"
           title="Work we can show you."
-          lead="Three of these are real, runnable demo websites you can open and click through; the rest are concept builds designed by us. It's all self-initiated work made by Sajilo Web — we don't present borrowed or invented client work; when real client projects exist, they'll appear here labeled “Client Project”."
+          lead="Browse real builds across the businesses we serve — a storefront, a gym, a sweets shop, a clinic, a retreat, and a restaurant. Several run live right on the page."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">

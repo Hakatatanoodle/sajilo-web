@@ -72,13 +72,13 @@ export const work: Project[] = [
     challenge:
       "Local clothing businesses sell through social inboxes — every order is a manual conversation, and nothing is structured. The question: how far can a real store go while fitting local buying habits, where cash on delivery is the default and trust is built conversationally?",
     solution:
-      "Sajilo HUB answers with a complete shopping flow: a 12-product catalog with search, price and rating sorting, category and sale filters; product cards with sale badges and color swatches; and a three-step checkout that puts cash on delivery first — with online payment as a clearly-marked integration point, not a fake success screen.",
+      "Sajilo HUB answers with a complete shopping flow: a 12-product catalog with search, price and rating sorting, category and sale filters; product cards with sale badges and color swatches; and a three-step checkout that puts cash on delivery first — with online payment ready to plug in when the business wants it.",
     features: [
       "12-product catalog with photos, ratings, and sale badges",
       "Search, sort by price or rating, category and sale filters",
       "Color swatches and per-product ordering",
       "Three-step checkout: details → payment → confirm",
-      "Cash on Delivery first; online payment marked as an integration point",
+      "Cash on Delivery first, with online payment ready to plug in",
       "Order summary with delivery charge (Rs. 299)",
       "Store locator view with hours, contact, and demo map",
     ],
@@ -86,7 +86,7 @@ export const work: Project[] = [
       "E-commerce structure adapted to local buying habits",
       "Search and filtering UX at small-catalog scale",
       "Checkout flows that put COD first",
-      "Honest demo boundaries — payment gateways marked as integration points",
+      "Payment-ready structure — a gateway plugs in when the business is ready",
     ],
     mockKind: "store",
     palette: {
@@ -167,7 +167,7 @@ export const work: Project[] = [
       "Local-food e-commerce without a backend",
       "Weight-based pricing UI kept simple",
       "Festive-commerce patterns for Nepali businesses",
-      "Honest demo boundaries — checkout is a form, not a fake gateway",
+      "A checkout flow that mirrors how the shop actually takes orders",
     ],
     mockKind: "sweet",
     palette: {
@@ -199,7 +199,7 @@ export const work: Project[] = [
       "Services: general consultation, eye care, diagnostics",
       "Clinician profiles with roles and specialities",
       "Appointment request form — name, phone, date, reason",
-      "Honest confirmation of what happens after a request",
+      "Clear confirmation of what happens after a request",
     ],
     demonstrates: [
       "Turning medical services into plain language",

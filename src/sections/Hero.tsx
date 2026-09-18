@@ -59,13 +59,6 @@ export function Hero() {
             </div>
           </Reveal>
 
-          <Reveal delay={340}>
-            <p className="mt-7 flex items-center gap-2 text-sm text-fg-faint">
-              <Check className="size-4 shrink-0 text-mint" />
-              Everything in our work section is our own build — no borrowed
-              screenshots, no invented clients.
-            </p>
-          </Reveal>
         </div>
 
         {/* Illustrative composition: a generic local-business site + the
@@ -143,10 +136,6 @@ export function Hero() {
               </>
             }
           />
-
-          <p className="mt-10 text-center text-[11px] font-medium text-fg-faint">
-            Grab the window — give it a spin. There&apos;s a back.
-          </p>
         </Reveal>
       </Container>
     </section>

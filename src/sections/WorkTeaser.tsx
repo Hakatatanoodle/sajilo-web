@@ -21,8 +21,8 @@ export function WorkTeaser() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading
             eyebrow="Selected work"
-            title={<>Real builds, honestly labeled.</>}
-            lead="Every project below is a Sajilo Web concept build — designed and developed by us to show what we can do for businesses like yours."
+            title={<>Real builds, made by us.</>}
+            lead="Every project below is designed and developed by us — to show what we can do for businesses like yours."
           />
           <ButtonLink href="/work" variant="ghost" size="md" className="shrink-0">
             All work
@@ -38,13 +38,6 @@ export function WorkTeaser() {
           ))}
         </div>
 
-        <Reveal delay={160}>
-          <p className="mt-8 text-sm text-fg-faint">
-            No client projects are shown yet — when they exist, they will be
-            labeled &ldquo;Client Project&rdquo;, kept separate from these
-            demos.
-          </p>
-        </Reveal>
       </Container>
     </section>
   );

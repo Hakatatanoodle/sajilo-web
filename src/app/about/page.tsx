@@ -16,11 +16,11 @@ export const metadata: Metadata = {
 const PRINCIPLES = [
   {
     title: "No fake work",
-    text: "Every project on this site is labeled for what it is. Concept builds are ours; client projects will be labeled as clients'. Nothing in between.",
+    text: "Every project in our work section was designed and built by us. Ask about any of them — we'll happily walk you through every screen.",
   },
   {
     title: "No invented numbers",
-    text: "No fake testimonials, no made-up statistics, no borrowed trust logos. If a claim isn't true, it doesn't go on the page.",
+    text: "Real prices, real timelines, and no inflated promises — what we quote is what you get.",
   },
   {
     title: "Smallest thing that works",

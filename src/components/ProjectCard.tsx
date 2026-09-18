@@ -27,7 +27,7 @@ export function ProjectCard({
       <div
         className="relative aspect-[16/10] overflow-hidden border-b border-line"
         role="img"
-        aria-label={`Preview of the ${project.title} concept demo`}
+        aria-label={`Preview of the ${project.title} website`}
       >
         <ProjectMockup
           kind={project.mockKind}
