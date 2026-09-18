@@ -8,7 +8,7 @@ export function BrowserChrome({ url }: { url: string }) {
       <span className="size-2 rounded-full bg-[#FF5F57]" />
       <span className="size-2 rounded-full bg-[#FEBC2E]" />
       <span className="size-2 rounded-full bg-[#28C840]" />
-      <span className="ml-2 flex-1 truncate rounded-md bg-navy/[0.06] px-2.5 py-0.5 text-[10px] text-fg-faint">
+      <span className="ml-2 flex-1 truncate rounded-md bg-navy/[0.06] px-2.5 py-0.5 text-xs text-fg-faint">
         {url}
       </span>
     </div>

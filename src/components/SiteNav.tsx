@@ -85,8 +85,10 @@ export function SiteNav() {
               {item.label}
             </Link>
           ))}
+          {/* Same label + destination as the hero's primary button — the
+              header opens the identical contact flow (audit fix #1). */}
           <ButtonLink href="/contact" className="ml-3">
-            Let&apos;s Talk
+            Start a conversation
           </ButtonLink>
         </div>
 
@@ -124,7 +126,7 @@ export function SiteNav() {
               </Link>
             ))}
             <ButtonLink href="/contact" size="lg" className="mt-3">
-              Let&apos;s Talk
+              Start a conversation
             </ButtonLink>
           </div>
         </div>

@@ -31,7 +31,7 @@ export function CtaSection() {
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
             <ButtonLink href="/contact" variant="dark" size="lg">
-              Get in touch
+              Start a conversation
               <ArrowRight className="size-4" />
             </ButtonLink>
             <ButtonLink href="/work" variant="onDark" size="lg">

@@ -40,7 +40,7 @@ export function ProjectCard({
           <div className="flex items-center gap-2.5">
             <Tag>{project.tag}</Tag>
             {project.demoUrl && (
-              <span className="flex items-center gap-1.5 text-[11px] font-semibold text-mint">
+              <span className="flex items-center gap-1.5 text-xs font-semibold text-mint">
                 <span className="size-1.5 rounded-full bg-mint" aria-hidden />
                 Live demo
               </span>

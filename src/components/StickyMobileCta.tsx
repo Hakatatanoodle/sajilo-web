@@ -43,7 +43,7 @@ export function StickyMobileCta() {
           properly.
         </p>
         <ButtonLink href="/contact">
-          Start a project
+          Start a conversation
           <ArrowRight className="size-4" />
         </ButtonLink>
       </div>

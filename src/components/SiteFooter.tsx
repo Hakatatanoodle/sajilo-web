@@ -30,7 +30,7 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label="Footer">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">
             Site
           </p>
           <ul className="mt-4 space-y-2.5 text-sm">
@@ -64,7 +64,7 @@ export function SiteFooter() {
         </nav>
 
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/50">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">
             Contact
           </p>
           <ul className="mt-4 space-y-2.5 text-sm">
@@ -101,7 +101,7 @@ export function SiteFooter() {
       </Container>
 
       <div className="border-t border-white/15">
-        <Container className="flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/50 sm:flex-row">
+        <Container className="flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/70 sm:flex-row">
           <p>© {year} Sajilo Web. Built for local businesses.</p>
           <p>Made in Nepal</p>
         </Container>

@@ -65,7 +65,7 @@ export function LogoLockup({
 
 export function LogoTagline({ className }: { className?: string }) {
   return (
-    <p className={cn("font-display text-[11px] font-bold tracking-[0.28em]", className)}>
+    <p className={cn("font-display text-xs font-bold tracking-[0.28em]", className)}>
       BUILD &middot; LAUNCH &middot; GROW
     </p>
   );

@@ -49,14 +49,25 @@ export function Hero() {
 
           <Reveal delay={260}>
             <div className="mt-8 flex flex-wrap items-center gap-4">
+              {/* The single contact action — every contact CTA on the site
+                  shares this label and destination (design audit fix #1:
+                  one primary path, work as the clearly secondary path). */}
               <ButtonLink href="/contact" size="lg">
                 Start a conversation
                 <ArrowRight className="size-4" />
               </ButtonLink>
+              {/* Deliberately secondary: viewing work, not a competing
+                  conversion path. */}
               <ButtonLink href="/work" variant="ghost" size="lg">
-                See our work
+                See the work first
               </ButtonLink>
             </div>
+            {/* Names the two paths explicitly — audit fix: task & goal
+                clarity (visitors couldn't tell whether to view work or talk). */}
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-fg-muted">
+              One short conversation is usually enough — or look at the work
+              first to see how we build.
+            </p>
           </Reveal>
 
         </div>
@@ -80,8 +91,8 @@ export function Hero() {
                     front face, so they parallax as the window spins. */}
                 <div className="absolute -right-3 -top-7 backface-hidden [transform:translateZ(56px)] sm:-right-6">
                   <div className="animate-float-a rounded-xl border border-line bg-ink-2/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgba(31,39,64,0.16)] backdrop-blur">
-                    <p className="text-[11px] font-semibold text-fg">Booking request</p>
-                    <p className="mt-0.5 flex items-center gap-1.5 text-[10px] text-fg-faint">
+                    <p className="text-xs font-semibold text-fg">Booking request</p>
+                    <p className="mt-0.5 flex items-center gap-1.5 text-xs text-fg-muted">
                       <span className="size-1.5 rounded-full bg-mint" />
                       Today · via the website
                     </p>
@@ -90,8 +101,8 @@ export function Hero() {
 
                 <div className="absolute -bottom-7 -left-3 backface-hidden [transform:translateZ(48px)] sm:-left-8">
                   <div className="animate-float-b rounded-xl border border-line bg-ink-2/90 px-4 py-3 shadow-[0_16px_40px_-16px_rgba(31,39,64,0.16)] backdrop-blur">
-                    <p className="text-[11px] font-semibold text-fg">New WhatsApp inquiry</p>
-                    <p className="mt-0.5 text-[10px] text-fg-faint">
+                    <p className="text-xs font-semibold text-fg">New WhatsApp inquiry</p>
+                    <p className="mt-0.5 text-xs text-fg-muted">
                       &ldquo;Do you deliver to Bhaktapur?&rdquo;
                     </p>
                   </div>
@@ -99,7 +110,7 @@ export function Hero() {
 
                 <div className="absolute -bottom-4 right-6 backface-hidden [transform:translateZ(52px)]">
                   <div className="animate-float-a rounded-full border border-line bg-ink-2/90 px-4 py-2 shadow-[0_16px_40px_-16px_rgba(31,39,64,0.16)] backdrop-blur [animation-delay:1.4s]">
-                    <p className="flex items-center gap-1.5 text-[10px] font-semibold text-fg-muted">
+                    <p className="flex items-center gap-1.5 text-xs font-semibold text-fg-muted">
                       <Check className="size-3.5 text-mint" />
                       Hours &amp; location — updated
                     </p>
