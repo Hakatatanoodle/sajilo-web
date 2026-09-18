@@ -15,7 +15,12 @@ import { Reveal } from "@/components/Reveal";
  */
 export function Hero() {
   return (
-    <section className="relative isolate overflow-hidden pb-24 pt-14 sm:pt-20">
+    <section
+      className="relative isolate flex min-h-[calc(100dvh-4rem)] items-center overflow-hidden pb-24 pt-14 sm:pt-20"
+    >
+      {/* min-height fills the first viewport (minus the fixed header), so the
+          WorkTeaser case-study tiles always start below the primary fold —
+          they no longer peek in and compete with the hero CTA. */}
       {/* Backdrop: dynamic multi-color aurora + dot grid (refs: amphora) */}
       <AuroraBackdrop variant="hero" />
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -56,10 +61,13 @@ export function Hero() {
                 Start a conversation
                 <ArrowRight className="size-4" />
               </ButtonLink>
-              {/* Deliberately secondary: viewing work, not a competing
-                  conversion path. */}
-              <ButtonLink href="/work" variant="ghost" size="lg">
+              {/* Deliberately secondary AND visually quiet: a plain text
+                  link, not a button surface — the yellow contact pill leads
+                  the eye (audit follow-up: reduce secondary's weight). The
+                  lg size keeps the real tap target and focus ring. */}
+              <ButtonLink href="/work" variant="quiet" size="lg">
                 See the work first
+                <ArrowRight className="size-4" />
               </ButtonLink>
             </div>
             {/* Names the two paths explicitly — audit fix: task & goal

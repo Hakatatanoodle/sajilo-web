@@ -3,7 +3,7 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type Variant = "primary" | "ghost" | "dark" | "onDark" | "quiet";
-type Size = "md" | "lg";
+type Size = "sm" | "md" | "lg";
 
 const baseStyles =
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-tight transition-all duration-300 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
@@ -23,6 +23,9 @@ const variantStyles: Record<Variant, string> = {
 };
 
 const sizeStyles: Record<Size, string> = {
+  /* Compact — header/nav actions that must stay visually quieter than
+     in-page primary CTAs (still a real tap target with focus outline). */
+  sm: "px-3.5 py-2 text-xs",
   md: "px-5 py-2.5 text-sm",
   lg: "px-7 py-3.5 text-base",
 };

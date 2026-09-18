@@ -86,8 +86,10 @@ export function SiteNav() {
             </Link>
           ))}
           {/* Same label + destination as the hero's primary button — the
-              header opens the identical contact flow (audit fix #1). */}
-          <ButtonLink href="/contact" className="ml-3">
+              header opens the identical contact flow (audit fix #1). Kept
+              at size "sm": fully accessible, but visually smaller than the
+              hero's lg CTA so the in-page action always leads. */}
+          <ButtonLink href="/contact" size="sm" className="ml-3">
             Start a conversation
           </ButtonLink>
         </div>
