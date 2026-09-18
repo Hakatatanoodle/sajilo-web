@@ -17,7 +17,7 @@ navLinks.forEach(link => {
 
 document.querySelectorAll('[data-plan]').forEach(btn => {
   btn.addEventListener('click', () => {
-    toast.textContent = `${btn.dataset.plan} membership selected — we'll contact you soon!`;
+    toast.textContent = `${btn.dataset.plan} selected — demo only, nobody was contacted.`;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3500);
   });

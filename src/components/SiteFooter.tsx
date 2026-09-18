@@ -57,6 +57,14 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                href="/privacy"
+                className="text-white/75 transition-colors hover:text-white focus-visible:outline-brand"
+              >
+                Privacy
+              </Link>
+            </li>
           </ul>
         </nav>
 

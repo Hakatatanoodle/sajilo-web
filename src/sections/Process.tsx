@@ -55,7 +55,7 @@ export function Process() {
             {STEPS.map((step) => (
               <li
                 key={step.num}
-                className="bg-ink p-7 transition-colors duration-300 hover:bg-surface"
+                className="bg-white p-7 transition-colors duration-300 hover:bg-surface"
               >
                 <p className="text-gradient font-display text-3xl font-extrabold tracking-tight">
                   {step.num}

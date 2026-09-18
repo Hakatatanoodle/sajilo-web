@@ -2,7 +2,7 @@
 /**
  * Sync the real demo websites into public/demos/.
  *
- * The demos' source of truth lives OUTSIDE this repo (sibling folders/zips in
+ * The demos' source of truth lives OUTSIDE this repo (sibling folders in
  * the parent directory, edited by the demo author). This script copies them
  * in VERBATIM — same filenames, same folder names — so the portfolio never
  * needs code changes when a demo changes.
@@ -13,7 +13,6 @@
  * Usage: npm run sync-demos
  */
 import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -25,19 +24,16 @@ const DEMOS = [
   {
     slug: "sajilo-hub-store",
     label: "Sajilo HUB — Clothing Store",
-    kind: "folder",
     from: join(parentDir, "sajilo_hub_clothing_store_updated"),
   },
   {
     slug: "ironforge-fitness",
     label: "IronForge Fitness",
-    kind: "folder",
     from: join(parentDir, "sajiloweb_gym_website_responsive"),
   },
   {
     slug: "sweet-house",
     label: "Sajilo Sweets House",
-    kind: "folder",
     from: join(parentDir, "sajilo_sweets_house_redesigned"),
   },
 ];
@@ -58,13 +54,8 @@ for (const demo of DEMOS) {
   try {
     rmSync(dest, { recursive: true, force: true });
     mkdirSync(dest, { recursive: true });
-
-    if (demo.kind === "folder") {
-      cpSync(demo.from, dest, { recursive: true });
-    } else {
-      execFileSync("unzip", ["-o", "-q", demo.from, "-d", dest]);
-    }
-    console.log(`✓  ${demo.slug} — ${demo.label} (${demo.kind} synced)`);
+    cpSync(demo.from, dest, { recursive: true });
+    console.log(`✓  ${demo.slug} — ${demo.label} (folder synced)`);
   } catch (err) {
     failures += 1;
     console.error(`✗  ${demo.slug}: ${err instanceof Error ? err.message : err}`);

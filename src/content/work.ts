@@ -117,7 +117,7 @@ export const work: Project[] = [
       "IronForge leads with its three training paths, shows every membership tier openly with real prices, and invites a free introductory visit — a concrete, low-pressure step into the gym rather than a generic “join now”.",
     features: [
       "Programs: strength, conditioning, personal training",
-      "Three membership tiers with open pricing — Rs. 2,500 to Rs. 7,500 per month",
+      "Three membership tiers with open pricing — Rs. 2,499 / 3,999 / 6,999 per month",
       "Free introductory visit request",
       "Direct tone — motivation without the hype",
     ],
