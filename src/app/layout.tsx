@@ -59,6 +59,14 @@ export const metadata: Metadata = {
     images: ["/opengraph-image"],
   },
   robots: { index: true, follow: true },
+  /*
+   * Google Search Console ownership verification. The Metadata API emits
+   * <meta name="google-site-verification" content="…"/> into every page's
+   * head — Google reads it from the live homepage to confirm ownership.
+   */
+  verification: {
+    google: "1A9qhWvG7ei6fQl6eWjcQSiJJPnlUJMlszf8lMS2zLQ",
+  },
 };
 
 export const viewport: Viewport = {
