@@ -4,12 +4,14 @@ import { notFound } from "next/navigation";
 import { BrowserFrame } from "@/components/BrowserFrame";
 import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
+import { JsonLd } from "@/components/JsonLd";
 import { LiveDemoFrame } from "@/components/LiveDemoFrame";
 import { ProjectMockup } from "@/components/mockups";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/icons";
 import { Reveal } from "@/components/Reveal";
 import { Tag } from "@/components/Tag";
 import { getProject, nextProject, work } from "@/content/work";
+import { site } from "@/content/site";
 
 export function generateStaticParams() {
   return work.map((project) => ({ slug: project.slug }));
@@ -29,6 +31,7 @@ export async function generateMetadata({
   return {
     title: `${project.title} — ${project.industry}`,
     description: project.summary,
+    alternates: { canonical: `/work/${slug}` },
   };
 }
 
@@ -47,8 +50,31 @@ export default async function ProjectPage({
   if (!project) notFound();
   const next = nextProject(project.slug);
 
+  /* Breadcrumb structured data — Home > Work > {project}. Case studies sit
+     two levels deep, so crawlers get the explicit trail. */
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Work",
+        item: `${site.url}/work`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: project.title,
+        item: `${site.url}/work/${project.slug}`,
+      },
+    ],
+  };
+
   return (
     <article>
+      <JsonLd data={breadcrumbLd} />
       <Container className="py-14 sm:py-16">
         <Reveal>
           <Link

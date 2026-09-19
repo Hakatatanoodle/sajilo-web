@@ -4,15 +4,33 @@ import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
 import { IconChip } from "@/components/IconChip";
 import { serviceIconMap } from "@/components/icons";
+import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import { CtaSection } from "@/sections/CtaSection";
 import { services } from "@/content/services";
+import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
     "Business websites, landing pages, booking systems, custom digital tools, and ongoing support — sized to the problem, honestly scoped.",
+  alternates: { canonical: "/services" },
+};
+
+/* Breadcrumb structured data — Home > Services. */
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Services",
+      item: `${site.url}/services`,
+    },
+  ],
 };
 
 /**
@@ -21,6 +39,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={breadcrumbLd} />
       <div className="relative isolate overflow-hidden">
         <AuroraBackdrop variant="edge-right" />
         <Container className="py-16 sm:py-20">

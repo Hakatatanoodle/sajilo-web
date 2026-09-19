@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import type { ReactNode } from "react";
+import { JsonLd } from "@/components/JsonLd";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
-import { site } from "@/content/site";
+import { areaServed, site } from "@/content/site";
 import "./globals.css";
 
 /*
@@ -24,6 +25,34 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "600"],
   display: "swap",
 });
+
+/*
+ * Site-wide structured data (schema.org JSON-LD) — tells Google that
+ * "Sajilo Web" is an entity, not just page text. Deliberately minimal:
+ * no `sameAs` (no confirmed live social profiles to link) and no
+ * `aggregateRating` (no real reviews yet) — both would be invented facts.
+ */
+const siteJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${site.url}/#organization`,
+      name: site.name,
+      url: site.url,
+      email: site.contact.email,
+      areaServed: [...areaServed],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: site.url,
+      name: site.name,
+      publisher: { "@id": `${site.url}/#organization` },
+      inLanguage: "en",
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -99,6 +128,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: "document.documentElement.classList.add('js');",
           }}
         />
+        <JsonLd data={siteJsonLd} />
       </head>
       <body className="min-h-dvh bg-ink font-body text-fg">
         <a

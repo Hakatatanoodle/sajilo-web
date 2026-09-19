@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Talk to Sajilo Web about your business website, booking system, or online store. We reply personally — no bots, no ticket queues.",
+  alternates: { canonical: "/contact" },
 };
 
 const NEXT_STEPS = [

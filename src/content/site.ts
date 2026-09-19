@@ -79,6 +79,13 @@ export const industries = [
 ] as const;
 
 /**
+ * Areas the studio actively serves — used in the Organization structured
+ * data (SEO). TODO(user): widen or trim this list if you serve more of the
+ * valley or beyond.
+ */
+export const areaServed = ["Kathmandu", "Lalitpur", "Bhaktapur"] as const;
+
+/**
  * Founders. Roles are provisional — TODO(user): confirm the real role split
  * (current assignment by listing order: Yochan = Engineering & Delivery,
  * Rohan = Design & Client Care). Photos can be added in

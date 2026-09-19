@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "How Sajilo Web handles information on this website. We don't run analytics, ads, or a contact backend.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {

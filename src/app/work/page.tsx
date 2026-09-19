@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Work",
   description:
     "Websites and digital builds by Sajilo Web — clinic, gym, hotel, restaurant, and storefront. Open the live demos and click through.",
+  alternates: { canonical: "/work" },
 };
 
 /**

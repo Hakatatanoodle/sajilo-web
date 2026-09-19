@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "Sajilo Web is a small, founder-led web studio for growing local businesses in Nepal. Small on purpose, serious about the work.",
+  alternates: { canonical: "/about" },
 };
 
 const PRINCIPLES = [
