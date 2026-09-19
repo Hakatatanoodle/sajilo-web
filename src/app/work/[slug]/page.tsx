@@ -11,6 +11,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/icons";
 import { Reveal } from "@/components/Reveal";
 import { Tag } from "@/components/Tag";
 import { getProject, nextProject, work } from "@/content/work";
+import { services } from "@/content/services";
 import { site } from "@/content/site";
 
 export function generateStaticParams() {
@@ -49,6 +50,9 @@ export default async function ProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
   const next = nextProject(project.slug);
+  /* The service that produced this build — cross-linked below the demo
+     and reciprocally from the services page (SEO internal linking). */
+  const service = services.find((item) => item.slug === project.relatedService);
 
   /* Breadcrumb structured data — Home > Work > {project}. Case studies sit
      two levels deep, so crawlers get the explicit trail. */
@@ -176,6 +180,33 @@ export default async function ProjectPage({
           </section>
         </Reveal>
       </Container>
+
+      {service ? (
+        <Container className="pb-4">
+          <Reveal>
+            <Link
+              href={`/services#${service.slug}`}
+              className="group flex items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-accent/40"
+            >
+              <span>
+                <span className="block text-xs font-bold uppercase tracking-[0.18em] text-fg-faint">
+                  How we build it
+                </span>
+                <span className="mt-1.5 block font-display text-lg font-bold text-fg">
+                  {service.title}
+                </span>
+                <span className="mt-1 block text-sm text-fg-muted">
+                  The service behind this build — what&apos;s included, and a
+                  good fit.
+                </span>
+              </span>
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-line-strong bg-surface text-fg transition-all group-hover:border-accent/50 group-hover:text-accent">
+                <ArrowUpRight className="size-5" />
+              </span>
+            </Link>
+          </Reveal>
+        </Container>
+      ) : null}
 
       <Container className="py-8">
         <Reveal>

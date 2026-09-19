@@ -1,3 +1,5 @@
+import type { ServiceSlug } from "@/content/services";
+
 /**
  * Work / portfolio projects.
  *
@@ -28,6 +30,12 @@ export type Project = {
   /** Always "Concept · Demo" — never presented as client work. */
   tag: "Concept · Demo";
   year: string;
+  /**
+   * Slug of the service (content/services.ts) this build best demonstrates.
+   * Drives the case-study ↔ service cross-links on both pages — every
+   * project must name the service that produced it (SEO internal linking).
+   */
+  relatedService: ServiceSlug;
   /**
    * Optional path to the real, runnable demo under public/demos/. When set,
    * the case-study page embeds the actual site in a live frame instead of
@@ -61,6 +69,7 @@ export const work: Project[] = [
     industry: "E-commerce",
     tag: "Concept · Demo",
     year: "2026",
+    relatedService: "business-information-systems",
     demoUrl: "/demos/sajilo-hub-store/index.html",
     summary:
       "A working storefront demo: searchable catalog with filters and swatches, cart, and a three-step checkout that treats cash on delivery as the primary payment method.",
@@ -104,6 +113,7 @@ export const work: Project[] = [
     demoUrl: "/demos/ironforge-fitness/index.html",
     tag: "Concept · Demo",
     year: "2026",
+    relatedService: "business-websites",
     summary:
       "A membership-first gym site: programs explained, three honest pricing tiers in Rs., and a free intro visit instead of a hard sell.",
     heroLine: "Build your edge.",
@@ -143,6 +153,7 @@ export const work: Project[] = [
     tag: "Concept · Demo",
     year: "2026",
     demoUrl: "/demos/sweet-house/index.html",
+    relatedService: "business-information-systems",
     summary:
       "A neighbourhood mithai shop, online: filterable menu, per-piece and weight-based ordering with bulk discounts, a cart that survives refreshes, and festive Dashain–Tihar gift boxes — every price in Rs.",
     heroLine: "Sweet moments, made the Sajilo way.",
@@ -184,6 +195,7 @@ export const work: Project[] = [
     industry: "Healthcare",
     tag: "Concept · Demo",
     year: "2026",
+    relatedService: "business-information-systems",
     summary:
       "A clean clinic concept: services explained in plain language, clinicians introduced properly, and appointment requests without the phone ping-pong.",
     heroLine: "Care that starts with you.",
@@ -221,6 +233,7 @@ export const work: Project[] = [
     industry: "Hospitality",
     tag: "Concept · Demo",
     year: "2026",
+    relatedService: "business-information-systems",
     summary:
       "A boutique mountain retreat: rooms with honest “from Rs.” pricing, an experience section that sells the feeling, and booking inquiries with dates and guests.",
     heroLine: "Stay above the ordinary.",
@@ -258,6 +271,7 @@ export const work: Project[] = [
     industry: "Restaurant",
     tag: "Concept · Demo",
     year: "2026",
+    relatedService: "business-websites",
     summary:
       "A neighbourhood restaurant site: a readable menu with real prices, a story with a voice, and reservations in three fields.",
     heroLine: "Taste the moment.",

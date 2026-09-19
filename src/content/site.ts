@@ -52,7 +52,12 @@ export const site = {
      */
     whatsapp: "9779746345871",
     phoneDisplay: "+977 9746345871",
-    location: "Nepal",
+    /**
+     * Real service focus (owner-confirmed): the studio works across the
+     * Kathmandu valley, not the whole country. Shown in the footer and the
+     * contact page's "Where we are" block; `areaServed` (schema) mirrors it.
+     */
+    location: "Kathmandu, Lalitpur & Bhaktapur, Nepal",
   },
 } as const;
 
