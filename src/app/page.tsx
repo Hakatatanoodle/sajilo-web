@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { AboutStrip } from "@/sections/AboutStrip";
 import { CtaSection } from "@/sections/CtaSection";
 import { Hero } from "@/sections/Hero";
@@ -11,6 +12,11 @@ import { WorkTeaser } from "@/sections/WorkTeaser";
  * Intensity tapers down the page: hero → positioning → work → services →
  * process → about → calm contact CTA.
  */
+export const metadata: Metadata = {
+  /* metadataBase (layout) turns "/" into the full canonical origin. */
+  alternates: { canonical: "/" },
+};
+
 export default function HomePage() {
   return (
     <>
