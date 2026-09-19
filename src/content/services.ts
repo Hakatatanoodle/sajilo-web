@@ -10,8 +10,16 @@ export type ServiceIcon =
   | "spark"
   | "shield";
 
+/** URL-safe slugs — also used as in-page anchors (/services#<slug>). */
+export type ServiceSlug =
+  | "business-websites"
+  | "landing-pages"
+  | "business-information-systems"
+  | "custom-digital-solutions"
+  | "maintenance-support";
+
 export type Service = {
-  slug: string;
+  slug: ServiceSlug;
   title: string;
   /** One-liner used on the home page grid. */
   short: string;
@@ -112,3 +120,8 @@ export const services: Service[] = [
     icon: "shield",
   },
 ];
+
+/** Look up a service by slug — /services/[slug] routes and cross-links. */
+export function getService(slug: string): Service | undefined {
+  return services.find((service) => service.slug === slug);
+}

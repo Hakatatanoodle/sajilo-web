@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/content/site";
+import { services } from "@/content/services";
 import { work } from "@/content/work";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,10 +13,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
+  const serviceRoutes = services.map((service) => ({
+    url: `${site.url}/services/${service.slug}`,
+    lastModified,
+  }));
+
   const projectRoutes = work.map((project) => ({
     url: `${site.url}/work/${project.slug}`,
     lastModified,
   }));
 
-  return [...staticRoutes, ...projectRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...projectRoutes];
 }

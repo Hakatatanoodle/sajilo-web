@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
 import { IconChip } from "@/components/IconChip";
-import { serviceIconMap } from "@/components/icons";
+import { ArrowUpRight, serviceIconMap } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
 import { CtaSection } from "@/sections/CtaSection";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
+import { work, type Project } from "@/content/work";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -33,6 +35,16 @@ const breadcrumbLd = {
   ],
 };
 
+/* Case-study ↔ service cross-links: the first project that demonstrates
+   each service, keyed by service slug. Services with no matching build
+   simply render without a "see it built" link. */
+const showcaseByService = new Map<string, Project>();
+for (const project of work) {
+  if (!showcaseByService.has(project.relatedService)) {
+    showcaseByService.set(project.relatedService, project);
+  }
+}
+
 /**
  * Services detail page (design.md §68: SERVICES ★3).
  */
@@ -52,6 +64,7 @@ export default function ServicesPage() {
           <div className="mt-14 space-y-6">
             {services.map((service, index) => {
               const Icon = serviceIconMap[service.icon];
+              const showcase = showcaseByService.get(service.slug);
               return (
                 <Reveal key={service.slug} delay={index * 70}>
                   <section
@@ -67,7 +80,12 @@ export default function ServicesPage() {
                           {String(index + 1).padStart(2, "0")}
                         </p>
                         <h2 className="font-display text-2xl font-extrabold text-fg">
-                          {service.title}
+                          <Link
+                            href={`/services/${service.slug}`}
+                            className="transition-colors hover:text-accent"
+                          >
+                            {service.title}
+                          </Link>
                         </h2>
                       </div>
                     </div>
@@ -96,6 +114,16 @@ export default function ServicesPage() {
                         </p>
                       </div>
                     </div>
+
+                    {showcase ? (
+                      <Link
+                        href={`/work/${showcase.slug}`}
+                        className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-fg"
+                      >
+                        See it built — {showcase.title}
+                        <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      </Link>
+                    ) : null}
                   </section>
                 </Reveal>
               );
