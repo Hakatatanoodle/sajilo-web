@@ -3,7 +3,7 @@ import type { ServiceSlug } from "@/content/services";
 /**
  * Work / portfolio projects.
  *
- * Six of these builds are Sajilo Web concepts and demos — self-initiated
+ * Three of these builds are Sajilo Web concepts and demos — self-initiated
  * work that demonstrates capability, each tagged "Concept · Demo". One —
  * Ganapati Eye Care Clinic — is a real, named client system running in
  * production, tagged "Client · Live". design.md §26 and portfolio_v0.1.md §35
@@ -11,23 +11,15 @@ import type { ServiceSlug } from "@/content/services";
  * and never described in the other's language — in both directions.
  *
  * Concept facts (features, pricing, palette) come from the actual demo builds.
- * Three demos are real, runnable sites served from public/demos/ (synced from
- * the source folders in the parent directory via `npm run sync-demos`) and
- * embedded live on their case-study pages via `demoUrl`; the rest are
- * illustrated with CSS miniatures until their real builds are delivered.
- * The client system is login-gated and deliberately has no demoUrl — its
+ * All three demos are real, runnable sites served from public/demos/ (synced
+ * from the source folders in the parent directory via `npm run sync-demos`)
+ * and embedded live on their case-study pages via `demoUrl`. The client
+ * system is login-gated and deliberately has no demoUrl — its
  * case study is text and abstract visuals only, never a fake demo or a
  * screenshot of real records.
  */
 
-export type ProjectKind =
-  | "clinic"
-  | "gym"
-  | "hotel"
-  | "restaurant"
-  | "store"
-  | "sweet"
-  | "client-system";
+export type ProjectKind = "gym" | "store" | "sweet" | "client-system";
 
 /**
  * Status tag, always rendered on cards and case-study pages. design.md §26:
@@ -208,120 +200,6 @@ export const work: Project[] = [
       base: "#FFFDFB",
       ink: "#28221E",
       accent: "#EF6C18",
-    },
-  },
-  {
-    slug: "carepoint-clinic",
-    title: "CarePoint Clinic",
-    industry: "Healthcare",
-    tag: "Concept · Demo",
-    year: "2026",
-    relatedService: "business-information-systems",
-    summary:
-      "A clean clinic concept: services explained in plain language, clinicians introduced properly, and appointment requests without the phone ping-pong.",
-    heroLine: "Care that starts with you.",
-    overview: [
-      "CarePoint Clinic is a concept website for a modern primary-care practice — the kind of clinic that already has loyal patients but is effectively invisible online.",
-      "The build covers the full patient journey: understanding services, meeting the clinicians, and requesting an appointment with clear expectations of what happens next.",
-    ],
-    challenge:
-      "Clinic websites usually fail patients in the same ways: services described in jargon, no way to know who the clinicians are, and appointments that mean calling during working hours and hoping someone picks up.",
-    solution:
-      "CarePoint is structured around what a patient actually needs. Services are written in plain language, the clinicians section introduces people rather than wall-of-text credentials, and the appointment form asks only for what the front desk genuinely acts on — then states clearly what happens after the request.",
-    features: [
-      "Services: general consultation, eye care, diagnostics",
-      "Clinician profiles with roles and specialities",
-      "Appointment request form — name, phone, date, reason",
-      "Clear confirmation of what happens after a request",
-    ],
-    demonstrates: [
-      "Turning medical services into plain language",
-      "Trust-oriented structure for healthcare businesses",
-      "Form UX that sets expectations instead of faking success",
-    ],
-    mockKind: "clinic",
-    palette: {
-      heroFrom: "#1D4558",
-      heroTo: "#86B8C5",
-      base: "#F6F8F9",
-      ink: "#16262E",
-      accent: "#2C7A8C",
-    },
-  },
-  {
-    slug: "himalayan-haven",
-    title: "Himalayan Haven",
-    industry: "Hospitality",
-    tag: "Concept · Demo",
-    year: "2026",
-    relatedService: "business-information-systems",
-    summary:
-      "A boutique mountain retreat: rooms with honest “from Rs.” pricing, an experience section that sells the feeling, and booking inquiries with dates and guests.",
-    heroLine: "Stay above the ordinary.",
-    overview: [
-      "Himalayan Haven is a concept site for a boutique mountain retreat in Nepal — quiet rooms, mountain views, and slow mornings.",
-      "It balances two jobs that usually fight each other: evoking a place well enough that people want to go, and capturing a real booking inquiry once they do.",
-    ],
-    challenge:
-      "Small hotels compete with booking platforms on the platforms' terms. A direct website has to do what an OTA listing can't: convey the feeling of the place, and take a proper booking inquiry — with dates and party size, not just a name and a hope.",
-    solution:
-      "Himalayan Haven pairs its room tiers with transparent “from Rs.” pricing, tells the experience story — local food, village walks, fire-side evenings — and captures booking inquiries with the fields a host actually plans around: check-in, check-out, and guest count.",
-    features: [
-      "Rooms & suites with “from Rs.” pricing",
-      "Experience section with first-person storytelling",
-      "Booking inquiry: check-in, check-out, guests",
-      "Warm, unhurried visual tone",
-    ],
-    demonstrates: [
-      "Hospitality storytelling that still converts",
-      "Booking inquiry flows with the right fields",
-      "Presenting a physical place honestly online",
-    ],
-    mockKind: "hotel",
-    palette: {
-      heroFrom: "#3E2D1C",
-      heroTo: "#C9A875",
-      base: "#FAF7F2",
-      ink: "#2C2013",
-      accent: "#B08D57",
-    },
-  },
-  {
-    slug: "the-courtyard",
-    title: "The Courtyard",
-    industry: "Restaurant",
-    tag: "Concept · Demo",
-    year: "2026",
-    relatedService: "business-websites",
-    summary:
-      "A neighbourhood restaurant site: a readable menu with real prices, a story with a voice, and reservations in three fields.",
-    heroLine: "Taste the moment.",
-    overview: [
-      "The Courtyard is a concept site for a neighbourhood restaurant — familiar ingredients, seasonal plates, and a room built for conversation.",
-      "The site is deliberately small: menu, story, reservations. Everything a diner needs on a phone, nothing that gets between them and booking a table.",
-    ],
-    challenge:
-      "Restaurant websites die under PDF menus, Instagram-only presence, and reservation forms that ask for everything except what a host needs. Diners on phones want the menu and a table — fast.",
-    solution:
-      "The Courtyard keeps it useful: today's menu highlights with prices in Rs., a short story section with an actual voice, and a reservation request with date, time, and party size — the fields a restaurant acts on immediately.",
-    features: [
-      "Menu highlights with prices — momo, thali, seasonal plates",
-      "Story section with a real voice",
-      "Reservation request: date, time, guests",
-      "Fresh · local · seasonal positioning",
-    ],
-    demonstrates: [
-      "Menus people can actually read on a phone",
-      "Reservation UX with minimal friction",
-      "Brand voice in a small business site",
-    ],
-    mockKind: "restaurant",
-    palette: {
-      heroFrom: "#173C2B",
-      heroTo: "#9A6741",
-      base: "#FBF9F4",
-      ink: "#1E2B22",
-      accent: "#3E6B4F",
     },
   },
   {
