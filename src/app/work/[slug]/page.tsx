@@ -10,7 +10,7 @@ import { ProjectMockup } from "@/components/mockups";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/icons";
 import { Reveal } from "@/components/Reveal";
 import { Tag } from "@/components/Tag";
-import { getProject, nextProject, work } from "@/content/work";
+import { getProject, isClientProject, nextProject, work } from "@/content/work";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 
@@ -39,7 +39,9 @@ export async function generateMetadata({
 /**
  * Project case study (design.md §68: PROJECT ★3, structure per §69).
  * Concept builds are presented honestly: what it solves, what we built,
- * what it demonstrates — never claimed as client work.
+ * what it demonstrates — never claimed as client work. The one real client
+ * build is presented the other way round: labelled "Client · Live", with no
+ * fake demo URL and no screenshots of real records.
  */
 export default async function ProjectPage({
   params,
@@ -49,6 +51,7 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
+  const client = isClientProject(project);
   const next = nextProject(project.slug);
   /* The service that produced this build — cross-linked below the demo
      and reciprocally from the services page (SEO internal linking). */
@@ -92,7 +95,7 @@ export default async function ProjectPage({
 
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <Reveal delay={60}>
-            <Tag>{project.tag}</Tag>
+            <Tag variant={client ? "client" : "concept"}>{project.tag}</Tag>
           </Reveal>
           <Reveal delay={90}>
             <span className="text-sm text-fg-faint">
@@ -143,6 +146,23 @@ export default async function ProjectPage({
                     <ArrowUpRight className="size-3.5" />
                   </a>
                 </div>
+              </>
+            ) : client ? (
+              <>
+                <BrowserFrame
+                  title={`${project.title} — live client system`}
+                  url="login-gated · private system"
+                  className="relative"
+                >
+                  <ProjectMockup
+                    kind={project.mockKind}
+                    palette={project.palette}
+                  />
+                </BrowserFrame>
+                <p className="mt-4 text-xs text-fg-faint">
+                  Live in production for {project.title} — login-gated, so
+                  there is no public demo to click. Ask us for a walkthrough.
+                </p>
               </>
             ) : (
               <>
@@ -235,7 +255,7 @@ export default async function ProjectPage({
           <Reveal delay={100}>
             <section>
               <h2 className="font-display text-xl font-bold text-fg">
-                What it demonstrates
+                {project.demonstratesLabel ?? "What it demonstrates"}
               </h2>
               <CheckList
                 items={project.demonstrates}

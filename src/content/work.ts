@@ -3,16 +3,21 @@ import type { ServiceSlug } from "@/content/services";
 /**
  * Work / portfolio projects.
  *
- * Every project here is a Sajilo Web concept or demo build — self-initiated
- * work that demonstrates capability. design.md §26 and portfolio_v0.1.md §35
+ * Six of these builds are Sajilo Web concepts and demos — self-initiated
+ * work that demonstrates capability, each tagged "Concept · Demo". One —
+ * Ganapati Eye Care Clinic — is a real, named client system running in
+ * production, tagged "Client · Live". design.md §26 and portfolio_v0.1.md §35
  * require that concept work is ALWAYS visibly distinguished from client work,
- * so the tag is part of the type and rendered on every card and page.
+ * and never described in the other's language — in both directions.
  *
- * Project facts (features, pricing, palette) come from the actual demo builds.
+ * Concept facts (features, pricing, palette) come from the actual demo builds.
  * Three demos are real, runnable sites served from public/demos/ (synced from
- * the source folders in the parent directory via `npm run sync-demos`)
- * and embedded live on their case-study pages via `demoUrl`; the rest are
+ * the source folders in the parent directory via `npm run sync-demos`) and
+ * embedded live on their case-study pages via `demoUrl`; the rest are
  * illustrated with CSS miniatures until their real builds are delivered.
+ * The client system is login-gated and deliberately has no demoUrl — its
+ * case study is text and abstract visuals only, never a fake demo or a
+ * screenshot of real records.
  */
 
 export type ProjectKind =
@@ -21,14 +26,24 @@ export type ProjectKind =
   | "hotel"
   | "restaurant"
   | "store"
-  | "sweet";
+  | "sweet"
+  | "client-system";
+
+/**
+ * Status tag, always rendered on cards and case-study pages. design.md §26:
+ * concept work and real client work must never be presented as each other.
+ */
+export type ProjectTag = "Concept · Demo" | "Client · Live";
 
 export type Project = {
   slug: string;
   title: string;
   industry: string;
-  /** Always "Concept · Demo" — never presented as client work. */
-  tag: "Concept · Demo";
+  /**
+   * "Concept · Demo" for self-initiated builds; "Client · Live" for real
+   * client work — never swapped (design.md §26).
+   */
+  tag: ProjectTag;
   year: string;
   /**
    * Slug of the service (content/services.ts) this build best demonstrates.
@@ -52,6 +67,12 @@ export type Project = {
   solution: string;
   features: string[];
   demonstrates: string[];
+  /**
+   * Section heading for the `demonstrates` list on the case-study page.
+   * Concept builds use the default "What it demonstrates"; real client
+   * builds override it so client work is never framed as a demonstration.
+   */
+  demonstratesLabel?: string;
   mockKind: ProjectKind;
   palette: {
     heroFrom: string;
@@ -303,6 +324,50 @@ export const work: Project[] = [
       accent: "#3E6B4F",
     },
   },
+  {
+    // Real client build — tagged "Client · Live", never "Concept · Demo".
+    // Login-gated and private by design: no demoUrl, no screenshots of real
+    // records, no invented before-story or outcomes (portfolio_v0.1.md §35).
+    slug: "ganapati-eye-care",
+    title: "Ganapati Eye Care Clinic",
+    industry: "Eye Care",
+    tag: "Client · Live",
+    year: "2026",
+    relatedService: "business-information-systems",
+    summary:
+      "A real clinic's records system, live in production: login-gated patient records — refraction, clinical, lens orders, payments — plus SMS broadcasts from the clinic's own SIM.",
+    heroLine: "Patient records and SMS, in one private system.",
+    overview: [
+      "Ganapati Eye Care Clinic runs on a system we designed and built end to end: a login-gated web app where the clinic's own staff keep patient records — personal details, refraction and clinical findings, lens and frame orders, payments — and reach patients by SMS straight from the clinic's own phone.",
+      "This one is deliberately not a demo. There is no public page to click through: records are private to each clinic account, and the whole system is kept out of search engines. This page describes what was built and why it helps.",
+    ],
+    challenge:
+      "An eye-care clinic's daily work generates exactly the kind of information that is easy to lose track of: refraction readings for each eye at each visit, lens and frame orders, payments and balances, follow-ups. The problem this system solves is keeping all of it structured, private to the clinic's own accounts, and reachable from the front desk — without patient records ever sitting on a public web page.",
+    solution:
+      "A single staff tool built on Firebase Authentication and Firestore: every record is stored under the signed-in clinic user's own path in the database, so no account can read another's. The SMS Broadcast module composes a message, picks recipients from the clinic's own records, and delivers through an Android SMS gateway on the clinic's phone and SIM — and the broadcast API verifies each caller's identity server-side before it will send anything.",
+    features: [
+      "Login-gated access — records stay private to each clinic account",
+      "Complete patient record: personal, refraction, clinical, lens & frame, payments",
+      "SMS Broadcast — compose, select recipients, send via the clinic's own SIM",
+      "Dashboard with today's and total record counts",
+      "Hosted on Vercel; every sensitive endpoint checks who is calling",
+    ],
+    demonstratesLabel: "Why it matters",
+    demonstrates: [
+      "We build systems businesses actually run, not just pages they show off",
+      "Privacy-first defaults: login-gated, per-account data isolation, noindex",
+      "SMS automation that uses hardware the business already owns",
+      "Security treated as a launch requirement — authenticated before publicised",
+    ],
+    mockKind: "client-system",
+    palette: {
+      heroFrom: "#0E3A31",
+      heroTo: "#2E7D6B",
+      base: "#F7FAF8",
+      ink: "#12241E",
+      accent: "#1E7A66",
+    },
+  },
 ];
 
 export const featuredSlugs = [
@@ -310,6 +375,11 @@ export const featuredSlugs = [
   "ironforge-fitness",
   "sajilo-sweets-house",
 ] as const;
+
+/** design.md §26 — client work must be visually and verbally distinct. */
+export function isClientProject(project: Project): boolean {
+  return project.tag !== "Concept · Demo";
+}
 
 export function getProject(slug: string): Project | undefined {
   return work.find((p) => p.slug === slug);

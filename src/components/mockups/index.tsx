@@ -1,5 +1,6 @@
 import type { ProjectKind } from "@/content/work";
 import { ClinicMini } from "./ClinicMini";
+import { ClientSystemMini } from "./ClientSystemMini";
 import { GymMini } from "./GymMini";
 import { GenericLocalMini } from "./GenericLocalMini";
 import { HotelMini } from "./HotelMini";
@@ -13,6 +14,7 @@ export { GenericLocalMini };
 
 const registry: Record<ProjectKind, (props: MiniProps) => React.ReactElement> = {
   clinic: ClinicMini,
+  "client-system": ClientSystemMini,
   gym: GymMini,
   hotel: HotelMini,
   restaurant: RestaurantMini,

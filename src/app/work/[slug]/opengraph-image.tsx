@@ -17,7 +17,7 @@ export async function alt({ params }: { params: Promise<{ slug: string }> }) {
  * Per-project social card (route-level OG convention). Same visual system
  * as the root card, but the headline belongs to this build: the project
  * title plain, the demo's actual heroLine under the yellow marker swipe.
- * Generated at build time for each of the six case studies.
+ * Generated at build time for every case study.
  */
 export default async function Image({
   params,

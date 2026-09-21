@@ -1,13 +1,14 @@
 import Link from "next/link";
-import type { Project } from "@/content/work";
+import { isClientProject, type Project } from "@/content/work";
 import { ProjectMockup } from "@/components/mockups";
 import { Tag } from "@/components/Tag";
 import { ArrowUpRight } from "@/components/icons";
 import { cn } from "@/lib/cn";
 
 /**
- * Work card used on the home page and the work index.
- * The Concept · Demo tag is always rendered — design.md §26.
+ * Work card used on the home page and the work index. The status tag is
+ * always rendered and styled per kind — concept (amber) vs client (emerald):
+ * design.md §26.
  */
 export function ProjectCard({
   project,
@@ -16,6 +17,7 @@ export function ProjectCard({
   project: Project;
   className?: string;
 }) {
+  const client = isClientProject(project);
   return (
     <Link
       href={`/work/${project.slug}`}
@@ -27,7 +29,7 @@ export function ProjectCard({
       <div
         className="relative aspect-[16/10] overflow-hidden border-b border-line"
         role="img"
-        aria-label={`Preview of the ${project.title} website`}
+        aria-label={`Preview of ${project.title}`}
       >
         <ProjectMockup
           kind={project.mockKind}
@@ -38,7 +40,7 @@ export function ProjectCard({
       <div className="flex flex-1 flex-col gap-3 p-5">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <Tag>{project.tag}</Tag>
+            <Tag variant={client ? "client" : "concept"}>{project.tag}</Tag>
             {project.demoUrl && (
               <span className="flex items-center gap-1.5 text-xs font-semibold text-mint">
                 <span className="size-1.5 rounded-full bg-mint" aria-hidden />

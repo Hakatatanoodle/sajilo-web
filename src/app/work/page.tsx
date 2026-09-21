@@ -9,14 +9,15 @@ import { work } from "@/content/work";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Websites and digital builds by Sajilo Web — clinic, gym, hotel, restaurant, and storefront. Open the live demos and click through.",
+    "Six labelled concept builds you can open and click through — and our first real client system, live in production for Ganapati Eye Care Clinic. By Sajilo Web.",
   alternates: { canonical: "/work" },
 };
 
 /**
- * Work index (design.md §68: WORK ★4). Every project is our own concept/demo
- * build and is labeled as such — the distinction from client work is
- * non-negotiable (design.md §26, portfolio_v0.1.md §35).
+ * Work index (design.md §68: WORK ★4). Six projects are our own concept/demo
+ * builds, tagged "Concept · Demo"; Ganapati Eye Care Clinic is a real client
+ * system, tagged "Client · Live". The distinction is non-negotiable and stays
+ * visible on every card (design.md §26, portfolio_v0.1.md §35).
  */
 export default function WorkPage() {
   return (
@@ -26,7 +27,7 @@ export default function WorkPage() {
         <PageHeader
           eyebrow="Our work"
           title="Work we can show you."
-          lead="Browse real builds across the businesses we serve — a storefront, a gym, a sweets shop, a clinic, a retreat, and a restaurant. Several run live right on the page."
+          lead="Six labelled concept builds you can open and click through — plus our first real client system, live in production for Ganapati Eye Care Clinic."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
