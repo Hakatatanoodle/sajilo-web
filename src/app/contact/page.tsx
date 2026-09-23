@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
+import { FaqSection } from "@/components/FaqSection";
 import { IconChip } from "@/components/IconChip";
 import { InquiryComposer } from "@/components/InquiryComposer";
 import { PageHeader } from "@/components/PageHeader";
@@ -123,6 +124,8 @@ export default function ContactPage() {
           <InquiryComposer />
         </Reveal>
       </Container>
+
+      <FaqSection />
     </div>
   );
 }

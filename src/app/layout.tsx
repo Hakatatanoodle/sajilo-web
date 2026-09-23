@@ -5,7 +5,8 @@ import { JsonLd } from "@/components/JsonLd";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
 import { StickyMobileCta } from "@/components/StickyMobileCta";
-import { areaServed, site } from "@/content/site";
+import { industries, areaServed, site } from "@/content/site";
+import { services } from "@/content/services";
 import "./globals.css";
 
 /*
@@ -27,21 +28,35 @@ const dmSans = DM_Sans({
 });
 
 /*
- * Site-wide structured data (schema.org JSON-LD) — tells Google that
- * "Sajilo Web" is an entity, not just page text. Deliberately minimal:
- * no `sameAs` (no confirmed live social profiles to link) and no
- * `aggregateRating` (no real reviews yet) — both would be invented facts.
+ * Site-wide structured data (schema.org JSON-LD) — tells Google AND the
+ * AI answer engines (Google AI Overviews, ChatGPT, Perplexity, Gemini)
+ * that "Sajilo Web" is an entity: a web studio serving the Kathmandu
+ * valley, not just words on a page. Typed as `ProfessionalService` (a
+ * LocalBusiness subtype of Organization) so engines categorise it as a
+ * local web-development agency — the entity class AEO/GEO systems look
+ * for when someone asks "web design agency in Kathmandu". Still
+ * deliberately minimal: no `sameAs` (no confirmed live social profiles),
+ * no `priceRange`, no `aggregateRating` (no real reviews yet) — anything
+ * else would be an invented fact.
  */
 const siteJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Organization",
+      "@type": "ProfessionalService",
       "@id": `${site.url}/#organization`,
       name: site.name,
       url: site.url,
+      description: site.shortDescription,
       email: site.contact.email,
+      telephone: site.contact.phoneDisplay,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Kathmandu",
+        addressCountry: "NP",
+      },
       areaServed: [...areaServed],
+      knowsAbout: [...services.map((service) => service.title), ...industries],
     },
     {
       "@type": "WebSite",
