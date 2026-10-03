@@ -1,3 +1,4 @@
+import { getPosts } from "@/content/blog";
 import { services } from "@/content/services";
 import { areaServed, industries, site } from "@/content/site";
 import { work } from "@/content/work";
@@ -14,7 +15,7 @@ import { work } from "@/content/work";
  */
 export const dynamic = "force-static";
 
-export function GET(): Response {
+export async function GET(): Promise<Response> {
   const lines: string[] = [
     `# ${site.name}`,
     "",
@@ -31,6 +32,7 @@ export function GET(): Response {
     `- [About](${site.url}/about): Who runs the studio and how we work.`,
     `- [Contact](${site.url}/contact): WhatsApp, email, and a short inquiry form.`,
     `- [Privacy](${site.url}/privacy): No analytics, no ads, no contact backend.`,
+    `- [Blog](${site.url}/blog): Notes from the studio on what a small business actually needs online.`,
     "",
     "## Services",
     "",
@@ -55,6 +57,13 @@ export function GET(): Response {
     "- Industries served: " + industries.join(", ") + ".",
     "- Every project tagged \"Concept · Demo\" is a real, runnable website we built to demonstrate capability — never client work.",
     "- We reply personally via WhatsApp or email; every engagement starts with a scoping conversation, then a clear plan with real prices and timelines.",
+    "",
+    "## Blog",
+    "",
+    ...(await getPosts()).map(
+      (post) =>
+        `- [${post.title}](${site.url}/blog/${post.slug}): ${post.description} — by ${post.author}, ${post.date}.`
+    ),
     "",
   ];
 

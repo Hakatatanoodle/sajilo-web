@@ -92,6 +92,146 @@
   background-size: 56px 56px;
 }
 
+/*
+ * Blog prose — the reading face of a post. Hand-rolled rather than pulled
+ * from @tailwindcss/typography so the output stays flat: a single set of
+ * rules that scales through the brand type ramp, never a generic plugin
+ * palette. Paragraphs use fg-muted (never the faint grey), headings are the
+ * display face, and links are the amber accent with an underline offset.
+ */
+.prose {
+  --prose-body: var(--color-fg-muted);
+  --prose-headings: var(--color-fg);
+  --prose-bold: var(--color-fg);
+  --prose-links: var(--color-accent);
+  line-height: 1.7;
+}
+
+.prose p {
+  margin: 0.75em 0;
+  color: var(--prose-body);
+}
+
+.prose p:first-child {
+  margin-top: 0;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin: 1.4em 0 0.5em;
+  color: var(--prose-headings);
+  font-family: var(--font-display);
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.prose h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.prose h2 {
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+}
+
+.prose h3 {
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+}
+
+.prose h1:first-child,
+.prose h2:first-child,
+.prose h3:first-child {
+  margin-top: 0;
+}
+
+.prose a {
+  color: var(--prose-links);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: color 0.15s ease;
+}
+
+.prose a:hover {
+  color: var(--color-accent-strong);
+}
+
+.prose strong {
+  color: var(--prose-bold);
+  font-weight: 700;
+}
+
+.prose ul,
+.prose ol {
+  margin: 0.75em 0;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin: 0.35em 0;
+  color: var(--prose-body);
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose blockquote {
+  margin: 1.2em 0;
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 3px solid var(--color-brand);
+  color: var(--prose-body);
+  font-style: italic;
+}
+
+.prose blockquote p {
+  margin: 0.35em 0;
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.875em;
+  background: var(--color-surface-2);
+  color: var(--color-navy);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+.prose pre {
+  margin: 1.2em 0;
+  padding: 1em 1.25em;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: var(--color-navy);
+}
+
+.prose pre code {
+  background: transparent;
+  color: #f5f5f5;
+  padding: 0;
+}
+
+.prose img {
+  margin: 1.4em 0;
+  border-radius: 12px;
+}
+
+.prose hr {
+  margin: 1.6em 0;
+  border: 0;
+  border-top: 1px solid var(--color-line);
+}
+
 /* Brand emphasis — a yellow marker swipe under the word (the logo's "Web"
    pill energy) instead of the old gradient text fill. */
 @utility text-gradient {
