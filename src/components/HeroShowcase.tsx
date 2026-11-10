@@ -8,7 +8,7 @@ import {
   useState,
   type CSSProperties,
 } from "react";
-import { BrowserFrame } from "@/components/BrowserFrame";
+import { BrowserChrome } from "@/components/BrowserChrome";
 import { ArrowUpRight } from "@/components/icons";
 import { ProjectMockup, type MiniPalette } from "@/components/mockups";
 import type { ProjectKind } from "@/content/work";
@@ -20,21 +20,38 @@ export type ShowcaseItem = {
   tag: string;
   kind: ProjectKind;
   palette: MiniPalette;
+  /** Path of the runnable demo under /public/demos (optional). */
+  demoUrl?: string;
 };
 
 /** The miniatures are drawn for a ~380px-wide card; we scale them up to fit. */
-const BASE_WIDTH = 380;
+const MINI_WIDTH = 380;
+/** Live demos are rendered at a desktop viewport, then scaled to fit. */
+const LIVE_WIDTH = 1280;
 const AUTO_MS = 6500;
 const SWAP_MS = 1150;
+/** First live demo waits for the hero's load-in to finish. */
+const FIRST_LIVE_DELAY_MS = 1600;
+
+type SaveDataNavigator = Navigator & { connection?: { saveData?: boolean } };
 
 /**
- * Hero showcase — tabs over a browser frame. Switching tabs plays a
- * direction-aware wipe (forward tab = wipes in from the right, backward =
- * from the left; the outgoing page recedes and dims). Auto-advances every
- * few seconds until the visitor hovers or focuses it; never auto-advances
- * for prefers-reduced-motion.
+ * Hero showcase — tabs over a browser frame.
  *
- * Round 2 will swap the CSS miniatures for the live demos in public/demos.
+ * Every tab starts as a lightweight CSS miniature ("poster"). On desktop
+ * (≥1024px, not reduced-data) the real demo site is mounted on top of the
+ * active poster once its wipe has finished, and fades in when loaded — so the
+ * hero never shows a blank box, and phones / data-saver visitors never pay
+ * for an iframe.
+ *
+ * The live demo is click-to-activate: until the visitor clicks it, a guard
+ * sits over the iframe so page scroll is never trapped inside it. Moving the
+ * pointer out of the frame releases it again.
+ *
+ * Switching tabs plays a direction-aware wipe (forward = from the right,
+ * backward = from the left; the old page recedes and dims). Auto-advances
+ * every few seconds until the visitor hovers or focuses it; never
+ * auto-advances for prefers-reduced-motion.
  */
 export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
   const [active, setActive] = useState(0);
@@ -42,12 +59,19 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
   const [dir, setDir] = useState<"next" | "back">("next");
   const [turns, setTurns] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [scale, setScale] = useState<number | null>(null);
+  const [width, setWidth] = useState<number | null>(null);
+
+  // Live-demo state.
+  const [live, setLive] = useState(false);
+  const [liveSlug, setLiveSlug] = useState<string | null>(null);
+  const [loadedSlug, setLoadedSlug] = useState<string | null>(null);
+  const [interactive, setInteractive] = useState(false);
 
   const activeRef = useRef(0);
   const swapTimer = useRef(0);
   const reduced = useRef(false);
   const stageRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
 
   const go = useCallback((index: number, direction?: "next" | "back") => {
     const current = activeRef.current;
@@ -57,6 +81,7 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
     setPrev(current);
     setActive(index);
     setTurns((t) => t + 1);
+    setInteractive(false);
     window.clearTimeout(swapTimer.current);
     swapTimer.current = window.setTimeout(() => setPrev(null), SWAP_MS);
   }, []);
@@ -65,14 +90,25 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
     reduced.current = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    return () => window.clearTimeout(swapTimer.current);
+
+    // Live demos only on roomy screens and when the visitor hasn't asked
+    // the browser to save data.
+    const wide = window.matchMedia("(min-width: 1024px)");
+    const saveData = (navigator as SaveDataNavigator).connection?.saveData;
+    const update = () => setLive(wide.matches && !saveData);
+    update();
+    wide.addEventListener("change", update);
+    return () => {
+      wide.removeEventListener("change", update);
+      window.clearTimeout(swapTimer.current);
+    };
   }, []);
 
-  // Fit the miniatures to the frame's actual width.
+  // Fit the miniatures and the live demo to the frame's actual width.
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
-    const measure = () => setScale(el.clientWidth / BASE_WIDTH);
+    const measure = () => setWidth(el.clientWidth);
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(el);
@@ -89,12 +125,29 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
     return () => window.clearTimeout(id);
   }, [active, paused, items.length, go]);
 
+  // Mount the live demo once the active tab has settled.
+  useEffect(() => {
+    setLiveSlug(null);
+    setLoadedSlug(null);
+    if (!live) return;
+    const item = items[active];
+    if (!item?.demoUrl) return;
+    const id = window.setTimeout(
+      () => setLiveSlug(item.slug),
+      turns === 0 ? FIRST_LIVE_DELAY_MS : SWAP_MS - 150
+    );
+    return () => window.clearTimeout(id);
+  }, [active, live, items, turns]);
+
   const current = items[active];
 
   return (
     <div
       onPointerEnter={() => setPaused(true)}
-      onPointerLeave={() => setPaused(false)}
+      onPointerLeave={() => {
+        setPaused(false);
+        setInteractive(false);
+      }}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
@@ -130,37 +183,84 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
 
       <div className="hn-frame">
         <div id="hn-panel" role="tabpanel" aria-labelledby={`hn-tab-${active}`}>
-          <BrowserFrame
-            title={`${current.title} (concept demo)`}
-            url="yourbusiness.com.np"
-          >
-            <div
-              ref={stageRef}
-              className="hn-shots"
-              data-dir={dir}
-              data-ready={scale !== null ? "" : undefined}
-              style={
-                scale !== null ? ({ "--k": scale } as CSSProperties) : undefined
-              }
-            >
-              {items.map((item, i) => {
-                const state = i === active ? "on" : i === prev ? "out" : null;
-                if (!state) return null;
-                return (
-                  <div
-                    key={state === "on" ? `${item.slug}-${turns}` : item.slug}
-                    className="hn-shot"
-                    data-state={state}
-                    data-enter={state === "on" && turns > 0 ? "" : undefined}
-                  >
-                    <div className="hn-scale">
-                      <ProjectMockup kind={item.kind} palette={item.palette} />
+          <div className="overflow-hidden rounded-xl border border-line bg-white shadow-[0_30px_80px_-30px_rgba(31,39,64,0.28)]">
+            <BrowserChrome url={`${current.slug}.sajiloweb-demo.build`} />
+            <div className="relative aspect-[16/10]">
+              <div
+                ref={stageRef}
+                className="hn-shots"
+                data-dir={dir}
+                data-ready={width !== null ? "" : undefined}
+                style={
+                  width !== null
+                    ? ({
+                        "--k": width / MINI_WIDTH,
+                        "--kl": width / LIVE_WIDTH,
+                      } as CSSProperties)
+                    : undefined
+                }
+              >
+                {items.map((item, i) => {
+                  const state = i === active ? "on" : i === prev ? "out" : null;
+                  if (!state) return null;
+                  const showLive =
+                    state === "on" && liveSlug === item.slug && item.demoUrl;
+                  return (
+                    <div
+                      key={state === "on" ? `${item.slug}-${turns}` : item.slug}
+                      className="hn-shot"
+                      data-state={state}
+                      data-enter={state === "on" && turns > 0 ? "" : undefined}
+                    >
+                      <div className="hn-scale">
+                        <ProjectMockup
+                          kind={item.kind}
+                          palette={item.palette}
+                        />
+                      </div>
+
+                      {showLive ? (
+                        <>
+                          <div
+                            className="hn-live"
+                            data-loaded={
+                              loadedSlug === item.slug ? "" : undefined
+                            }
+                          >
+                            <iframe
+                              ref={frameRef}
+                              src={item.demoUrl}
+                              title={`${item.title} — live demo`}
+                              sandbox="allow-scripts allow-forms"
+                              referrerPolicy="no-referrer"
+                              tabIndex={interactive ? 0 : -1}
+                              onLoad={() => setLoadedSlug(item.slug)}
+                            />
+                          </div>
+                          {!interactive && loadedSlug === item.slug ? (
+                            <button
+                              type="button"
+                              className="hn-guard"
+                              aria-label={`Try the ${item.title} demo — click to interact`}
+                              onClick={() => {
+                                setInteractive(true);
+                                window.setTimeout(
+                                  () => frameRef.current?.focus(),
+                                  0
+                                );
+                              }}
+                            >
+                              <span>Click to try it live</span>
+                            </button>
+                          ) : null}
+                        </>
+                      ) : null}
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </BrowserFrame>
+          </div>
         </div>
       </div>
 

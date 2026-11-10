@@ -21,6 +21,7 @@ export function HeroNavy() {
     tag: p.tag,
     kind: p.mockKind,
     palette: p.palette,
+    demoUrl: p.demoUrl,
   }));
 
   return (
