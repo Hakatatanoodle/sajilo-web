@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "ghost" | "dark" | "onDark" | "quiet";
+type Variant = "primary" | "ghost" | "dark" | "onDark" | "onNavy" | "quiet";
 type Size = "sm" | "md" | "lg";
 
 const baseStyles =
@@ -19,6 +19,8 @@ const variantStyles: Record<Variant, string> = {
   /* Ghost tuned for use on the yellow CTA band. */
   onDark:
     "border border-navy/30 bg-transparent text-navy hover:border-navy/60 hover:bg-navy/10",
+  /* Quiet text link for use on the dark navy hero. */
+  onNavy: "text-white/75 hover:text-white",
   quiet: "text-fg-muted hover:text-fg",
 };
 

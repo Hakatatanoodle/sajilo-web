@@ -1,0 +1,500 @@
+/*
+ * Hero A — "navy sunrise".
+ *
+ * Choreography is plain CSS keyframes (load-in) + one CSS variable, --p
+ * (0 → 1 over the first ~85% of a viewport of scroll), written by
+ * <ScrollProgress>. Everything scroll-driven reads --p via calc(), so there
+ * is no animation library. Entrance animations are gated on `html.js` and
+ * `prefers-reduced-motion: no-preference` (no-JS and reduced-motion visitors
+ * get the finished, static hero).
+ */
+
+.hero-navy {
+  --p: 0;
+  --hn-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --hn-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --hn-inout: cubic-bezier(0.65, 0, 0.35, 1);
+
+  position: relative;
+  isolation: isolate;
+  /* Slide under the fixed 4rem header (main has pt-16). */
+  margin-top: -4rem;
+  padding-top: calc(4rem + clamp(2.25rem, 7vh, 5rem));
+  padding-bottom: clamp(2.5rem, 7vh, 4.5rem);
+  color: #fff;
+}
+
+/* ── Background ─────────────────────────────────────────────────────────── */
+
+.hero-navy__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    #161d33 0%,
+    #1f2740 46%,
+    #2b3252 62%,
+    #ffffff 100%
+  );
+}
+
+.hero-navy__veil {
+  position: absolute;
+  inset: 0;
+  background: #161d33;
+  opacity: 0;
+}
+
+/* The sun is anchored to the FIRST viewport (not the hero's full height), so
+   its glow is visible on arrival, rising behind the top edge of the frame. */
+.hero-navy__sun {
+  position: absolute;
+  left: -25%;
+  top: calc(100svh - 52vh);
+  width: 150%;
+  height: 100vh;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 52%,
+    #ffc629 0%,
+    rgba(255, 198, 41, 0.9) 22%,
+    rgba(255, 176, 32, 0.42) 48%,
+    rgba(255, 176, 32, 0) 74%
+  );
+  /* Scroll: drifts down and softens as you leave the hero. */
+  transform: translateY(calc(var(--p) * 14%)) scale(calc(1 + var(--p) * 0.06));
+  opacity: calc(1 - var(--p) * 0.35);
+  /* Screen (not plain alpha) keeps yellow-on-navy luminous instead of olive. */
+  mix-blend-mode: screen;
+}
+
+.hero-navy__core {
+  position: absolute;
+  left: 28%;
+  top: 30%;
+  width: 44%;
+  height: 44%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    rgba(255, 233, 150, 0.95) 0%,
+    rgba(255, 216, 77, 0.45) 45%,
+    rgba(255, 216, 77, 0) 75%
+  );
+}
+
+.hero-navy__ember {
+  position: absolute;
+  right: 14%;
+  top: 22%;
+  width: 22%;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  background: radial-gradient(
+    closest-side,
+    rgba(240, 180, 41, 0.55),
+    rgba(240, 180, 41, 0)
+  );
+}
+
+.hero-navy__dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 18%, #000, transparent);
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 18%, #000, transparent);
+}
+
+.hero-navy__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Clean exit into the white page. */
+.hero-navy__bg::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 20%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+}
+
+/* ── Copy ───────────────────────────────────────────────────────────────── */
+
+.hero-navy__copy {
+  max-width: 54rem;
+  margin-inline: auto;
+  text-align: center;
+  /* Scroll: lifts away and fades while the frame takes over. */
+  translate: 0 calc(var(--p) * -36px);
+  opacity: calc(1 - var(--p) * 0.6);
+}
+
+.hn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.hn-pill i {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  box-shadow: 0 0 10px rgba(255, 198, 41, 0.9);
+}
+
+.hn-title {
+  margin-top: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 6.6vw, 5.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+
+.hl-line {
+  display: block;
+}
+
+.hl-accent {
+  color: var(--color-brand);
+}
+
+/* Each word sits in a mask; its inner span slides up through it. */
+.hl-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.04em 0.16em;
+  margin: 0 -0.04em -0.16em;
+}
+
+.hl-word > span {
+  display: inline-block;
+  transform-origin: 0 100%;
+}
+
+.hn-lead {
+  margin: 1.5rem auto 0;
+  max-width: 40rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.hn-actions {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hn-micro {
+  margin: 1rem auto 0;
+  max-width: 34rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* ── Stage: tabs + tilted frame ─────────────────────────────────────────── */
+
+.hn-stage {
+  margin: clamp(2rem, 5vh, 3.25rem) auto 0;
+  max-width: 56rem;
+  text-align: center;
+}
+
+.hn-tabs {
+  --n: 3;
+  --i: 0;
+  position: relative;
+  display: inline-grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.hn-tab-ind {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / var(--n));
+  border-radius: 9999px;
+  background: var(--color-brand);
+  box-shadow: 0 6px 18px -6px rgba(255, 198, 41, 0.8);
+  transform: translateX(calc(var(--i) * 100%));
+  transition: transform 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hn-tab {
+  position: relative;
+  z-index: 1;
+  padding: 0.5rem 1.15rem;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.78);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.hn-tab:hover {
+  color: #fff;
+}
+
+.hn-tab[aria-selected="true"] {
+  color: var(--color-navy);
+}
+
+.hn-frame {
+  margin-top: 1rem;
+  padding: 6px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 1px 2px rgba(20, 10, 5, 0.06),
+    0 40px 90px -40px rgba(120, 80, 5, 0.55);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  /* Scroll: starts tilted back and flattens as you scroll. */
+  transform-origin: 50% 0;
+  transform: perspective(1600px)
+    rotateX(calc((1 - var(--p)) * 26deg))
+    translateY(calc((1 - var(--p)) * 24px))
+    scale(calc(0.86 + var(--p) * 0.14));
+}
+
+.hn-frame > div[role="tabpanel"] > div {
+  border-radius: 20px;
+}
+
+.hn-caption {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  text-align: left;
+  color: var(--color-navy);
+}
+
+.hn-caption p {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.hn-caption .hn-tag {
+  border-radius: 9999px;
+  background: var(--color-brand-soft);
+  padding: 0.15rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #8a5a00;
+}
+
+.hn-caption a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-decoration-color: var(--color-brand);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* ── Showcase layers (direction-aware wipe) ─────────────────────────────── */
+
+.hn-shots {
+  --k: 1.6;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.hn-shot {
+  position: absolute;
+  inset: 0;
+}
+
+.hn-shot[data-state="on"] {
+  z-index: 2;
+}
+
+.hn-shot[data-state="out"] {
+  z-index: 1;
+}
+
+/* The miniatures are drawn for a ~380px card; scale them to the frame. */
+.hn-scale {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 380px;
+  height: 237.5px;
+  transform-origin: 0 0;
+  transform: scale(var(--k));
+}
+
+html.js .hn-shots:not([data-ready]) .hn-scale {
+  opacity: 0;
+}
+
+/* ── Motion (only when JS is on and motion is allowed) ──────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .hero-navy__veil {
+    animation: hn-fade-out 1.1s var(--hn-quart) backwards;
+  }
+  html.js .hero-navy__sun {
+    animation: hn-sunrise 1.4s var(--hn-expo) backwards;
+  }
+  html.js .hero-navy__core {
+    animation: hn-breathe 16s ease-in-out infinite alternate;
+  }
+  html.js .hero-navy__ember {
+    animation: hn-ember 22s ease-in-out infinite alternate;
+  }
+
+  html.js .hn-pill {
+    animation: hn-rise-pill 0.7s var(--hn-expo) 40ms backwards;
+  }
+  html.js .hl-word > span {
+    animation: hn-word 0.95s var(--hn-expo) backwards;
+    animation-delay: calc(0.13s + var(--w) * 42ms + var(--l) * 50ms);
+  }
+  html.js .hn-lead {
+    animation: hn-rise 0.8s var(--hn-expo) 0.43s backwards;
+  }
+  html.js .hn-actions {
+    animation: hn-rise 0.8s var(--hn-expo) 0.53s backwards;
+  }
+  html.js .hn-micro {
+    animation: hn-rise 0.8s var(--hn-expo) 0.6s backwards;
+  }
+  html.js .hn-stage {
+    animation: hn-arrive 1.1s var(--hn-expo) 0.55s backwards;
+  }
+
+  /* New screenshot wipes in; its picture settles from slightly zoomed. */
+  html.js .hn-shot[data-state="on"][data-enter] {
+    animation: hn-wipe-next 0.82s var(--hn-inout) backwards;
+  }
+  html.js .hn-shot[data-state="on"][data-enter] .hn-scale {
+    animation: hn-settle-next 1.1s var(--hn-expo) backwards;
+  }
+  html.js .hn-shots[data-dir="back"] .hn-shot[data-state="on"][data-enter] {
+    animation-name: hn-wipe-back;
+  }
+  html.js .hn-shots[data-dir="back"] .hn-shot[data-state="on"][data-enter] .hn-scale {
+    animation-name: hn-settle-back;
+  }
+  /* The old one shrinks away and dims. */
+  html.js .hn-shot[data-state="out"] {
+    animation: hn-recede-next 0.82s var(--hn-inout) forwards;
+  }
+  html.js .hn-shots[data-dir="back"] .hn-shot[data-state="out"] {
+    animation-name: hn-recede-back;
+  }
+}
+
+@keyframes hn-fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes hn-sunrise {
+  0% { opacity: 0.2; translate: 0 38%; scale: 0.78; }
+}
+@keyframes hn-rise-pill {
+  0% { opacity: 0; translate: 0 14px; scale: 0.94; }
+}
+@keyframes hn-word {
+  0% { translate: 0 112%; rotate: 7deg; }
+}
+@keyframes hn-rise {
+  0% { opacity: 0; translate: 0 18px; }
+}
+@keyframes hn-arrive {
+  0% { opacity: 0; translate: 0 120px; }
+}
+@keyframes hn-breathe {
+  0% { opacity: 1; scale: 1; }
+  100% { opacity: 0.82; scale: 1.1; }
+}
+@keyframes hn-ember {
+  0% { translate: 0 0; scale: 1; }
+  50% { translate: -14% -8%; scale: 1.12; }
+  100% { translate: 14% 2%; scale: 0.94; }
+}
+@keyframes hn-wipe-next {
+  0% { clip-path: inset(0 0 0 100%); }
+  100% { clip-path: inset(0); }
+}
+@keyframes hn-wipe-back {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0); }
+}
+@keyframes hn-settle-next {
+  0% { translate: 16% 0; }
+}
+@keyframes hn-settle-back {
+  0% { translate: -16% 0; }
+}
+@keyframes hn-recede-next {
+  100% { clip-path: inset(0 round 18px); translate: -7% 0; scale: 0.88; opacity: 0.55; }
+}
+@keyframes hn-recede-back {
+  100% { clip-path: inset(0 round 18px); translate: 7% 0; scale: 0.88; opacity: 0.55; }
+}
+
+@media (max-width: 640px) {
+  .hn-tab {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.74rem;
+  }
+  .hn-caption {
+    justify-content: center;
+    text-align: center;
+  }
+}

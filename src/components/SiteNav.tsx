@@ -18,13 +18,30 @@ export function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [onDark, setOnDark] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const update = () => {
+      setScrolled(window.scrollY > 8);
+      // A section marked data-nav-dark (the navy hero) restyles the header
+      // for as long as it is behind it; the bottom margin flips back to the
+      // light header a little early because the hero fades to white there.
+      const dark = document.querySelector("[data-nav-dark]");
+      if (!dark) {
+        setOnDark(false);
+        return;
+      }
+      const rect = dark.getBoundingClientRect();
+      setOnDark(rect.top <= 32 && rect.bottom > 340);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
@@ -45,6 +62,8 @@ export function SiteNav() {
     };
   }, [open]);
 
+  const dark = onDark && !open;
+
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
@@ -53,7 +72,9 @@ export function SiteNav() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-300",
         scrolled || open
-          ? "border-b border-line bg-white/85 shadow-[0_10px_40px_-24px_rgba(31,39,64,0.35)] backdrop-blur-md"
+          ? dark
+            ? "border-b border-white/10 bg-navy-deep/80 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.5)] backdrop-blur-md"
+            : "border-b border-line bg-white/85 shadow-[0_10px_40px_-24px_rgba(31,39,64,0.35)] backdrop-blur-md"
           : "border-b border-transparent"
       )}
     >
@@ -66,7 +87,7 @@ export function SiteNav() {
           className="rounded-md"
           aria-label={`${site.name} — home`}
         >
-          <LogoLockup />
+          <LogoLockup inverted={dark} />
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
@@ -78,8 +99,12 @@ export function SiteNav() {
               className={cn(
                 "rounded-full px-4 py-2 text-sm font-medium transition-colors",
                 isActive(item.href)
-                  ? "bg-brand/20 font-semibold text-navy"
-                  : "text-fg-muted hover:bg-surface-2 hover:text-fg"
+                  ? dark
+                    ? "bg-white/10 font-semibold text-white"
+                    : "bg-brand/20 font-semibold text-navy"
+                  : dark
+                    ? "text-white/75 hover:bg-white/10 hover:text-white"
+                    : "text-fg-muted hover:bg-surface-2 hover:text-fg"
               )}
             >
               {item.label}
@@ -96,7 +121,12 @@ export function SiteNav() {
 
         <button
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-full border border-line bg-white text-fg transition-colors hover:bg-surface-2 md:hidden"
+          className={cn(
+            "inline-flex size-10 items-center justify-center rounded-full border transition-colors md:hidden",
+            dark
+              ? "border-white/20 bg-white/10 text-white hover:bg-white/15"
+              : "border-line bg-white text-fg hover:bg-surface-2"
+          )}
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
