@@ -58,7 +58,7 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
   const [prev, setPrev] = useState<number | null>(null);
   const [dir, setDir] = useState<"next" | "back">("next");
   const [turns, setTurns] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hover, setHover] = useState(false);
   const [width, setWidth] = useState<number | null>(null);
 
   // Live-demo state.
@@ -66,6 +66,8 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
   const [liveSlug, setLiveSlug] = useState<string | null>(null);
   const [loadedSlug, setLoadedSlug] = useState<string | null>(null);
   const [interactive, setInteractive] = useState(false);
+  // Autoplay stays paused while hovering, focused, or using the live demo.
+  const paused = hover || interactive;
 
   const activeRef = useRef(0);
   const swapTimer = useRef(0);
@@ -125,6 +127,42 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
     return () => window.clearTimeout(id);
   }, [active, paused, items.length, go]);
 
+  // While the live demo is active, release it when the pointer goes anywhere
+  // outside the frame (the page only receives pointer events outside the
+  // iframe), on a press outside it, or when keyboard focus returns to the
+  // page (tabbing out of the demo). We deliberately do NOT use
+  // pointerleave on the wrapper: browsers can report "left" the moment the
+  // pointer moves onto the iframe, which would re-lock it under the user.
+  useEffect(() => {
+    if (!interactive) return;
+    const outside = (e: PointerEvent) => {
+      const el = stageRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      if (
+        e.clientX < r.left ||
+        e.clientX > r.right ||
+        e.clientY < r.top ||
+        e.clientY > r.bottom
+      ) {
+        setInteractive(false);
+      }
+    };
+    // Key presses inside a cross-origin iframe never reach the page, so a
+    // key like Escape can't be used; focus returning to the page is the signal.
+    const onFocusIn = (e: FocusEvent) => {
+      if (e.target !== frameRef.current) setInteractive(false);
+    };
+    window.addEventListener("pointermove", outside, { passive: true });
+    window.addEventListener("pointerdown", outside, { passive: true });
+    window.addEventListener("focusin", onFocusIn);
+    return () => {
+      window.removeEventListener("pointermove", outside);
+      window.removeEventListener("pointerdown", outside);
+      window.removeEventListener("focusin", onFocusIn);
+    };
+  }, [interactive]);
+
   // Mount the live demo once the active tab has settled.
   useEffect(() => {
     setLiveSlug(null);
@@ -143,13 +181,10 @@ export function HeroShowcase({ items }: { items: ShowcaseItem[] }) {
 
   return (
     <div
-      onPointerEnter={() => setPaused(true)}
-      onPointerLeave={() => {
-        setPaused(false);
-        setInteractive(false);
-      }}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onPointerEnter={() => setHover(true)}
+      onPointerLeave={() => setHover(false)}
+      onFocus={() => setHover(true)}
+      onBlur={() => setHover(false)}
     >
       <div
         className="hn-tabs"
