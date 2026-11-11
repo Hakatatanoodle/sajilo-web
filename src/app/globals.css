@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./hero-navy.css";
+@import "./hero-taste.css";
 
 /*
  * Sajilo Web design tokens — design.md §71.
@@ -32,6 +33,18 @@
   --color-accent-strong: #ffc629;
   --color-accent-2: #ffd84d;
   --color-mint: #0f766e;
+
+  /* Color chapters — tasteskill-inspired section palettes */
+  --color-chapter-slate: #0f172a;
+  --color-chapter-slate-deep: #020617;
+  --color-chapter-violet: #7c3aed;
+  --color-chapter-violet-soft: #ede9fe;
+  --color-chapter-emerald: #10b981;
+  --color-chapter-emerald-soft: #ecfdf5;
+  --color-chapter-rose: #f43f5e;
+  --color-chapter-rose-soft: #fff1f2;
+  --color-chamber-amber: #f59e0b;
+  --color-chamber-amber-soft: #fffbeb;
 
   /* Typography (wired to next/font variables in layout.tsx) */
   --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;

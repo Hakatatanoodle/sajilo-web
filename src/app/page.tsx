@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CtaSection } from "@/sections/CtaSection";
-import { HeroNavy } from "@/sections/HeroNavy";
+import { HeroTaste } from "@/sections/HeroTaste";
 import { Positioning } from "@/sections/Positioning";
 import { Process } from "@/sections/Process";
 import { ServicesGrid } from "@/sections/ServicesGrid";
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <HeroNavy />
+      <HeroTaste />
       <Positioning />
       <WorkTeaser />
       <ServicesGrid />
