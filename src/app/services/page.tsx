@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AuroraBackdrop } from "@/components/AuroraBackdrop";
-import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
-import { IconChip } from "@/components/IconChip";
-import { ArrowUpRight, serviceIconMap } from "@/components/icons";
-import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
-import { Reveal } from "@/components/Reveal";
-import { CtaSection } from "@/sections/CtaSection";
+import { ArrowUpRight } from "@/components/icons";
+import { JsonLd } from "@/components/JsonLd";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
-import { work, type Project } from "@/content/work";
+import { LaunchCta } from "@/sections/LaunchCta";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -20,118 +15,65 @@ export const metadata: Metadata = {
   alternates: { canonical: "/services" },
 };
 
-/* Breadcrumb structured data — Home > Services. */
 const breadcrumbLd = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: site.url },
-    {
-      "@type": "ListItem",
-      position: 2,
-      name: "Services",
-      item: `${site.url}/services`,
-    },
+    { "@type": "ListItem", position: 2, name: "Services", item: `${site.url}/services` },
   ],
 };
 
-/* Case-study ↔ service cross-links: the first project that demonstrates
-   each service, keyed by service slug. Services with no matching build
-   simply render without a "see it built" link. */
-const showcaseByService = new Map<string, Project>();
-for (const project of work) {
-  if (!showcaseByService.has(project.relatedService)) {
-    showcaseByService.set(project.relatedService, project);
-  }
-}
-
 /**
- * Services detail page (design.md §68: SERVICES ★3).
+ * Services index — the contents page. Five offers as a typographic index;
+ * each row opens its own offer sheet. Recommended by fit, not invoice size.
  */
 export default function ServicesPage() {
   return (
     <>
       <JsonLd data={breadcrumbLd} />
-      <div className="relative isolate overflow-hidden">
-        <AuroraBackdrop variant="edge-right" />
-        <Container className="py-16 sm:py-20">
-          <PageHeader
-            eyebrow="Services"
-            title="What we build."
-            lead="Five focused services — recommended by fit, not by invoice size. Every engagement starts with understanding how your business works."
-          />
+      <Container className="section-pad">
+        <PageHeader
+          eyebrow="The contents page"
+          title="What we build."
+          lead="Five focused services — recommended by fit, not by invoice size. Every engagement starts with understanding how your business works."
+        />
 
-          <div className="mt-14 space-y-6">
-            {services.map((service, index) => {
-              const Icon = serviceIconMap[service.icon];
-              const showcase = showcaseByService.get(service.slug);
-              return (
-                <Reveal key={service.slug} delay={index * 70}>
-                  <section
-                    id={service.slug}
-                    className="scroll-mt-24 rounded-2xl border border-line bg-surface p-7 sm:p-9"
-                  >
-                    <div className="flex flex-wrap items-center gap-4">
-                      <IconChip>
-                        <Icon className="size-5" />
-                      </IconChip>
-                      <div>
-                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-fg-faint">
-                          {String(index + 1).padStart(2, "0")}
-                        </p>
-                        <h2 className="font-display text-2xl font-extrabold text-fg">
-                          <Link
-                            href={`/services/${service.slug}`}
-                            className="transition-colors hover:text-accent"
-                          >
-                            {service.title}
-                          </Link>
-                        </h2>
-                      </div>
-                    </div>
+        <ul className="mt-12 border-b border-line">
+          {services.map((service, index) => (
+            <li key={service.slug} className="border-t border-line">
+              <Link
+                href={`/services/${service.slug}`}
+                className="group grid gap-4 py-7 sm:grid-cols-[3rem_1fr_auto] sm:items-baseline sm:gap-8"
+              >
+                <span className="font-mono text-[0.62rem] tracking-[0.12em] text-fg-faint">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span>
+                  <span className="industry-row__name block font-display text-2xl font-medium tracking-tight text-fg sm:text-3xl">
+                    {service.title}
+                  </span>
+                  <span className="mt-2 block max-w-xl text-sm leading-relaxed text-fg-muted">
+                    {service.short}
+                  </span>
+                  <span className="mt-3 block max-w-xl text-sm leading-relaxed text-fg-faint">
+                    <span className="font-semibold text-accent">Good fit:</span>{" "}
+                    {service.goodFit}
+                  </span>
+                </span>
+                <ArrowUpRight className="hidden size-6 text-fg-faint transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-navy sm:block" />
+              </Link>
+            </li>
+          ))}
+        </ul>
 
-                    <p className="mt-5 max-w-3xl leading-relaxed text-fg-muted">
-                      {service.description}
-                    </p>
-
-                    <div className="mt-7 grid gap-6 md:grid-cols-[1.2fr_1fr]">
-                      <div>
-                        <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-fg-faint">
-                          What&apos;s included
-                        </h3>
-                        <CheckList
-                          items={service.includes}
-                          spacing="compact"
-                          className="mt-3"
-                        />
-                      </div>
-                      <div className="rounded-xl border border-dashed border-line-strong p-5">
-                        <h3 className="text-sm font-bold uppercase tracking-[0.14em] text-fg-faint">
-                          A good fit if
-                        </h3>
-                        <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                          {service.goodFit}
-                        </p>
-                      </div>
-                    </div>
-
-                    {showcase ? (
-                      <Link
-                        href={`/work/${showcase.slug}`}
-                        className="group mt-7 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors hover:text-fg"
-                      >
-                        See it built — {showcase.title}
-                        <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                      </Link>
-                    ) : null}
-                  </section>
-                </Reveal>
-              );
-            })}
-          </div>
-        </Container>
-      </div>
-      <CtaSection />
+        <p className="mt-8 max-w-xl text-sm leading-relaxed text-fg-muted">
+          Not sure which one fits? That&apos;s exactly what the first
+          conversation is for — we&apos;ll tell you honestly if a smaller job
+          is the right one.
+        </p>
+      </Container>
+      <LaunchCta />
     </>
   );
 }

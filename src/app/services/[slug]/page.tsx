@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { ArrowLeft } from "@/components/icons";
 import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
-import { CtaSection } from "@/sections/CtaSection";
+import { LaunchCta } from "@/sections/LaunchCta";
 import { getService, services } from "@/content/services";
 import { areaServed, site } from "@/content/site";
 
@@ -87,7 +86,6 @@ export default async function ServicePage({
       <JsonLd data={serviceLd} />
       <JsonLd data={breadcrumbLd} />
       <div className="relative isolate overflow-hidden">
-        <AuroraBackdrop variant="edge-right" />
         <Container className="py-16 sm:py-20">
           <Reveal>
             <Link
@@ -127,7 +125,7 @@ export default async function ServicePage({
           </div>
         </Container>
       </div>
-      <CtaSection />
+      <LaunchCta />
     </>
   );
 }

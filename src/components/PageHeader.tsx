@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
-import { Reveal } from "@/components/Reveal";
 import { cn } from "@/lib/cn";
 
 type PageHeaderProps = {
   /**
-   * Header eyebrow. A plain string renders as the standard brand eyebrow
-   * (small caps, accent color); pass a node (e.g. a <Tag/>) for a custom one.
+   * Header eyebrow. A plain string renders as the mono chapter label;
+   * pass a node (e.g. a <Tag/>) for a custom one.
    */
   eyebrow?: ReactNode;
   title: ReactNode;
@@ -14,41 +13,34 @@ type PageHeaderProps = {
 };
 
 /**
- * Page-level header (h1) — the standard eyebrow / title / lead stack shared
- * by the work, services, about, and contact pages, with the same reveal
- * rhythm (0ms / 80ms / 160ms). The h2 counterpart for mid-page sections is
- * SectionHeading.
+ * Page-level header (h1) — the Open Studio editorial stack: a mono chapter
+ * label, a monument display title, and a calm lead. Shared by the work,
+ * services, about and contact pages so every route opens with the same voice.
  */
 export function PageHeader({ eyebrow, title, lead, className }: PageHeaderProps) {
   return (
-    <header className={cn("max-w-2xl", className)}>
+    <header className={cn("max-w-3xl", className)}>
       {eyebrow ? (
-        <Reveal>
-          {typeof eyebrow === "string" ? (
-            <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-accent">
-              {eyebrow}
-            </p>
-          ) : (
-            eyebrow
-          )}
-        </Reveal>
+        typeof eyebrow === "string" ? (
+          <p className="chapter">{eyebrow}</p>
+        ) : (
+          eyebrow
+        )
       ) : null}
 
-      <Reveal delay={80}>
-        <h1
-          className={cn(
-            "font-display text-4xl font-extrabold tracking-tight text-fg sm:text-5xl",
-            typeof eyebrow === "string" ? "mt-3" : "mt-5"
-          )}
-        >
-          {title}
-        </h1>
-      </Reveal>
+      <h1
+        className={cn(
+          "display-lg text-fg",
+          eyebrow ? "mt-5" : undefined
+        )}
+      >
+        {title}
+      </h1>
 
       {lead ? (
-        <Reveal delay={160}>
-          <p className="mt-5 text-lg leading-relaxed text-fg-muted">{lead}</p>
-        </Reveal>
+        <p className="mt-6 max-w-2xl text-base leading-relaxed text-fg-muted sm:text-lg">
+          {lead}
+        </p>
       ) : null}
     </header>
   );

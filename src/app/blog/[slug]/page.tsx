@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { ArrowLeft } from "@/components/icons";
 import { Container } from "@/components/Container";
 import { JsonLd } from "@/components/JsonLd";
@@ -89,7 +88,6 @@ export default async function PostPage({
       <JsonLd data={articleLd} />
 
       <div className="relative isolate overflow-hidden">
-        <AuroraBackdrop variant="page" />
         <Container className="py-14 sm:py-16">
           <Reveal>
             <Link

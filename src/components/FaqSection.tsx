@@ -1,95 +1,76 @@
 import { Container } from "@/components/Container";
-import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { coreFaqs, moreFaqs } from "@/content/faq";
 
 /**
- * FAQ section (Contact page) — the questions a hesitant prospect reads
- * right before deciding whether to reach out. Native <details>/<summary>
- * accordions: expands and collapses with zero JavaScript, consistent with
- * the site's progressive-enhancement approach (content fully in the
- * server-rendered HTML, usable with JS disabled per the html.js pattern).
- *
- * Two tiers: the five load-bearing questions render as the always-visible
- * list; the remaining eleven sit behind a single native <details> ("More
- * questions") with a hint of what's inside, so a visitor looking for
- * something specific can find it without the page front-loading 16
- * accordions. Still fully content-in-HTML — the details block is just
- * collapsed by default.
- *
- * Deliberately no FAQPage JSON-LD here — see src/content/faq.ts.
+ * FAQ — a calm hairline bento. The load-bearing questions are all visible at
+ * once (no accordion friction); the long tail sits behind one native
+ * <details> so the page doesn't front-load sixteen disclosures. Fully
+ * content-in-HTML, usable with JavaScript disabled.
  */
 export function FaqSection() {
   return (
-    <Container className="py-16 sm:py-20">
-      <SectionHeading
-        eyebrow="FAQ"
-        title="Questions people ask before reaching out."
-        lead="Short, honest answers — the things you'd probably want to know before the first conversation."
-      />
+    <section className="border-t border-line bg-paper-light" aria-labelledby="faq-title">
+      <Container className="section-pad">
+        <SectionHeading
+          eyebrow="FAQ"
+          title="Questions people ask before reaching out."
+          lead="Short, honest answers — the things you'd probably want to know before the first conversation."
+        />
 
-      <div className="mt-12 space-y-4">
-        {coreFaqs.map((faq, index) => (
-          <Reveal key={faq.question} delay={index * 60}>
-            <details className="group rounded-2xl border border-line bg-surface px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-bold text-fg">
-                {faq.question}
-                <span
-                  aria-hidden
-                  className="flex size-7 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-sm font-bold text-accent transition-transform duration-200 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-fg-muted">
-                {faq.answer}
-              </p>
-            </details>
-          </Reveal>
-        ))}
-
-        {/* The remaining questions, behind one zero-JS disclosure. The
-            summary lists what's inside so someone searching for a specific
-            topic can tell it's worth opening before they commit. */}
-        <Reveal delay={coreFaqs.length * 60}>
-          <details className="group rounded-2xl border border-dashed border-line-strong bg-transparent px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-bold text-fg">
-              More questions
-              <span className="text-sm font-medium text-fg-faint">
-                payments, location, process, existing sites…
-              </span>
-              <span
-                aria-hidden
-                className="flex size-7 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-sm font-bold text-accent transition-transform duration-200 group-open:rotate-45"
+        <div className="mt-10 overflow-hidden rounded-2xl border border-line-strong">
+          <div className="grid gap-px bg-line sm:grid-cols-2">
+            {coreFaqs.map((faq, index) => (
+              <div
+                key={faq.question}
+                className={
+                  "bg-paper-light p-6 sm:p-7 " +
+                  (index === coreFaqs.length - 1 && coreFaqs.length % 2 === 1
+                    ? "sm:col-span-2"
+                    : "")
+                }
               >
-                +
-              </span>
-            </summary>
-            <div className="mt-6 space-y-4">
-              {moreFaqs.map((faq) => (
-                <details
-                  key={faq.question}
-                  className="group/nested rounded-2xl border border-line bg-surface px-6 py-5 [&_summary::-webkit-details-marker]:hidden"
-                >
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-sm font-bold text-fg">
-                    {faq.question}
-                    <span
-                      aria-hidden
-                      className="flex size-6 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-xs font-bold text-accent transition-transform duration-200 group-open/nested:rotate-45"
-                    >
-                      +
-                    </span>
-                  </summary>
-                  <p className="mt-4 max-w-3xl text-sm leading-relaxed text-fg-muted">
-                    {faq.answer}
-                  </p>
-                </details>
-              ))}
-            </div>
-          </details>
-        </Reveal>
-      </div>
-    </Container>
+                <p className="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-fg-faint">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-2 font-display text-lg font-medium leading-snug tracking-tight text-fg">
+                  {faq.question}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <details className="group mt-6 rounded-2xl border border-dashed border-line-strong px-6 py-5 [&_summary::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-base font-medium text-fg">
+            More questions
+            <span className="hidden text-sm font-normal text-fg-faint sm:inline">
+              payments, location, process, existing sites…
+            </span>
+            <span
+              aria-hidden
+              className="flex size-7 shrink-0 items-center justify-center rounded-full border border-line-strong text-sm font-bold text-accent transition-transform duration-200 group-open:rotate-45"
+            >
+              +
+            </span>
+          </summary>
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            {moreFaqs.map((faq) => (
+              <div key={faq.question} className="border-t border-line pt-4">
+                <h3 className="font-display text-base font-medium leading-snug text-fg">
+                  {faq.question}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-fg-muted">
+                  {faq.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </details>
+      </Container>
+    </section>
   );
 }
-

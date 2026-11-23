@@ -385,7 +385,8 @@ main:has(> .hero-open) {
   transition: transform 0.28s var(--ease-out-expo);
 }
 
-.industry-row:hover .industry-row__name::after {
+.industry-row:hover .industry-row__name::after,
+.group:hover .industry-row__name::after {
   transform: scaleX(1);
 }
 
