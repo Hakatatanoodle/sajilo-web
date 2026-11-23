@@ -10,7 +10,7 @@ const spacingStyles = {
 type CheckListProps = {
   items: readonly string[];
   spacing?: keyof typeof spacingStyles;
-  /** Extra classes for the check icons (color); defaults to brand mint. */
+  /** Extra classes for the check icons (color); defaults to the amber accent. */
   iconClassName?: string;
   /** Classes for the list itself — typically margins (mt-*, …). */
   className?: string;
@@ -23,7 +23,7 @@ type CheckListProps = {
 export function CheckList({
   items,
   spacing = "default",
-  iconClassName = "text-mint",
+  iconClassName = "text-accent",
   className,
 }: CheckListProps) {
   return (
