@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { CtaSection } from "@/sections/CtaSection";
-import { HeroNavy } from "@/sections/HeroNavy";
-import { Positioning } from "@/sections/Positioning";
-import { Process } from "@/sections/Process";
-import { ServicesGrid } from "@/sections/ServicesGrid";
-import { WorkTeaser } from "@/sections/WorkTeaser";
+import { IndustryIndex } from "@/sections/IndustryIndex";
+import { LaunchCta } from "@/sections/LaunchCta";
+import { ProcessStage } from "@/sections/ProcessStage";
+import { SelectedWork } from "@/sections/SelectedWork";
+import { ServicesIndex } from "@/sections/ServicesIndex";
+import { StudioHero } from "@/sections/StudioHero";
+import { StudioNote } from "@/sections/StudioNote";
 
 /**
- * Home — the site's most cinematic page (design.md §68: HOME ★5).
- * Intensity tapers down the page: hero → positioning → work → services →
- * process → calm contact CTA. (Founders strip removed.)
+ * Home — "The Open Studio".
+ *
+ * Seven plates, each with its own job: open (promise + live window), qualify
+ * (industries), prove (selected work), explain the offer (services), show the
+ * method (process), introduce the studio, then close on the brand yellow.
+ * Sections are not a repeated card grid; the accent yellow is the through-line.
  */
 export const metadata: Metadata = {
   /* metadataBase (layout) turns "/" into the full canonical origin. */
@@ -19,12 +23,13 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <HeroNavy />
-      <Positioning />
-      <WorkTeaser />
-      <ServicesGrid />
-      <Process />
-      <CtaSection />
+      <StudioHero />
+      <IndustryIndex />
+      <SelectedWork />
+      <ServicesIndex />
+      <ProcessStage />
+      <StudioNote />
+      <LaunchCta />
     </>
   );
 }

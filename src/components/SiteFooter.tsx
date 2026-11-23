@@ -5,39 +5,43 @@ import { LogoLockup, LogoTagline } from "@/components/Logo";
 import { Mail, MapPin, WhatsApp } from "@/components/icons";
 
 /**
- * Site footer — the navy band of the brand: logo lockup (inverted), the
- * BUILD · LAUNCH · GROW tagline, honesty note, site links, and real
- * contact channels.
+ * Site footer — the navy chapter that closes every page.
+ *
+ * The big promise sits above it in <LaunchCta>; the footer stays practical:
+ * who we are, where to go, and how to reach a person.
  */
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy text-white">
-      <Container className="grid gap-10 py-14 md:grid-cols-[1.4fr_0.8fr_1fr]">
+    <footer className="on-dark bg-navy-deep pb-28 text-white md:pb-0">
+      <Container className="grid gap-12 py-14 md:grid-cols-[1.4fr_0.8fr_1fr] md:py-16">
         <div>
           <Link
             href="/"
             aria-label="Sajilo Web — home"
-            className="inline-block rounded-md focus-visible:outline-brand"
+            className="inline-block rounded-md"
           >
             <LogoLockup inverted />
           </Link>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/70">
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/65">
             {site.tagline}
           </p>
-          <LogoTagline className="mt-5 text-brand" />
+          <LogoTagline className="mt-6 text-brand" />
+          <p className="mt-6 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-white/40">
+            Kathmandu · Lalitpur · Bhaktapur
+          </p>
         </div>
 
         <nav aria-label="Footer">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">
+          <p className="font-mono text-[0.62rem] font-medium uppercase tracking-[0.16em] text-white/45">
             Site
           </p>
-          <ul className="mt-4 space-y-2.5 text-sm">
+          <ul className="mt-5 space-y-2.5 text-sm">
             <li>
               <Link
                 href="/"
-                className="text-white/75 transition-colors hover:text-white focus-visible:outline-brand"
+                className="text-white/72 transition-colors hover:text-brand"
               >
                 Home
               </Link>
@@ -46,7 +50,7 @@ export function SiteFooter() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-white/75 transition-colors hover:text-white focus-visible:outline-brand"
+                  className="text-white/72 transition-colors hover:text-brand"
                 >
                   {item.label}
                 </Link>
@@ -55,7 +59,7 @@ export function SiteFooter() {
             <li>
               <Link
                 href="/privacy"
-                className="text-white/75 transition-colors hover:text-white focus-visible:outline-brand"
+                className="text-white/72 transition-colors hover:text-brand"
               >
                 Privacy
               </Link>
@@ -64,14 +68,14 @@ export function SiteFooter() {
         </nav>
 
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-white/70">
+          <p className="font-mono text-[0.62rem] font-medium uppercase tracking-[0.16em] text-white/45">
             Contact
           </p>
-          <ul className="mt-4 space-y-2.5 text-sm">
+          <ul className="mt-5 space-y-3 text-sm">
             <li>
               <a
                 href={`mailto:${site.contact.email}`}
-                className="inline-flex items-center gap-2 text-white/75 transition-colors hover:text-white focus-visible:outline-brand"
+                className="inline-flex items-center gap-2.5 text-white/72 transition-colors hover:text-brand"
               >
                 <Mail className="size-4 text-brand" />
                 {site.contact.email}
@@ -84,15 +88,15 @@ export function SiteFooter() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-white/75 transition-colors hover:text-white focus-visible:outline-brand"
+                className="inline-flex items-center gap-2.5 text-white/72 transition-colors hover:text-brand"
               >
                 <WhatsApp className="size-4 text-brand" />
                 WhatsApp us
               </a>
             </li>
             <li>
-              <span className="inline-flex items-center gap-2 text-white/75">
-                <MapPin className="size-4 text-brand" />
+              <span className="inline-flex items-start gap-2.5 text-white/72">
+                <MapPin className="mt-0.5 size-4 shrink-0 text-brand" />
                 {site.contact.location}
               </span>
             </li>
@@ -100,10 +104,12 @@ export function SiteFooter() {
         </div>
       </Container>
 
-      <div className="border-t border-white/15">
-        <Container className="flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/70 sm:flex-row">
+      <div className="border-t border-white/10">
+        <Container className="flex flex-col items-start justify-between gap-2 py-5 text-[0.68rem] text-white/45 sm:flex-row sm:items-center">
           <p>© {year} Sajilo Web. Built for local businesses.</p>
-          <p>Made in Nepal</p>
+          <p>
+            Concept demo photography from Unsplash · Made in Nepal
+          </p>
         </Container>
       </div>
     </footer>

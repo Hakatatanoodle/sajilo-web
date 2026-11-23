@@ -1,67 +1,54 @@
 @import "tailwindcss";
-@import "./hero-navy.css";
+@import "./open-studio.css";
 
 /*
- * Sajilo Web design tokens — design.md §71.
- * Light brand canvas (white / yellow / navy): warm paper surfaces, yellow
- * brand accents with an amber text-accent, generous type, disciplined motion.
+ * Sajilo Web design tokens — "The Open Studio".
+ *
+ * Warm paper ground, navy ink, one brand yellow used as highlighter and
+ * flood. The old rainbow-chapter tokens are deliberately gone: a single
+ * accent, used with discipline, is what makes the varied sections feel like
+ * one studio rather than a component demo.
  */
 @theme {
-  /* Surfaces — light canvas (Sajilo Web brand: white / yellow / navy) */
-  --color-ink: #ffffff;
-  --color-ink-2: #f7f6f2;
-  --color-surface: #faf9f5;
-  --color-surface-2: #f1efe8;
-  --color-line: #e9e6de;
-  --color-line-strong: #d9d5ca;
+  /* Surfaces — warm paper, navy chapters */
+  --color-ink: #f4efe4; /* page ground (kept as `ink` for existing classes) */
+  --color-ink-2: #fbf7ee;
+  --color-paper: #f4efe4;
+  --color-paper-light: #fbf7ee;
+  --color-paper-deep: #e8e0cf;
+  --color-surface: #fbf7ee;
+  --color-surface-2: #eee7d8;
+  --color-line: #ded6c6;
+  --color-line-strong: #c9bfab;
 
   /* Text */
-  --color-fg: #1c2333;
-  --color-fg-muted: #4a5268;
-  --color-fg-faint: #5d6479;
+  --color-fg: #141b2e;
+  --color-fg-muted: #4f5668;
+  --color-fg-faint: #646b7c;
 
   /* Brand */
   --color-navy: #1f2740;
-  --color-navy-deep: #161d33;
+  --color-navy-deep: #101728;
   --color-brand: #ffc629;
-  --color-brand-deep: #f0b429;
-  --color-brand-soft: #fff3cd;
+  --color-brand-deep: #eab000;
+  --color-brand-soft: #fff1bf;
 
   /* Accents */
-  --color-accent: #b45309;
+  --color-accent: #8a5a00; /* amber ink on paper — 5.5:1 */
   --color-accent-strong: #ffc629;
   --color-accent-2: #ffd84d;
   --color-mint: #0f766e;
 
   /* Typography (wired to next/font variables in layout.tsx) */
-  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  --font-logo: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 
   /* Motion */
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-cubic: cubic-bezier(0.55, 0.06, 0.68, 0.19);
-  --animate-float-a: float-a 7s ease-in-out infinite;
-  --animate-float-b: float-b 9s ease-in-out infinite;
-
-  @keyframes float-a {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-12px);
-    }
-  }
-
-  @keyframes float-b {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(10px);
-    }
-  }
 }
 
 @layer base {
@@ -70,7 +57,7 @@
   }
 
   body {
-    @apply bg-ink font-body text-fg antialiased;
+    @apply bg-paper font-body text-fg antialiased;
   }
 
   ::selection {
@@ -80,8 +67,18 @@
 
   :focus-visible {
     outline: 2px solid var(--color-navy);
-    outline-offset: 2px;
+    outline-offset: 3px;
     border-radius: 4px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-brand);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 

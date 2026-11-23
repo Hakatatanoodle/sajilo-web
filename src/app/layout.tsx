@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Manrope } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  IBM_Plex_Mono,
+  Instrument_Sans,
+  Manrope,
+} from "next/font/google";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -10,20 +15,36 @@ import { services } from "@/content/services";
 import "./globals.css";
 
 /*
- * Brand typography — Manrope for display, DM Sans for body.
- * Deliberately the same pairing as Sajilo Web's existing demo builds.
+ * Brand typography — "The Open Studio".
+ *
+ * Bricolage gives the monument headlines a crafted, editorial voice;
+ * Instrument Sans keeps body copy and UI quiet; IBM Plex Mono carries the
+ * working-file labels, counters and tags. Manrope stays loaded for the
+ * existing logo lockup only, so the wordmark does not change.
  */
-const manrope = Manrope({
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-manrope",
-  weight: ["500", "600", "700", "800"],
+  variable: "--font-bricolage",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const instrument = Instrument_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-plex-mono",
   weight: ["400", "500", "600"],
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  weight: ["700", "800"],
   display: "swap",
 });
 
@@ -121,7 +142,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${manrope.variable} ${dmSans.variable}`}
+      className={`${bricolage.variable} ${instrument.variable} ${plexMono.variable} ${manrope.variable}`}
       /*
        * suppressHydrationWarning: the inline script below adds the `js`
        * class to <html> before React hydrates (it gates the scroll-reveal
@@ -145,7 +166,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <JsonLd data={siteJsonLd} />
       </head>
-      <body className="min-h-dvh bg-ink font-body text-fg">
+      <body className="min-h-dvh bg-paper font-body text-fg">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-brand focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-navy"
