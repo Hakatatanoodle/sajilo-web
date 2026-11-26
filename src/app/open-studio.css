@@ -901,6 +901,45 @@ main:has(> .hero-open) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Smart navbar: hide on scroll down, show on scroll up                  */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes nav-fade-out {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes nav-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .nav-hidden {
+    animation: nav-fade-out 0.4s ease-out 0.3s forwards;
+  }
+
+  .nav-hidden .site-nav {
+    animation: nav-fade-in 0.4s ease-out forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .nav-hidden,
+  html.js .site-nav {
+    animation: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
 /* Small-screen tuning                                                 */
 /* ------------------------------------------------------------------ */
 

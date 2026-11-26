@@ -20,6 +20,7 @@ export function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 12);
@@ -27,6 +28,35 @@ export function SiteNav() {
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, [pathname]);
+
+  // Hide navbar on scroll down, show on scroll up
+  useEffect(() => {
+    let lastScroll = 0;
+    let ticking = false;
+
+    const checkScroll = () => {
+      const currentScroll = window.scrollY;
+      // With mobile menu open, keep navbar visible
+      if (open) {
+        setVisible(true);
+        return;
+      }
+      const isScrollingDown = currentScroll > lastScroll;
+      setVisible(!isScrollingDown || currentScroll <= 12);
+      lastScroll = currentScroll;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(checkScroll);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [open]);
 
   // Close the mobile menu whenever the route changes.
   useEffect(() => {
@@ -53,16 +83,31 @@ export function SiteNav() {
       : pathname === href || pathname.startsWith(`${href}/`);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 sm:pt-4">
-      <nav
-        aria-label="Main"
+    <>
+      <header
         className={cn(
-          "mx-auto flex h-14 w-full max-w-5xl items-center justify-between rounded-full border border-white/10 pl-4 pr-2 text-white transition-all duration-300 sm:pl-5",
-          scrolled
-            ? "bg-navy-deep/95 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl"
-            : "bg-navy/92 shadow-[0_14px_40px_-24px_rgba(0,0,0,0.55)] backdrop-blur-md"
+          "fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 sm:pt-4",
+          scrolled && "nav-hidden"
         )}
       >
+        <nav
+          aria-label="Main"
+          className="site-nav mx-auto flex h-14 w-full max-w-5xl items-center justify-between rounded-full border border-white/10 pl-4 pr-2 text-white transition-all duration-300 sm:pl-5"
+          style={{
+            opacity: visible ? 1 : 0,
+            ...(scrolled
+              ? {
+                  background: "var(--color-navy-deep)/0.95",
+                  boxShadow: "0 18px 50px -20px rgba(0,0,0,0.65)",
+                  backdropFilter: "blur-xl",
+                }
+              : {
+                  background: "var(--color-navy)/0.92",
+                  boxShadow: "0 14px 40px -24px rgba(0,0,0,0.55)",
+                  backdropFilter: "blur-md",
+                }),
+          }}
+        >
         <Link
           href="/"
           className="rounded-md"
@@ -98,7 +143,7 @@ export function SiteNav() {
 
         <button
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-colors hover:bg-white/10 md:hidden"
+          className="inset-x-0 mx-auto inline-flex w-10 size-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition-colors hover:bg-white/10 md:inline-flex md:mx-0 md:w-auto"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -147,5 +192,6 @@ export function SiteNav() {
         </div>
       ) : null}
     </header>
+    </>
   );
 }
