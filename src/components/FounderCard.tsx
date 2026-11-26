@@ -1,22 +1,37 @@
-import { IconChip } from "@/components/IconChip";
-import { User } from "@/components/icons";
-
 type FounderCardProps = {
   name: string;
   role: string;
   focus: string;
 };
 
-/** Founder profile card — shared by the home AboutStrip and the About page. */
+/**
+ * Founder profile — a working-file entry, not a stock portrait: monogram,
+ * name, role and focus on a hairline. No invented photos.
+ */
 export function FounderCard({ name, role, focus }: FounderCardProps) {
+  const initials = name
+    .split(" ")
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("");
+
   return (
-    <div className="h-full rounded-2xl border border-line bg-surface p-6">
-      <IconChip shape="circle">
-        <User className="size-5" />
-      </IconChip>
-      <p className="mt-4 font-display text-lg font-bold text-fg">{name}</p>
-      <p className="text-sm text-accent">{role}</p>
-      <p className="mt-2 text-sm leading-relaxed text-fg-muted">{focus}</p>
+    <div className="flex h-full gap-5 border-t border-line pt-6">
+      <span
+        aria-hidden
+        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-navy font-mono text-sm tracking-wide text-brand"
+      >
+        {initials}
+      </span>
+      <div>
+        <p className="font-display text-xl font-medium tracking-tight text-fg">
+          {name}
+        </p>
+        <p className="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-accent">
+          {role.replace("Founder — ", "")}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-fg-muted">{focus}</p>
+      </div>
     </div>
   );
 }

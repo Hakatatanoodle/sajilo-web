@@ -10,7 +10,8 @@ type SectionHeadingProps = {
 };
 
 /**
- * Consistent section header: eyebrow, title, optional lead paragraph.
+ * Mid-page section header in the Open Studio voice: mono chapter label,
+ * display title, optional lead. The h1 counterpart is PageHeader.
  */
 export function SectionHeading({
   eyebrow,
@@ -20,15 +21,19 @@ export function SectionHeading({
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
-      <p className="font-display text-xs font-bold uppercase tracking-[0.22em] text-accent">
+    <div
+      className={cn(
+        "max-w-2xl",
+        align === "center" && "mx-auto text-center",
+        className
+      )}
+    >
+      <p className={cn("chapter", align === "center" && "justify-center")}>
         {eyebrow}
       </p>
-      <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
-        {title}
-      </h2>
+      <h2 className="display-md mt-4 text-fg">{title}</h2>
       {lead ? (
-        <p className="mt-4 text-base leading-relaxed text-fg-muted sm:text-lg">{lead}</p>
+        <p className="mt-4 text-base leading-relaxed text-fg-muted">{lead}</p>
       ) : null}
     </div>
   );

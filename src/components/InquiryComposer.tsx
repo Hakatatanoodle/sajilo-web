@@ -119,9 +119,15 @@ export function InquiryComposer() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-2xl border border-line bg-surface p-6 sm:p-8"
+      className="rounded-2xl border border-line-strong bg-paper-light p-6 sm:p-8"
     >
-      <div className="grid gap-5 sm:grid-cols-2">
+      <p className="chapter">Start with one sentence</p>
+      <h2 className="display-md mt-3 text-fg">Tell us about the business.</h2>
+      <p className="mt-3 text-sm leading-relaxed text-fg-muted">
+        A couple of lines is enough to start. We&apos;ll take it from there.
+      </p>
+
+      <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <div>
           <Label htmlFor="inq-name">Your name</Label>
           <input

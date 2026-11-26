@@ -53,7 +53,7 @@ export function LogoLockup({
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <LogoMark className="size-9 shrink-0" />
-      <span className="flex items-baseline gap-1.5 font-display text-xl font-extrabold tracking-tight">
+      <span className="flex items-baseline gap-1.5 font-logo text-xl font-extrabold tracking-tight">
         <span className={inverted ? "text-white" : "text-fg"}>Sajilo</span>
         <span className="rounded-lg bg-brand px-2 pb-0.5 pt-0.5 leading-[1.15] text-navy">
           Web

@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
-import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { FaqSection } from "@/components/FaqSection";
-import { IconChip } from "@/components/IconChip";
 import { InquiryComposer } from "@/components/InquiryComposer";
 import { PageHeader } from "@/components/PageHeader";
-import { Clock, Mail, MapPin, WhatsApp } from "@/components/icons";
-import { Reveal } from "@/components/Reveal";
+import { Mail, MapPin, WhatsApp } from "@/components/icons";
 import { site, whatsappHref } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -23,109 +20,84 @@ const NEXT_STEPS = [
 ] as const;
 
 /**
- * Contact page (design.md §68: CONTACT ★2 — the calmest page).
- * Real channels + an honest inquiry composer that opens a prefilled
- * email draft. No backend, no fake submission success.
+ * Contact — the conversation. Real channels on a hairline rail, an honest
+ * inquiry composer that opens a prefilled email draft, then the FAQ bento.
+ * No backend, no fake submission success.
  */
 export default function ContactPage() {
   return (
-    <div className="relative isolate overflow-hidden">
-      <AuroraBackdrop variant="edge-right" />
-      <Container className="grid gap-12 py-16 sm:py-20 lg:grid-cols-[1fr_1.15fr]">
+    <>
+      <Container className="section-pad grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
         <div>
           <PageHeader
-            eyebrow="Contact"
+            eyebrow="The conversation"
             title="Let's talk about your business."
             lead="Tell us where your business is — and where the digital side should catch up. We reply personally."
           />
 
-          <Reveal delay={220}>
-            <ul className="mt-9 space-y-4">
-              <li>
-                <a
-                  href={`mailto:${site.contact.email}`}
-                  className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent/40"
-                >
-                  <IconChip size="sm">
-                    <Mail className="size-5" />
-                  </IconChip>
-                  <span>
-                    <span className="block text-xs font-bold uppercase tracking-[0.14em] text-fg-faint">
-                      Email
-                    </span>
-                    <span className="block text-sm font-semibold text-fg">
-                      {site.contact.email}
-                    </span>
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={whatsappHref(
-                    "Hi Sajilo Web — I run a business in Nepal and I'd like to talk about getting online."
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-accent/40"
-                >
-                  <IconChip size="sm">
-                    <WhatsApp className="size-5" />
-                  </IconChip>
-                  <span>
-                    <span className="block text-xs font-bold uppercase tracking-[0.14em] text-fg-faint">
-                      WhatsApp
-                    </span>
-                    <span className="block text-sm font-semibold text-fg">
-                      {site.contact.phoneDisplay}
-                    </span>
-                  </span>
-                </a>
-              </li>
-              <li className="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
-                <IconChip size="sm">
-                  <MapPin className="size-5" />
-                </IconChip>
-                <span>
-                  <span className="block text-xs font-bold uppercase tracking-[0.14em] text-fg-faint">
-                    Where we are
-                  </span>
-                  <span className="block text-sm font-semibold text-fg">
-                    {site.contact.location}
-                  </span>
+          <ul className="mt-10 border-b border-line">
+            <li className="border-t border-line">
+              <a
+                href={`mailto:${site.contact.email}`}
+                className="group flex items-baseline gap-4 py-4"
+              >
+                <Mail className="size-4 shrink-0 self-center text-accent" />
+                <span className="w-24 shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-fg-faint">
+                  Email
                 </span>
-              </li>
-            </ul>
-          </Reveal>
+                <span className="text-sm font-semibold text-fg transition-colors group-hover:text-accent">
+                  {site.contact.email}
+                </span>
+              </a>
+            </li>
+            <li className="border-t border-line">
+              <a
+                href={whatsappHref(
+                  "Hi Sajilo Web — I run a business in Nepal and I'd like to talk about getting online."
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-baseline gap-4 py-4"
+              >
+                <WhatsApp className="size-4 shrink-0 self-center text-accent" />
+                <span className="w-24 shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-fg-faint">
+                  WhatsApp
+                </span>
+                <span className="text-sm font-semibold text-fg transition-colors group-hover:text-accent">
+                  {site.contact.phoneDisplay}
+                </span>
+              </a>
+            </li>
+            <li className="flex items-baseline gap-4 border-t border-line py-4">
+              <MapPin className="size-4 shrink-0 self-center text-accent" />
+              <span className="w-24 shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-fg-faint">
+                Where
+              </span>
+              <span className="text-sm font-semibold text-fg">
+                {site.contact.location}
+              </span>
+            </li>
+          </ul>
 
-          <Reveal delay={280}>
-            <div className="mt-8 rounded-2xl border border-dashed border-line-strong p-6">
-              <h2 className="flex items-center gap-2 font-display text-base font-bold text-fg">
-                <Clock className="size-4 text-accent" />
-                What happens next
-              </h2>
-              <ol className="mt-4 space-y-3">
-                {NEXT_STEPS.map((step, index) => (
-                  <li
-                    key={step}
-                    className="flex items-start gap-3 text-sm leading-relaxed text-fg-muted"
-                  >
-                    <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-xs font-bold text-accent">
-                      {index + 1}
-                    </span>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </Reveal>
+          <div className="mt-10">
+            <p className="chapter">What happens next</p>
+            <ol className="mt-5 border-b border-line">
+              {NEXT_STEPS.map((step, index) => (
+                <li key={step} className="flex gap-4 border-t border-line py-4">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-navy font-mono text-[0.6rem] text-brand">
+                    {index + 1}
+                  </span>
+                  <p className="text-sm leading-relaxed text-fg-muted">{step}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
 
-        <Reveal delay={140}>
-          <InquiryComposer />
-        </Reveal>
+        <InquiryComposer />
       </Container>
 
       <FaqSection />
-    </div>
+    </>
   );
 }

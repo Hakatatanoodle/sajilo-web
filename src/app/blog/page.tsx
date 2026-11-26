@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AuroraBackdrop } from "@/components/AuroraBackdrop";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { Reveal } from "@/components/Reveal";
@@ -18,7 +17,6 @@ export default async function BlogPage() {
 
   return (
     <div className="relative isolate overflow-hidden">
-      <AuroraBackdrop variant="page" />
       <Container className="py-16 sm:py-20">
         <PageHeader
           eyebrow="From the studio"
