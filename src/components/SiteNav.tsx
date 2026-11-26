@@ -57,10 +57,10 @@ export function SiteNav() {
       <nav
         aria-label="Main"
         className={cn(
-          "mx-auto flex h-14 w-full max-w-5xl items-center justify-between rounded-full border border-white/10 pl-4 pr-2 text-white transition-all duration-300 sm:pl-5",
+          "mx-auto flex h-14 w-full max-w-5xl items-center justify-between rounded-full border border-white/30 pl-4 pr-2 text-white transition-all duration-300 sm:pl-5",
           scrolled
-            ? "bg-navy-deep/95 shadow-[0_18px_50px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl"
-            : "bg-navy/92 shadow-[0_14px_40px_-24px_rgba(0,0,0,0.55)] backdrop-blur-md"
+            ? "bg-navy-deep/90 shadow-xl backdrop-blur-xl"
+            : "bg-navy/90 shadow-lg backdrop-blur-md"
         )}
       >
         <Link
