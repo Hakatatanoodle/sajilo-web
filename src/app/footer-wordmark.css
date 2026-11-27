@@ -1,0 +1,195 @@
+/*
+ * Footer wordmark — the closing signature.
+ *
+ * A monument-scale "SajiloWeb" cut from the logo's own face (Manrope 800),
+ * with "Web" carrying the brand yellow of the lockup's pill. The letters
+ * rise through a mask from the centre out as the footer arrives, over a
+ * yellow sunrise that lifts and opens behind them — the page's last gesture
+ * after the yellow Launch CTA above.
+ *
+ * The final state is the default: without JS, or with reduced motion, the
+ * wordmark is simply there. FooterWordmark.tsx only supplies the scrub.
+ */
+
+.sj-wordmark {
+  --sj-rise: clamp(220px, 26vw, 330px);
+  /*
+   * The space under the wordmark on phones, where the fixed quick-action bar
+   * sits over the page. Kept in step with the root's `pb-28 md:pb-0` so the
+   * sunrise can still be centred on the word instead of the empty tail.
+   */
+  --sj-tail: 7rem;
+  position: relative;
+  isolation: isolate;
+  padding-top: clamp(2.25rem, 5vw, 4rem);
+}
+
+@media (min-width: 768px) {
+  .sj-wordmark {
+    --sj-tail: 0px;
+  }
+}
+
+.sj-wordmark__glow {
+  position: absolute;
+  z-index: 0;
+  left: -8%;
+  right: -8%;
+  bottom: calc(var(--sj-tail) - var(--sj-rise));
+  height: calc(var(--sj-rise) * 2);
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 238, 196, 0.6) 0%,
+    rgba(255, 204, 64, 0.47) 20%,
+    rgba(250, 168, 36, 0.29) 40%,
+    rgba(226, 120, 20, 0.14) 62%,
+    rgba(160, 78, 10, 0.04) 82%,
+    rgba(160, 78, 10, 0) 100%
+  );
+  will-change: transform, opacity;
+}
+
+/* The hotter core of the sun — the part that breathes while it is on screen.
+   Broad rather than tight, so it reads as light and not as a lens flare. */
+.sj-wordmark__glow::after {
+  content: "";
+  position: absolute;
+  inset: 14% 6%;
+  background: radial-gradient(
+    closest-side,
+    rgba(255, 240, 200, 0.3) 0%,
+    rgba(255, 214, 100, 0.12) 48%,
+    rgba(255, 198, 41, 0) 100%
+  );
+  opacity: 0.8;
+  transform: scale(1);
+}
+
+.sj-wordmark__fit {
+  container-type: inline-size;
+}
+
+.sj-wordmark__link {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  text-decoration: none;
+}
+
+.sj-wordmark__link:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: -2px;
+}
+
+/*
+ * --sj-wordmark-em is the word's rendered width in em with the tracking
+ * below (Manrope 800, no kerning across the split letters). Dividing the
+ * container by it makes the wordmark fill its column exactly, at every
+ * width, with no measuring script.
+ */
+.sj-wordmark__mask {
+  --sj-wordmark-em: 4.635;
+  display: block;
+  overflow: hidden;
+  font-family: var(--font-logo);
+  font-size: calc(100cqw / var(--sj-wordmark-em));
+  font-weight: 800;
+  line-height: 1;
+  padding-bottom: 0.145em;
+}
+
+.sj-wordmark__word {
+  display: flex;
+  width: fit-content;
+  margin-inline: auto;
+  line-height: 1;
+  user-select: none;
+  transition: translate 0.35s var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .sj-wordmark__link:hover .sj-wordmark__word {
+    translate: 0 -0.025em;
+  }
+}
+
+.sj-wordmark__letter {
+  --sj-top: #fffdf7;
+  --sj-mid: #ffefd2;
+  --sj-bottom: #ffdd9e;
+  display: block;
+  flex: none;
+  /* Padding gives the clipped background room for the j's descender; the
+     negative margin keeps the flex row on its line. */
+  padding-bottom: 0.24em;
+  margin-bottom: -0.24em;
+  background-image: linear-gradient(
+    to bottom,
+    var(--sj-top) 0%,
+    var(--sj-mid) 56%,
+    var(--sj-bottom) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  will-change: transform;
+}
+
+.sj-wordmark__letter + .sj-wordmark__letter {
+  margin-left: -0.05em;
+}
+
+.sj-wordmark__letter[data-loose] {
+  margin-left: -0.01em;
+}
+
+.sj-wordmark__letter--web {
+  --sj-top: #fff2c2;
+  --sj-mid: #ffd84d;
+  --sj-bottom: #ffc629;
+}
+
+/* If text clipping is unavailable, keep the words readable. */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .sj-wordmark__letter {
+    background-image: none;
+    color: #fbf7ee;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .sj-wordmark__letter--web {
+    color: var(--color-brand);
+  }
+}
+
+@keyframes sj-ember {
+  from {
+    opacity: 0.7;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The start of the scrub: a small, low glow and letters waiting below the
+     mask. JS replaces these with scrubbed values. */
+  html.js .sj-wordmark__glow {
+    opacity: 0.5;
+    transform: translateY(14%) scale(0.72, 0.42);
+  }
+
+  html.js .sj-wordmark__letter {
+    transform: translateY(104%);
+  }
+
+  html.js .sj-wordmark[data-awake] .sj-wordmark__glow::after {
+    animation: sj-ember 9s ease-in-out infinite alternate;
+  }
+}
