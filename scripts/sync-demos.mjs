@@ -22,6 +22,11 @@ const demosDir = join(repoRoot, "public", "demos");
 
 const DEMOS = [
   {
+    slug: "dwaar",
+    label: "Dwaar — Patan House Hotel",
+    from: join(parentDir, "dwaar"),
+  },
+  {
     slug: "sajilo-hub-store",
     label: "Sajilo HUB — Clothing Store",
     from: join(parentDir, "sajilo_hub_clothing_store_updated"),
