@@ -46,21 +46,25 @@ const nextConfig: NextConfig = {
         source: "/demos/:path*",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow" },
-          // Demos are self-contained static sites; they load their own
-          // fonts (Google Fonts), photos (Unsplash), and scripts (CDN or
-          // self-hosted). Give them a permissive CSP so they render with
-          // full styling inside the portfolio iframes instead of plain HTML.
+          // Demos are self-contained static sites (concept builds, not
+          // production apps). They load their own fonts (Google Fonts),
+          // photos (Unsplash), and scripts (CDN or self-hosted), and may be
+          // embedded inside the portfolio iframes. A strict CSP strips all of
+          // that away and leaves a plain HTML page, so give them a permissive
+          // policy instead — no CSP is safer than a broken one here.
           {
             key: "Content-Security-Policy",
             value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net",
-              "script-src-elem 'self' 'unsafe-inline' https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com data:",
-              "img-src 'self' data: blob: https://images.unsplash.com https://vercel.com",
-              "connect-src 'self' https://vercel.com",
+              "default-src 'self' https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://images.unsplash.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://images.unsplash.com",
+              "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://images.unsplash.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://images.unsplash.com",
+              "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://images.unsplash.com",
+              "font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com data: https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://images.unsplash.com",
+              "img-src 'self' data: blob: https://images.unsplash.com https://vercel.com https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net",
+              "connect-src 'self' https://vercel.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://fonts.googleapis.com https://images.unsplash.com",
+              "worker-src 'self' blob:",
+              "child-src 'self' blob:",
               "frame-src 'self'",
               "base-uri 'self'",
               "form-action 'self'",
