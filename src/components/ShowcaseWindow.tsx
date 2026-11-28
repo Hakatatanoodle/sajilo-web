@@ -12,6 +12,12 @@ type Demo = {
 
 const demos: Demo[] = [
   {
+    slug: "dwaar",
+    label: "Hotel",
+    title: "Dwaar",
+    image: "/showcase/dwaar-hero.webp",
+  },
+  {
     slug: "sajilo-sweets-house",
     label: "Sweets",
     title: "Sajilo Sweets House",
@@ -32,7 +38,7 @@ const demos: Demo[] = [
 ];
 
 /**
- * The hero window — three real concept builds, open on the table.
+ * The hero window — four real concept builds, open on the table.
  *
  * A tabbed frame rather than a fake browser: the tabs choose a real
  * screenshot of a build you can open, so the hero proves the work instead of

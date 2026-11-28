@@ -5,7 +5,17 @@ import { Container } from "@/components/Container";
 import { ArrowRight, ArrowUpRight, Lock } from "@/components/icons";
 import { getProject } from "@/content/work";
 
-const featureSlugs = ["sajilo-hub-store", "ironforge-fitness"] as const;
+const featureSlugs = [
+  "sajilo-hub-store",
+  "ironforge-fitness",
+  "sajilo-sweets-house",
+] as const;
+
+const shots: Record<string, string> = {
+  "sajilo-hub-store": "/showcase/hub-hero.webp",
+  "ironforge-fitness": "/showcase/ironforge-hero.webp",
+  "sajilo-sweets-house": "/showcase/sweets-hero.webp",
+};
 
 /**
  * Selected work — a case plate you can open, then a short index.
@@ -16,7 +26,7 @@ const featureSlugs = ["sajilo-hub-store", "ironforge-fitness"] as const;
  * by design and has no public screen to show.
  */
 export function SelectedWork() {
-  const feature = getProject("sajilo-sweets-house");
+  const feature = getProject("dwaar");
   const ganapati = getProject("ganapati-eye-care");
   if (!feature) return null;
 
@@ -31,7 +41,7 @@ export function SelectedWork() {
             </h2>
           </div>
           <p className="max-w-sm text-base leading-relaxed text-fg-muted md:text-right">
-            Three concept builds you can use right now, and one private system
+            Four concept builds you can use right now, and one private system
             running in a real clinic. Every label is honest.
           </p>
         </div>
@@ -55,9 +65,9 @@ export function SelectedWork() {
 
               <ul className="mt-7 space-y-3 border-t border-line pt-5">
                 {[
-                  "Order by piece or by weight — 250g / 500g / 1kg",
-                  "Festive Dashain and Tihar gift boxes",
-                  "Cash on delivery or pay at the store",
+                  "Three room types with open Rs. rates",
+                  "A courtyard kitchen and four experiences",
+                  "A booking request that carries the room",
                 ].map((item) => (
                   <li key={item} className="flex gap-3 text-sm leading-snug text-fg">
                     <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-brand" aria-hidden />
@@ -93,7 +103,7 @@ export function SelectedWork() {
             <figure className="work-plate">
               <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-2.5">
                 <span className="font-mono text-[0.58rem] uppercase tracking-[0.1em] text-fg-faint">
-                  sajilosweets.demo / menu
+                  dwaar.demo / rooms
                 </span>
                 <span className="font-mono text-[0.55rem] uppercase tracking-[0.1em] text-accent">
                   Concept · Demo
@@ -101,17 +111,20 @@ export function SelectedWork() {
               </div>
               <div className="relative aspect-[4/5] overflow-hidden sm:aspect-[16/11]">
                 <Image
-                  src="/showcase/sweets-work.webp"
-                  alt="Sajilo Sweets House demo — menu, weight-based ordering and festive gift boxes"
+                  src="/showcase/dwaar-work.webp"
+                  alt="Dwaar concept hotel demo — rooms with open Rs. rates in a restored Patan house"
                   fill
                   sizes="(max-width: 1024px) 100vw, 720px"
                   className="work-plate__image"
                 />
                 <div className="pointer-events-none absolute inset-x-3 bottom-3 flex flex-wrap gap-2">
-                  <span className="annotation">Weight ordering</span>
-                  <span className="annotation">Festive boxes</span>
-                  <span className="annotation">Cash on delivery</span>
+                  <span className="annotation">Eleven rooms</span>
+                  <span className="annotation">Open Rs. rates</span>
+                  <span className="annotation">Booking request</span>
                 </div>
+                <figcaption className="mt-3 text-[0.55rem] text-fg-faint font-mono max-w-md">
+                  Hero &amp; room photos from Unsplash — credits in the live demo.
+                </figcaption>
               </div>
             </figure>
           </div>
@@ -125,11 +138,7 @@ export function SelectedWork() {
               <Link key={slug} href={`/work/${slug}`} className="work-index-card group">
                 <div className="relative aspect-[16/10] overflow-hidden border-b border-line">
                   <Image
-                    src={
-                      slug === "sajilo-hub-store"
-                        ? "/showcase/hub-hero.webp"
-                        : "/showcase/ironforge-hero.webp"
-                    }
+                    src={shots[slug]}
                     alt={`${project.title} concept demo`}
                     fill
                     sizes="(max-width: 640px) 100vw, 25vw"
@@ -174,29 +183,29 @@ export function SelectedWork() {
               </span>
             </Link>
           ) : null}
-
-          <Link
-            href="/contact"
-            className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-navy/15 bg-brand/25 p-5 transition-transform duration-300 hover:-translate-y-0.5 hover:bg-brand/35"
-          >
-            <div>
-              <p className="font-mono text-[0.55rem] uppercase tracking-[0.1em] text-accent">
-                The next plate
-              </p>
-              <p className="mt-3 font-display text-2xl font-medium leading-tight tracking-tight text-fg">
-                Your business, built properly.
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-fg-muted">
-                Tell us how it runs. We&apos;ll show you what the digital side
-                could look like.
-              </p>
-            </div>
-            <span className="inline-flex items-center gap-1.5 pt-8 font-mono text-[0.6rem] uppercase tracking-[0.1em] text-navy">
-              Start a conversation
-              <ArrowUpRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </span>
-          </Link>
         </div>
+
+        <Link
+          href="/contact"
+          className="group mt-4 flex flex-col justify-between gap-6 overflow-hidden rounded-2xl border border-navy/15 bg-brand/25 p-6 transition-colors hover:bg-brand/35 sm:flex-row sm:items-center"
+        >
+          <div>
+            <p className="font-mono text-[0.55rem] uppercase tracking-[0.1em] text-accent">
+              The next plate
+            </p>
+            <p className="mt-2 font-display text-2xl font-medium leading-tight tracking-tight text-fg">
+              Your business, built properly.
+            </p>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-fg-muted">
+              Tell us how it runs. We&apos;ll show you what the digital side
+              could look like.
+            </p>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[0.6rem] uppercase tracking-[0.1em] text-navy">
+            Start a conversation
+            <ArrowUpRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
+        </Link>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
           <p className="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-fg-faint">

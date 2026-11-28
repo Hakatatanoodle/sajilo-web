@@ -3,7 +3,7 @@ import type { ServiceSlug } from "@/content/services";
 /**
  * Work / portfolio projects.
  *
- * Three of these builds are Sajilo Web concepts and demos — self-initiated
+ * Four of these builds are Sajilo Web concepts and demos — self-initiated
  * work that demonstrates capability, each tagged "Concept · Demo". One —
  * Ganapati Eye Care Clinic — is a real, named client system running in
  * production, tagged "Client · Live". design.md §26 and portfolio_v0.1.md §35
@@ -11,7 +11,7 @@ import type { ServiceSlug } from "@/content/services";
  * and never described in the other's language — in both directions.
  *
  * Concept facts (features, pricing, palette) come from the actual demo builds.
- * All three demos are real, runnable sites served from public/demos/ (synced
+ * All four demos are real, runnable sites served from public/demos/ (synced
  * from the source folders in the parent directory via `npm run sync-demos`)
  * and embedded live on their case-study pages via `demoUrl`. The client
  * system is login-gated and deliberately has no demoUrl — its
@@ -19,7 +19,7 @@ import type { ServiceSlug } from "@/content/services";
  * screenshot of real records.
  */
 
-export type ProjectKind = "gym" | "store" | "sweet" | "client-system";
+export type ProjectKind = "hotel" | "gym" | "store" | "sweet" | "client-system";
 
 /**
  * Status tag, always rendered on cards and case-study pages. design.md §26:
@@ -76,6 +76,53 @@ export type Project = {
 };
 
 export const work: Project[] = [
+  {
+    slug: "dwaar",
+    title: "Dwaar — Patan House Hotel",
+    industry: "Hospitality",
+    tag: "Concept · Demo",
+    year: "2026",
+    relatedService: "business-websites",
+    demoUrl: "/demos/dwaar/index.html",
+    summary:
+      "A concept hotel site for a restored Newari house in Patan: eleven rooms around one brick courtyard, a courtyard kitchen, and a booking request that carries the room with it.",
+    heroLine: "A restored Newari house in Patan.",
+    overview: [
+      "Dwaar is a concept build for a small heritage hotel — the kind of place that sells atmosphere, not a rate table. The site is a single page that opens like a door: a mountain hero, the house's restoration story, three rooms, the courtyard kitchen, and the walks you can take from the front door.",
+      "It shows what a hospitality site can do without a booking engine: tell the place honestly, put real prices in Rs. on the page, and make asking for a room one short form.",
+    ],
+    challenge:
+      "Small hotels live or die on trust and atmosphere, but most budget booking sites flatten a place into a grid of rates and stock photos. A heritage house has a story — original windows, local carvers, a courtyard — and a guest deciding where to stay wants to feel that before they ask about availability. The question: how much of that can a single static page carry, and still make booking obvious?",
+    solution:
+      "Dwaar opens with a short door-slide intro, then a full-bleed mountain hero and the house's real restoration facts. Three room types are listed with open Rs. prices and a request button that pre-fills the booking form with that room. A courtyard-kitchen menu, four experiences, location details and an FAQ answer the questions a guest would otherwise email. The booking form collects dates, guests and a note, and replies without pretending to be a live reservation system.",
+    features: [
+      "Door-slide intro that opens onto the mountain hero",
+      "WebGL image treatment with a plain-photo fallback",
+      "Smooth scrolling and a pinned horizontal experiences gallery",
+      "Three room types with open Rs. prices — 8,500 / 10,500 / 16,000 per night",
+      "Per-room “Request this room” buttons that pre-fill the booking form",
+      "Breakfast and dinner menus with Rs. prices",
+      "Four experiences: pottery, doorways walk, evening lamps, meet the carvers",
+      "Location, check-in times, airport pickup and an FAQ",
+      "Booking request form — name, email, dates, guests, room, note",
+      "Concept disclosure in the footer — not a real hotel",
+    ],
+    demonstrates: [
+      "Hospitality storytelling without a booking engine",
+      "Open pricing used as a trust device",
+      "Motion that falls back cleanly when WebGL or motion is unavailable",
+      "A static site that still feels like a place, not a template",
+    ],
+    mockKind: "hotel",
+    // Real demo tokens: ink-blue canvas, brick CTA, lamp-gold accent.
+    palette: {
+      heroFrom: "#0C1722",
+      heroTo: "#3A2A20",
+      base: "#0C1722",
+      ink: "#ECE3D2",
+      accent: "#E3B36A",
+    },
+  },
   {
     slug: "sajilo-hub-store",
     title: "Sajilo HUB — Clothing Store",
@@ -249,6 +296,7 @@ export const work: Project[] = [
 ];
 
 export const featuredSlugs = [
+  "dwaar",
   "sajilo-hub-store",
   "ironforge-fitness",
   "sajilo-sweets-house",

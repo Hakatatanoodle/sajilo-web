@@ -10,7 +10,7 @@ import { getFeatured } from "@/content/work";
  * Home hero, variant A — "navy sunrise".
  * Dark navy canvas with a yellow sun rising from the bottom; the headline
  * reveals word by word; the browser frame arrives tilted back and flattens as
- * you scroll, and its tabs wipe between the three demo builds.
+ * you scroll, and its tabs wipe between the four demo builds.
  * All styling lives in app/hero-navy.css.
  */
 export function HeroNavy() {

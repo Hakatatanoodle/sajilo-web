@@ -10,11 +10,12 @@ import { LaunchCta } from "@/sections/LaunchCta";
 export const metadata: Metadata = {
   title: "Work",
   description:
-    "Three labelled concept builds you can open and click through — and our first real client system, live in production for Ganapati Eye Care Clinic. By Sajilo Web.",
+    "Four labelled concept builds you can open and click through — and our first real client system, live in production for Ganapati Eye Care Clinic. By Sajilo Web.",
   alternates: { canonical: "/work" },
 };
 
 const shots: Record<string, string> = {
+  dwaar: "/showcase/dwaar-hero.webp",
   "sajilo-hub-store": "/showcase/hub-hero.webp",
   "ironforge-fitness": "/showcase/ironforge-hero.webp",
   "sajilo-sweets-house": "/showcase/sweets-work.webp",
@@ -32,7 +33,7 @@ export default function WorkPage() {
         <PageHeader
           eyebrow="The contact sheet"
           title="Work we can show you."
-          lead="Three labelled concept builds you can open and click through — plus our first real client system, live in production for Ganapati Eye Care Clinic."
+          lead="Four labelled concept builds you can open and click through — plus our first real client system, live in production for Ganapati Eye Care Clinic."
         />
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">

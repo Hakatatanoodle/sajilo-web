@@ -27,9 +27,15 @@ type LiveDemoFrameProps = {
  * demos never appear as a blank white box (client component — without JS the
  * iframe simply loads as before).
  *
- * The iframe is sandboxed without `allow-same-origin` so demo JS cannot
- * reach this page's DOM or localStorage. Demos that used origin storage
- * (cart persistence) degrade gracefully.
+ * The iframe is sandboxed WITH `allow-same-origin`. Do not remove it:
+ * without it the frame gets an opaque origin, the browser stops sending
+ * cookies for its CSS/JS/image requests, and on any Vercel preview that has
+ * Deployment Protection on, every one of those requests is redirected to
+ * vercel.com/sso-api — which our CSP blocks — leaving an unstyled page.
+ * (Opaque origins also taint WebGL textures and break localStorage.)
+ * That is safe here because the demos are our own first-party static files
+ * in public/demos/; never point this component at third-party URLs.
+ * `allow-popups` lets the credit links in the demos open in a new tab.
  *
  * The demo files are plain static sites copied verbatim from the source demo
  * folders/zips (see public/demos/README.md). Updating a demo means
@@ -69,7 +75,7 @@ export function LiveDemoFrame({
           title={title}
           loading="lazy"
           onLoad={() => setLoaded(true)}
-          sandbox="allow-scripts allow-forms"
+          sandbox="allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox"
           referrerPolicy="no-referrer"
           className="block h-full w-full border-0 bg-white"
         />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { nav, site, whatsappHref } from "@/content/site";
 import { Container } from "@/components/Container";
+import { FooterWordmark } from "@/components/FooterWordmark";
 import { LogoLockup, LogoTagline } from "@/components/Logo";
 import { Mail, MapPin, WhatsApp } from "@/components/icons";
 
@@ -8,13 +9,14 @@ import { Mail, MapPin, WhatsApp } from "@/components/icons";
  * Site footer — the navy chapter that closes every page.
  *
  * The big promise sits above it in <LaunchCta>; the footer stays practical:
- * who we are, where to go, and how to reach a person.
+ * who we are, where to go, and how to reach a person. Then it signs off with
+ * the monument wordmark.
  */
 export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="on-dark bg-navy-deep pb-28 text-white md:pb-0">
+    <footer className="on-dark relative overflow-hidden bg-navy-deep text-white">
       <Container className="grid gap-12 py-14 md:grid-cols-[1.4fr_0.8fr_1fr] md:py-16">
         <div>
           <Link
@@ -112,6 +114,8 @@ export function SiteFooter() {
           </p>
         </Container>
       </div>
+
+      <FooterWordmark />
     </footer>
   );
 }

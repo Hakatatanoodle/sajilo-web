@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { getFeatured } from "@/content/work";
 
 /**
- * Selected work teaser — three featured projects, each honestly tagged
+ * Selected work teaser — four featured projects, each honestly tagged
  * "Concept · Demo" (design.md §26).
  */
 export function WorkTeaser() {
