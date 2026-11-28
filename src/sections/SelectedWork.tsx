@@ -122,6 +122,9 @@ export function SelectedWork() {
                   <span className="annotation">Open Rs. rates</span>
                   <span className="annotation">Booking request</span>
                 </div>
+                <figcaption className="mt-3 text-[0.55rem] text-fg-faint font-mono max-w-md">
+                  Hero &amp; room photos from Unsplash — credits in the live demo.
+                </figcaption>
               </div>
             </figure>
           </div>
