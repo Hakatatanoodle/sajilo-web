@@ -6,8 +6,11 @@ case-study pages (`src/components/LiveDemoFrame.tsx`) — visitors click
 around inside the real build, not a screenshot.
 
 They are **concept demos, not live businesses**. Each page is `noindex`
-and discloses that it is a concept demo, and is iframed with `sandbox` (no
-`allow-same-origin`) so demo JS cannot reach the parent site. `/demos/` is
+and discloses that it is a concept demo, and is iframed with `sandbox`. The sandbox
+**must keep `allow-same-origin`** (see `LiveDemoFrame.tsx`): without it, Vercel
+preview deployments with Deployment Protection redirect every demo CSS/JS/image
+request to vercel.com/sso-api and the demo renders as unstyled HTML. Only put
+first-party static files in `public/demos/`. `/demos/` is
 also disallowed in `robots.ts`.
 
 ## The update contract (important)
